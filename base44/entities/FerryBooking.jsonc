@@ -1,0 +1,60 @@
+{
+  "name": "FerryBooking",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email of the person who booked"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "Name of the person who booked"
+    },
+    "schedule_id": {
+      "type": "string",
+      "description": "ID of the linked FerrySchedule"
+    },
+    "passengers": {
+      "type": "number",
+      "description": "Number of passengers (1-10)"
+    },
+    "total_price": {
+      "type": "number",
+      "description": "Total booking price"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "confirmed",
+        "used",
+        "canceled"
+      ],
+      "default": "confirmed",
+      "description": "Booking status"
+    },
+    "booking_ref": {
+      "type": "string",
+      "description": "Booking reference like BHI-XXXX"
+    },
+    "departure_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Departure time snapshot"
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "to_island",
+        "to_mainland"
+      ],
+      "description": "Direction snapshot"
+    }
+  },
+  "required": [
+    "user_email",
+    "user_name",
+    "schedule_id",
+    "passengers",
+    "total_price"
+  ]
+}

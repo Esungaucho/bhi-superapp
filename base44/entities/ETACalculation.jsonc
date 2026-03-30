@@ -1,0 +1,53 @@
+{
+  "name": "ETACalculation",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User email"
+    },
+    "origin_address": {
+      "type": "string",
+      "description": "Starting address"
+    },
+    "destination": {
+      "type": "string",
+      "description": "Destination on the island"
+    },
+    "drive_minutes": {
+      "type": "number",
+      "description": "Drive time to marina"
+    },
+    "park_minutes": {
+      "type": "number",
+      "default": 5,
+      "description": "Time to park and walk"
+    },
+    "wait_minutes": {
+      "type": "number",
+      "description": "Wait time for ferry"
+    },
+    "ferry_minutes": {
+      "type": "number",
+      "default": 20,
+      "description": "Ferry crossing time"
+    },
+    "cart_minutes": {
+      "type": "number",
+      "description": "Golf cart to destination"
+    },
+    "total_minutes": {
+      "type": "number",
+      "description": "Total travel time"
+    },
+    "recommended_ferry_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Recommended ferry departure"
+    }
+  },
+  "required": [
+    "origin_address",
+    "destination"
+  ]
+}

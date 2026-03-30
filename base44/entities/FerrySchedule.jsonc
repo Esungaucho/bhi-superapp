@@ -1,0 +1,68 @@
+{
+  "name": "FerrySchedule",
+  "type": "object",
+  "properties": {
+    "departure_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the ferry departs"
+    },
+    "arrival_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the ferry arrives"
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "to_island",
+        "to_mainland"
+      ],
+      "description": "Direction of travel"
+    },
+    "vessel_name": {
+      "type": "string",
+      "default": "Adventure",
+      "description": "Name of the vessel"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "on_time",
+        "delayed",
+        "canceled",
+        "boarding"
+      ],
+      "default": "on_time",
+      "description": "Current status"
+    },
+    "delay_minutes": {
+      "type": "number",
+      "default": 0,
+      "description": "Minutes of delay"
+    },
+    "capacity": {
+      "type": "number",
+      "default": 150,
+      "description": "Max passenger capacity"
+    },
+    "current_passengers": {
+      "type": "number",
+      "default": 0,
+      "description": "Current passenger count"
+    },
+    "gps_lat": {
+      "type": "number",
+      "description": "Current GPS latitude"
+    },
+    "gps_lng": {
+      "type": "number",
+      "description": "Current GPS longitude"
+    }
+  },
+  "required": [
+    "departure_time",
+    "arrival_time",
+    "direction"
+  ]
+}
