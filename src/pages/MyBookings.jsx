@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 export default function MyBookings() {
+  const [activeTab, setActiveTab] = useState('ferry');
   const queryClient = useQueryClient();
 
   const { data: user } = useQuery({
@@ -71,44 +72,110 @@ export default function MyBookings() {
 
   const noBookings = upcomingFerry.length === 0 && upcomingParking.length === 0 && pastFerry.length === 0 && pastParking.length === 0;
 
+  const ferryCount = upcomingFerry.length + pastFerry.length;
+  const parkingCount = upcomingParking.length + pastParking.length;
+  const noItems = activeTab === 'ferry'
+    ? ferryCount === 0
+    : parkingCount === 0;
+
   return (
-    <div className="px-4 py-5">
-      <h2 className="text-xl font-bold mb-4">My Bookings</h2>
-
-      {noBookings && (
-        <div className="text-center py-12 text-muted-foreground">
-          <p className="text-4xl mb-2">🎫</p>
-          <p className="font-medium">No bookings yet</p>
-          <p className="text-sm mt-1">Book a ferry or parking to get started</p>
-          <Link to="/ferry" className="text-accent font-semibold text-sm mt-3 inline-block hover:underline">
-            View Schedule →
-          </Link>
+    <div>
+      {/* Tab switcher */}
+      <div className="px-4 pt-5 pb-3">
+        <h2 className="text-xl font-bold mb-4">My Bookings</h2>
+        <div className="flex bg-secondary rounded-xl p-1">
+          <button
+            onClick={() => setActiveTab('ferry')}
+            className={`flex-1 py-3 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+              activeTab === 'ferry'
+                ? 'bg-accent text-accent-foreground shadow-md'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            ⛴️ Ferry
+            {ferryCount > 0 && (
+              <span className={`text-[11px] font-bold px-1.5 py-0.5 rounded-full ${
+                activeTab === 'ferry' ? 'bg-white/20' : 'bg-muted-foreground/20'
+              }`}>
+                {ferryCount}
+              </span>
+            )}
+          </button>
+          <button
+            onClick={() => setActiveTab('parking')}
+            className={`flex-1 py-3 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+              activeTab === 'parking'
+                ? 'bg-accent text-accent-foreground shadow-md'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            🅿️ Parking
+            {parkingCount > 0 && (
+              <span className={`text-[11px] font-bold px-1.5 py-0.5 rounded-full ${
+                activeTab === 'parking' ? 'bg-white/20' : 'bg-muted-foreground/20'
+              }`}>
+                {parkingCount}
+              </span>
+            )}
+          </button>
         </div>
-      )}
+      </div>
 
-      {/* Upcoming */}
-      {(upcomingFerry.length > 0 || upcomingParking.length > 0) && (
-        <Section title="Upcoming">
-          {upcomingFerry.map(b => (
-            <FerryBookingCard key={b.id} booking={b} onCancel={() => cancelFerryMutation.mutate(b)} canceling={cancelFerryMutation.isPending} />
-          ))}
-          {upcomingParking.map(p => (
-            <ParkingCard key={p.id} reservation={p} onCancel={() => cancelParkingMutation.mutate(p)} canceling={cancelParkingMutation.isPending} />
-          ))}
-        </Section>
-      )}
+      <div className="px-4 pb-4">
+        {noItems && (
+          <div className="text-center py-12 text-muted-foreground">
+            <p className="text-4xl mb-2">{activeTab === 'ferry' ? '⛴️' : '🅿️'}</p>
+            <p className="font-medium">No {activeTab === 'ferry' ? 'ferry bookings' : 'parking reservations'} yet</p>
+            <p className="text-sm mt-1">
+              {activeTab === 'ferry' ? 'Book a ferry to get started' : 'Reserve parking to get started'}
+            </p>
+            <Link
+              to={activeTab === 'ferry' ? '/ferry' : '/ferry/parking'}
+              className="text-accent font-semibold text-sm mt-3 inline-block hover:underline"
+            >
+              {activeTab === 'ferry' ? 'View Schedule →' : 'Reserve Parking →'}
+            </Link>
+          </div>
+        )}
 
-      {/* Past */}
-      {(pastFerry.length > 0 || pastParking.length > 0) && (
-        <Section title="Past">
-          {pastFerry.map(b => (
-            <FerryBookingCard key={b.id} booking={b} isPast />
-          ))}
-          {pastParking.map(p => (
-            <ParkingCard key={p.id} reservation={p} isPast />
-          ))}
-        </Section>
-      )}
+        {activeTab === 'ferry' && (
+          <>
+            {upcomingFerry.length > 0 && (
+              <Section title="Upcoming">
+                {upcomingFerry.map(b => (
+                  <FerryBookingCard key={b.id} booking={b} onCancel={() => cancelFerryMutation.mutate(b)} canceling={cancelFerryMutation.isPending} />
+                ))}
+              </Section>
+            )}
+            {pastFerry.length > 0 && (
+              <Section title="Past">
+                {pastFerry.map(b => (
+                  <FerryBookingCard key={b.id} booking={b} isPast />
+                ))}
+              </Section>
+            )}
+          </>
+        )}
+
+        {activeTab === 'parking' && (
+          <>
+            {upcomingParking.length > 0 && (
+              <Section title="Upcoming">
+                {upcomingParking.map(p => (
+                  <ParkingCard key={p.id} reservation={p} onCancel={() => cancelParkingMutation.mutate(p)} canceling={cancelParkingMutation.isPending} />
+                ))}
+              </Section>
+            )}
+            {pastParking.length > 0 && (
+              <Section title="Past">
+                {pastParking.map(p => (
+                  <ParkingCard key={p.id} reservation={p} isPast />
+                ))}
+              </Section>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
