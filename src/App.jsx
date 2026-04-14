@@ -23,6 +23,10 @@ import RentalsShell from '@/components/rentals/RentalsShell';
 import RentalsSearch from '@/pages/RentalsSearch';
 import RentalDetail from '@/pages/RentalDetail';
 import MyRentals from '@/pages/MyRentals';
+import FoodShell from '@/components/food/FoodShell';
+import FoodSearch from '@/pages/FoodSearch';
+import RestaurantMenu from '@/pages/RestaurantMenu';
+import MyOrders from '@/pages/MyOrders';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -69,6 +73,11 @@ const AuthenticatedApp = () => {
         <Route path="/rentals" element={<RentalsSearch />} />
         <Route path="/rentals/:id" element={<RentalDetail />} />
         <Route path="/rentals/my-rentals" element={<MyRentals />} />
+      </Route>
+      <Route element={<FoodShell />}>
+        <Route path="/food" element={<FoodSearch />} />
+        <Route path="/food/:restaurantId" element={<RestaurantMenu />} />
+        <Route path="/food/my-orders" element={<MyOrders />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

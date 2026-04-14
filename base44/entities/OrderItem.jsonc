@@ -1,0 +1,38 @@
+{
+  "name": "OrderItem",
+  "type": "object",
+  "properties": {
+    "order_id": {
+      "type": "string"
+    },
+    "menu_item_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "description": "Snapshot of item name"
+    },
+    "price": {
+      "type": "number",
+      "description": "Snapshot of item price"
+    },
+    "quantity": {
+      "type": "number",
+      "default": 1
+    },
+    "line_total": {
+      "type": "number"
+    },
+    "special_requests": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "order_id",
+    "menu_item_id",
+    "name",
+    "price",
+    "quantity",
+    "line_total"
+  ]
+}

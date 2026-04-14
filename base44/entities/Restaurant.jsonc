@@ -1,0 +1,78 @@
+{
+  "name": "Restaurant",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "cuisine": {
+      "type": "string",
+      "description": "e.g. Seafood, American, Pizza"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "hours": {
+      "type": "string",
+      "description": "e.g. 11am\u20139pm"
+    },
+    "delivery_fee": {
+      "type": "number",
+      "default": 3
+    },
+    "min_order": {
+      "type": "number",
+      "default": 0
+    },
+    "estimated_delivery_minutes": {
+      "type": "number",
+      "default": 30
+    },
+    "fulfillment_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "pickup, delivery, dine_in"
+    },
+    "commission_rate": {
+      "type": "number",
+      "default": 0.15,
+      "description": "Platform commission: 0.12 pickup, 0.15 delivery, 0.18 dine_in"
+    },
+    "rating": {
+      "type": "number"
+    },
+    "review_count": {
+      "type": "number",
+      "default": 0
+    },
+    "is_open": {
+      "type": "boolean",
+      "default": true
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "name",
+    "cuisine"
+  ]
+}

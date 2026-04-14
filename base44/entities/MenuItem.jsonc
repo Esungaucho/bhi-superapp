@@ -1,0 +1,47 @@
+{
+  "name": "MenuItem",
+  "type": "object",
+  "properties": {
+    "restaurant_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "category": {
+      "type": "string",
+      "description": "e.g. Appetizers, Mains, Drinks, Desserts"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "is_available": {
+      "type": "boolean",
+      "default": true
+    },
+    "is_popular": {
+      "type": "boolean",
+      "default": false
+    },
+    "allergens": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "calories": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "restaurant_id",
+    "name",
+    "price"
+  ]
+}
