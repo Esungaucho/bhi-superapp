@@ -15,6 +15,10 @@ import FerryParking from '@/pages/FerryParking';
 import MyBookings from '@/pages/MyBookings';
 import TierSelect from '@/pages/onboarding/TierSelect';
 import FerryRouteDetail from '@/pages/FerryRouteDetail';
+import LodgingShell from '@/components/lodging/LodgingShell';
+import LodgingSearch from '@/pages/LodgingSearch';
+import LodgingDetail from '@/pages/LodgingDetail';
+import MyStays from '@/pages/MyStays';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -51,6 +55,11 @@ const AuthenticatedApp = () => {
         <Route path="/ferry/book" element={<BookFerry />} />
         <Route path="/ferry/parking" element={<FerryParking />} />
         <Route path="/ferry/bookings" element={<MyBookings />} />
+      </Route>
+      <Route element={<LodgingShell />}>
+        <Route path="/lodging" element={<LodgingSearch />} />
+        <Route path="/lodging/:id" element={<LodgingDetail />} />
+        <Route path="/lodging/my-stays" element={<MyStays />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

@@ -1,0 +1,107 @@
+{
+  "name": "Lodging",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Listing title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Full description"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "vrbo",
+        "airbnb",
+        "intracoastal"
+      ],
+      "description": "Listing source/platform"
+    },
+    "external_id": {
+      "type": "string",
+      "description": "ID on the source platform"
+    },
+    "external_url": {
+      "type": "string",
+      "description": "Direct link to listing"
+    },
+    "address": {
+      "type": "string",
+      "description": "Street address on BHI"
+    },
+    "neighborhood": {
+      "type": "string",
+      "description": "Neighborhood or area"
+    },
+    "bedrooms": {
+      "type": "number",
+      "default": 2
+    },
+    "bathrooms": {
+      "type": "number",
+      "default": 1
+    },
+    "max_guests": {
+      "type": "number",
+      "default": 4
+    },
+    "price_per_night": {
+      "type": "number",
+      "description": "Base nightly rate"
+    },
+    "cleaning_fee": {
+      "type": "number",
+      "default": 0
+    },
+    "commission_rate": {
+      "type": "number",
+      "default": 0.06,
+      "description": "Platform commission rate (0.06 = 6%)"
+    },
+    "amenities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of amenities"
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of image URLs"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Average rating (1-5)"
+    },
+    "review_count": {
+      "type": "number",
+      "default": 0
+    },
+    "is_available": {
+      "type": "boolean",
+      "default": true
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "lat": {
+      "type": "number"
+    },
+    "lng": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "title",
+    "source",
+    "price_per_night",
+    "bedrooms",
+    "max_guests"
+  ]
+}

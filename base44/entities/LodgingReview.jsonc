@@ -1,0 +1,32 @@
+{
+  "name": "LodgingReview",
+  "type": "object",
+  "properties": {
+    "lodging_id": {
+      "type": "string",
+      "description": "ID of the Lodging listing"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number",
+      "description": "1-5 stars"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "stay_date": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "lodging_id",
+    "user_email",
+    "rating"
+  ]
+}

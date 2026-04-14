@@ -1,0 +1,82 @@
+{
+  "name": "LodgingBooking",
+  "type": "object",
+  "properties": {
+    "lodging_id": {
+      "type": "string",
+      "description": "ID of the Lodging listing"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "check_in": {
+      "type": "string",
+      "format": "date"
+    },
+    "check_out": {
+      "type": "string",
+      "format": "date"
+    },
+    "guests": {
+      "type": "number",
+      "default": 1
+    },
+    "nights": {
+      "type": "number"
+    },
+    "price_per_night": {
+      "type": "number"
+    },
+    "cleaning_fee": {
+      "type": "number",
+      "default": 0
+    },
+    "subtotal": {
+      "type": "number",
+      "description": "nights \u00d7 price_per_night"
+    },
+    "commission_amount": {
+      "type": "number",
+      "description": "Platform revenue from this booking"
+    },
+    "total_price": {
+      "type": "number"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "vrbo",
+        "airbnb",
+        "intracoastal"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "confirmed",
+        "canceled",
+        "completed"
+      ],
+      "default": "confirmed"
+    },
+    "booking_ref": {
+      "type": "string"
+    },
+    "special_requests": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "lodging_id",
+    "user_email",
+    "user_name",
+    "check_in",
+    "check_out",
+    "guests",
+    "total_price"
+  ]
+}
