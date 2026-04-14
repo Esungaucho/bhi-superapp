@@ -1,0 +1,43 @@
+{
+  "name": "RentalInventory",
+  "type": "object",
+  "properties": {
+    "rental_item_id": {
+      "type": "string",
+      "description": "ID of the RentalItem"
+    },
+    "unit_number": {
+      "type": "string",
+      "description": "Individual unit identifier e.g. GC-01"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "excellent",
+        "good",
+        "fair",
+        "maintenance"
+      ],
+      "default": "good"
+    },
+    "is_available": {
+      "type": "boolean",
+      "default": true
+    },
+    "current_booking_id": {
+      "type": "string",
+      "description": "Active RentalBooking ID if booked"
+    },
+    "last_serviced": {
+      "type": "string",
+      "format": "date"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "rental_item_id",
+    "unit_number"
+  ]
+}

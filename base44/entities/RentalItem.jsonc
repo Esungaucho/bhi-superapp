@@ -1,0 +1,92 @@
+{
+  "name": "RentalItem",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Item display name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "golf_cart",
+        "bike",
+        "scooter",
+        "gear"
+      ],
+      "description": "Item category"
+    },
+    "description": {
+      "type": "string"
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "price_per_day": {
+      "type": "number",
+      "description": "Daily rental rate"
+    },
+    "price_per_week": {
+      "type": "number",
+      "description": "Weekly rental rate (discount)"
+    },
+    "commission_rate": {
+      "type": "number",
+      "default": 0.15,
+      "description": "Platform commission (15%)"
+    },
+    "total_units": {
+      "type": "number",
+      "default": 1,
+      "description": "Total units in inventory"
+    },
+    "available_units": {
+      "type": "number",
+      "default": 1,
+      "description": "Currently available units"
+    },
+    "min_days": {
+      "type": "number",
+      "default": 1,
+      "description": "Minimum rental period in days"
+    },
+    "max_days": {
+      "type": "number",
+      "default": 14
+    },
+    "amenities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Features/included items"
+    },
+    "vendor_name": {
+      "type": "string",
+      "description": "Rental vendor/operator"
+    },
+    "is_available": {
+      "type": "boolean",
+      "default": true
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "rating": {
+      "type": "number"
+    },
+    "review_count": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "name",
+    "category",
+    "price_per_day"
+  ]
+}

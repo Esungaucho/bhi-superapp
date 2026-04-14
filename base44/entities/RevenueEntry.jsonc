@@ -1,0 +1,41 @@
+{
+  "name": "RevenueEntry",
+  "type": "object",
+  "properties": {
+    "source": {
+      "type": "string",
+      "enum": [
+        "ferry_commission",
+        "rental_commission",
+        "lodging_commission",
+        "parking_fee",
+        "ad_impression",
+        "other"
+      ],
+      "description": "Revenue source type"
+    },
+    "reference_id": {
+      "type": "string",
+      "description": "ID of linked booking/entity"
+    },
+    "reference_type": {
+      "type": "string",
+      "description": "Entity type e.g. RentalBooking, FerryBooking"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Revenue amount in USD"
+    },
+    "description": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Customer who generated the revenue"
+    }
+  },
+  "required": [
+    "source",
+    "amount"
+  ]
+}

@@ -19,6 +19,10 @@ import LodgingShell from '@/components/lodging/LodgingShell';
 import LodgingSearch from '@/pages/LodgingSearch';
 import LodgingDetail from '@/pages/LodgingDetail';
 import MyStays from '@/pages/MyStays';
+import RentalsShell from '@/components/rentals/RentalsShell';
+import RentalsSearch from '@/pages/RentalsSearch';
+import RentalDetail from '@/pages/RentalDetail';
+import MyRentals from '@/pages/MyRentals';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -60,6 +64,11 @@ const AuthenticatedApp = () => {
         <Route path="/lodging" element={<LodgingSearch />} />
         <Route path="/lodging/:id" element={<LodgingDetail />} />
         <Route path="/lodging/my-stays" element={<MyStays />} />
+      </Route>
+      <Route element={<RentalsShell />}>
+        <Route path="/rentals" element={<RentalsSearch />} />
+        <Route path="/rentals/:id" element={<RentalDetail />} />
+        <Route path="/rentals/my-rentals" element={<MyRentals />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

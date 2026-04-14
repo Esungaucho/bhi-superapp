@@ -1,0 +1,83 @@
+{
+  "name": "RentalBooking",
+  "type": "object",
+  "properties": {
+    "rental_item_id": {
+      "type": "string",
+      "description": "ID of the RentalItem"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "days": {
+      "type": "number"
+    },
+    "pricing_tier": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly"
+      ],
+      "default": "daily",
+      "description": "Which pricing tier applied"
+    },
+    "rate_applied": {
+      "type": "number",
+      "description": "Effective rate used for calculation"
+    },
+    "subtotal": {
+      "type": "number"
+    },
+    "commission_amount": {
+      "type": "number",
+      "description": "15% platform revenue"
+    },
+    "total_price": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "confirmed",
+        "active",
+        "completed",
+        "canceled"
+      ],
+      "default": "confirmed"
+    },
+    "booking_ref": {
+      "type": "string"
+    },
+    "item_category": {
+      "type": "string",
+      "description": "Snapshot of item category"
+    },
+    "item_name": {
+      "type": "string",
+      "description": "Snapshot of item name"
+    },
+    "special_requests": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "rental_item_id",
+    "user_email",
+    "user_name",
+    "start_date",
+    "end_date",
+    "days",
+    "total_price"
+  ]
+}
