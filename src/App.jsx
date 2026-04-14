@@ -27,6 +27,9 @@ import FoodShell from '@/components/food/FoodShell';
 import FoodSearch from '@/pages/FoodSearch';
 import RestaurantMenu from '@/pages/RestaurantMenu';
 import MyOrders from '@/pages/MyOrders';
+import WeatherShell from '@/components/weather/WeatherShell';
+import WeatherDashboard from '@/pages/WeatherDashboard';
+import IslandMap from '@/pages/IslandMap';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -78,6 +81,10 @@ const AuthenticatedApp = () => {
         <Route path="/food" element={<FoodSearch />} />
         <Route path="/food/:restaurantId" element={<RestaurantMenu />} />
         <Route path="/food/my-orders" element={<MyOrders />} />
+      </Route>
+      <Route element={<WeatherShell />}>
+        <Route path="/weather" element={<WeatherDashboard />} />
+        <Route path="/map" element={<IslandMap />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

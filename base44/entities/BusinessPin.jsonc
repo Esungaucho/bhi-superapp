@@ -1,0 +1,80 @@
+{
+  "name": "BusinessPin",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "restaurant",
+        "rental",
+        "lodging",
+        "activity",
+        "shop",
+        "service",
+        "beach_access"
+      ],
+      "description": "Business type"
+    },
+    "description": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "lat": {
+      "type": "number"
+    },
+    "lng": {
+      "type": "number"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "hours": {
+      "type": "string"
+    },
+    "is_sponsored": {
+      "type": "boolean",
+      "default": false
+    },
+    "sponsor_ad_text": {
+      "type": "string"
+    },
+    "sponsor_ad_trigger": {
+      "type": "string",
+      "enum": [
+        "always",
+        "high_uv",
+        "hot_weather",
+        "rain",
+        "high_crowd",
+        "low_tide"
+      ],
+      "description": "When to show contextual ad"
+    },
+    "ad_impressions": {
+      "type": "number",
+      "default": 0
+    },
+    "deep_link": {
+      "type": "string",
+      "description": "Internal app route e.g. /food/abc123"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "category",
+    "lat",
+    "lng"
+  ]
+}

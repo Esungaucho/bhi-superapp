@@ -5,6 +5,7 @@ import { isSameDay } from 'date-fns';
 import DateScroller from '@/components/ferry/DateScroller';
 import DirectionToggle from '@/components/ferry/DirectionToggle';
 import ScheduleCard from '@/components/ferry/ScheduleCard';
+import ConditionsBanner from '@/components/weather/ConditionsBanner';
 import { Loader2 } from 'lucide-react';
 
 export default function FerrySchedule() {
@@ -39,8 +40,15 @@ export default function FerrySchedule() {
       .sort((a, b) => new Date(a.departure_time) - new Date(b.departure_time));
   }, [schedules, selectedDate, direction]);
 
+  const { data: conditionsAll = [] } = useQuery({
+    queryKey: ['islandConditions'],
+    queryFn: () => base44.entities.IslandConditions.list('-recorded_at', 1),
+  });
+  const conditions = conditionsAll[0];
+
   return (
     <div>
+      <ConditionsBanner conditions={conditions} />
       <DateScroller selectedDate={selectedDate} onDateChange={setSelectedDate} />
       <DirectionToggle direction={direction} onDirectionChange={setDirection} />
 

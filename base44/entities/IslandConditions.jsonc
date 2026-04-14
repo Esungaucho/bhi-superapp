@@ -1,0 +1,92 @@
+{
+  "name": "IslandConditions",
+  "type": "object",
+  "properties": {
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "temp_f": {
+      "type": "number",
+      "description": "Temperature in Fahrenheit"
+    },
+    "feels_like_f": {
+      "type": "number"
+    },
+    "humidity_pct": {
+      "type": "number"
+    },
+    "wind_mph": {
+      "type": "number"
+    },
+    "wind_direction": {
+      "type": "string",
+      "description": "e.g. NE, SW"
+    },
+    "uv_index": {
+      "type": "number",
+      "description": "0-11+ UV index"
+    },
+    "wave_height_ft": {
+      "type": "number"
+    },
+    "tide_status": {
+      "type": "string",
+      "enum": [
+        "low",
+        "rising",
+        "high",
+        "falling"
+      ],
+      "description": "Current tide status"
+    },
+    "tide_next_event": {
+      "type": "string",
+      "description": "e.g. High tide at 3:45pm"
+    },
+    "crowd_level": {
+      "type": "string",
+      "enum": [
+        "quiet",
+        "moderate",
+        "busy",
+        "very_busy"
+      ],
+      "default": "moderate"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "sunny",
+        "partly_cloudy",
+        "cloudy",
+        "rain",
+        "storm",
+        "foggy"
+      ],
+      "default": "sunny"
+    },
+    "water_temp_f": {
+      "type": "number"
+    },
+    "beach_flag": {
+      "type": "string",
+      "enum": [
+        "green",
+        "yellow",
+        "red",
+        "purple"
+      ],
+      "default": "green",
+      "description": "Beach safety flag color"
+    },
+    "is_current": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "temp_f",
+    "condition"
+  ]
+}
