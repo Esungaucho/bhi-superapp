@@ -95,6 +95,11 @@ export const AuthProvider = ({ children }) => {
       setUser(currentUser);
       setIsAuthenticated(true);
       setIsLoadingAuth(false);
+
+      // Redirect to onboarding if tier not yet selected
+      if (!currentUser.tier && !window.location.pathname.startsWith('/onboarding')) {
+        window.location.replace('/onboarding/tier-select');
+      }
     } catch (error) {
       console.error('User auth check failed:', error);
       setIsLoadingAuth(false);

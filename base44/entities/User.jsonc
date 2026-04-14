@@ -1,0 +1,41 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "user"
+      ],
+      "default": "user"
+    },
+    "first_name": {
+      "type": "string",
+      "description": "User's first name"
+    },
+    "last_name": {
+      "type": "string",
+      "description": "User's last name"
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "short_term_guest",
+        "long_term_renter",
+        "homeowner",
+        "contractor"
+      ],
+      "description": "User's membership tier"
+    },
+    "avatar": {
+      "type": "string",
+      "description": "Avatar image URL"
+    },
+    "onboarding_complete": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the user has completed onboarding"
+    }
+  }
+}
