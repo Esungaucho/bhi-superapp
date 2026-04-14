@@ -43,6 +43,7 @@ export default function BookFerry() {
         schedule_id: scheduleId,
         passengers,
         total_price: total,
+        commission_amount: 2,
         status: 'confirmed',
         booking_ref: ref,
         departure_time: schedule.departure_time,

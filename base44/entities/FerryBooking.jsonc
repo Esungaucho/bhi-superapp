@@ -14,6 +14,10 @@
       "type": "string",
       "description": "ID of the linked FerrySchedule"
     },
+    "route_id": {
+      "type": "string",
+      "description": "ID of the linked FerryRoute"
+    },
     "passengers": {
       "type": "number",
       "description": "Number of passengers (1-10)"
@@ -21,6 +25,11 @@
     "total_price": {
       "type": "number",
       "description": "Total booking price"
+    },
+    "commission_amount": {
+      "type": "number",
+      "default": 2,
+      "description": "Platform commission per booking ($2)"
     },
     "status": {
       "type": "string",

@@ -1,0 +1,73 @@
+{
+  "name": "FerryRoute",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Route display name e.g. Southport \u2194 Bald Head Island"
+    },
+    "origin": {
+      "type": "string",
+      "description": "Departure location name"
+    },
+    "destination": {
+      "type": "string",
+      "description": "Arrival location name"
+    },
+    "distance_miles": {
+      "type": "number",
+      "description": "Distance of the route in miles"
+    },
+    "duration_minutes": {
+      "type": "number",
+      "default": 20,
+      "description": "Typical crossing time in minutes"
+    },
+    "price_per_person": {
+      "type": "number",
+      "default": 23,
+      "description": "Base ticket price per passenger"
+    },
+    "is_sponsored": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this route has a sponsored/promoted slot"
+    },
+    "sponsor_name": {
+      "type": "string",
+      "description": "Name of the sponsor"
+    },
+    "sponsor_logo_url": {
+      "type": "string",
+      "description": "URL of the sponsor logo image"
+    },
+    "sponsor_cta": {
+      "type": "string",
+      "description": "Sponsor call-to-action text"
+    },
+    "ad_impressions": {
+      "type": "number",
+      "default": 0,
+      "description": "Total ad impressions tracked"
+    },
+    "description": {
+      "type": "string",
+      "description": "Route description shown on detail page"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Hero image for the route detail page"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the route is currently operating"
+    }
+  },
+  "required": [
+    "name",
+    "origin",
+    "destination",
+    "price_per_person"
+  ]
+}

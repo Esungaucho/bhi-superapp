@@ -14,6 +14,7 @@ import BookFerry from '@/pages/BookFerry';
 import FerryParking from '@/pages/FerryParking';
 import MyBookings from '@/pages/MyBookings';
 import TierSelect from '@/pages/onboarding/TierSelect';
+import FerryRouteDetail from '@/pages/FerryRouteDetail';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -42,6 +43,7 @@ const AuthenticatedApp = () => {
     <Routes>
       <Route path="/" element={<Navigate to="/ferry" replace />} />
       <Route path="/onboarding/tier-select" element={<TierSelect />} />
+      <Route path="/ferry/route/:routeId" element={<FerryRouteDetail />} />
       <Route element={<AppShell />}>
         <Route path="/ferry" element={<FerrySchedule />} />
         <Route path="/ferry/map" element={<FerryMap />} />
