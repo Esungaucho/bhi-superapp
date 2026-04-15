@@ -1,0 +1,75 @@
+{
+  "name": "PromoDeal",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "cta_label": {
+      "type": "string",
+      "default": "Learn More"
+    },
+    "deep_link": {
+      "type": "string",
+      "description": "Internal route e.g. /food/abc123"
+    },
+    "sponsor_name": {
+      "type": "string"
+    },
+    "sponsor_logo_url": {
+      "type": "string"
+    },
+    "deal_type": {
+      "type": "string",
+      "enum": [
+        "flash_sale",
+        "featured_deal",
+        "sponsored",
+        "event"
+      ],
+      "default": "featured_deal"
+    },
+    "discount_pct": {
+      "type": "number",
+      "description": "e.g. 20 for 20% off"
+    },
+    "valid_until": {
+      "type": "string",
+      "format": "date"
+    },
+    "impressions": {
+      "type": "number",
+      "default": 0
+    },
+    "clicks": {
+      "type": "number",
+      "default": 0
+    },
+    "cpm_rate": {
+      "type": "number",
+      "default": 5,
+      "description": "$ per 1000 impressions"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "target_tiers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "User tiers to show this to: visitor, resident, owner, business"
+    }
+  },
+  "required": [
+    "title",
+    "sponsor_name"
+  ]
+}

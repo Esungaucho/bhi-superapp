@@ -34,6 +34,11 @@ import ShopsMarketplace from '@/pages/ShopsMarketplace';
 import WeatherShell from '@/components/weather/WeatherShell';
 import WeatherDashboard from '@/pages/WeatherDashboard';
 import IslandMap from '@/pages/IslandMap';
+import DashboardShell from '@/components/dashboard/DashboardShell';
+import Dashboard from '@/pages/Dashboard';
+import UniversalSearch from '@/pages/UniversalSearch';
+import Notifications from '@/pages/Notifications';
+import AllBookings from '@/pages/AllBookings';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -60,7 +65,13 @@ const AuthenticatedApp = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/ferry" replace />} />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route element={<DashboardShell />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/search" element={<UniversalSearch />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/bookings" element={<AllBookings />} />
+      </Route>
       <Route path="/onboarding/tier-select" element={<TierSelect />} />
       <Route path="/ferry/route/:routeId" element={<FerryRouteDetail />} />
       <Route element={<AppShell />}>
