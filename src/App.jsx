@@ -27,6 +27,10 @@ import FoodShell from '@/components/food/FoodShell';
 import FoodSearch from '@/pages/FoodSearch';
 import RestaurantMenu from '@/pages/RestaurantMenu';
 import MyOrders from '@/pages/MyOrders';
+import ShopsShell from '@/components/shops/ShopsShell';
+import ShopsDirectory from '@/pages/ShopsDirectory';
+import ShopDetail from '@/pages/ShopDetail';
+import ShopsMarketplace from '@/pages/ShopsMarketplace';
 import WeatherShell from '@/components/weather/WeatherShell';
 import WeatherDashboard from '@/pages/WeatherDashboard';
 import IslandMap from '@/pages/IslandMap';
@@ -81,6 +85,11 @@ const AuthenticatedApp = () => {
         <Route path="/food" element={<FoodSearch />} />
         <Route path="/food/:restaurantId" element={<RestaurantMenu />} />
         <Route path="/food/my-orders" element={<MyOrders />} />
+      </Route>
+      <Route element={<ShopsShell />}>
+        <Route path="/shops" element={<ShopsDirectory />} />
+        <Route path="/shops/marketplace" element={<ShopsMarketplace />} />
+        <Route path="/shops/:id" element={<ShopDetail />} />
       </Route>
       <Route element={<WeatherShell />}>
         <Route path="/weather" element={<WeatherDashboard />} />

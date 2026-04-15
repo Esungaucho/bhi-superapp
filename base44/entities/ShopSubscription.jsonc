@@ -1,0 +1,60 @@
+{
+  "name": "ShopSubscription",
+  "type": "object",
+  "properties": {
+    "shop_id": {
+      "type": "string"
+    },
+    "shop_name": {
+      "type": "string",
+      "description": "Snapshot"
+    },
+    "owner_email": {
+      "type": "string"
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "basic",
+        "premium",
+        "conglomerate"
+      ],
+      "description": "basic=$99, premium=$500-$1500, conglomerate=$3500"
+    },
+    "monthly_fee": {
+      "type": "number",
+      "description": "Recurring monthly fee"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "canceled",
+        "past_due",
+        "trial"
+      ],
+      "default": "active"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "next_billing_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "billing_ref": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "shop_id",
+    "shop_name",
+    "owner_email",
+    "tier",
+    "monthly_fee"
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "name": "Shop",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "boutique",
+        "grocery",
+        "gear",
+        "art",
+        "food_beverage",
+        "wellness",
+        "home_decor",
+        "services"
+      ],
+      "description": "Shop category"
+    },
+    "logo_url": {
+      "type": "string"
+    },
+    "banner_url": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "hours": {
+      "type": "string"
+    },
+    "owner_email": {
+      "type": "string"
+    },
+    "subscription_tier": {
+      "type": "string",
+      "enum": [
+        "basic",
+        "premium",
+        "conglomerate"
+      ],
+      "default": "basic",
+      "description": "basic=$99, premium=$500-$1500, conglomerate=$3500/mo"
+    },
+    "subscription_status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "trial"
+      ],
+      "default": "trial"
+    },
+    "commission_rate": {
+      "type": "number",
+      "default": 0.08,
+      "description": "Platform commission on transactions"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_conglomerate_partner": {
+      "type": "boolean",
+      "default": false
+    },
+    "conglomerate_name": {
+      "type": "string",
+      "description": "e.g. BHI Business Alliance"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rating": {
+      "type": "number"
+    },
+    "review_count": {
+      "type": "number",
+      "default": 0
+    },
+    "lat": {
+      "type": "number"
+    },
+    "lng": {
+      "type": "number"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ]
+}

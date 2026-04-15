@@ -1,0 +1,62 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "shop_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "compare_at_price": {
+      "type": "number",
+      "description": "Original price for sale items"
+    },
+    "category": {
+      "type": "string",
+      "description": "e.g. Apparel, Food, Art"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "is_available": {
+      "type": "boolean",
+      "default": true
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "stock_qty": {
+      "type": "number",
+      "default": 0
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "commission_rate": {
+      "type": "number",
+      "default": 0.08
+    }
+  },
+  "required": [
+    "shop_id",
+    "name",
+    "price"
+  ]
+}
