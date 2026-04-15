@@ -39,6 +39,10 @@ import Dashboard from '@/pages/Dashboard';
 import UniversalSearch from '@/pages/UniversalSearch';
 import Notifications from '@/pages/Notifications';
 import AllBookings from '@/pages/AllBookings';
+import AdminShell from '@/components/admin/AdminShell';
+import RevenueDashboard from '@/pages/admin/RevenueDashboard';
+import AdCampaigns from '@/pages/admin/AdCampaigns';
+import PartnerManagement from '@/pages/admin/PartnerManagement';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -105,6 +109,11 @@ const AuthenticatedApp = () => {
       <Route element={<WeatherShell />}>
         <Route path="/weather" element={<WeatherDashboard />} />
         <Route path="/map" element={<IslandMap />} />
+      </Route>
+      <Route element={<AdminShell />}>
+        <Route path="/admin/revenue" element={<RevenueDashboard />} />
+        <Route path="/admin/ads" element={<AdCampaigns />} />
+        <Route path="/admin/partners" element={<PartnerManagement />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

@@ -1,0 +1,89 @@
+{
+  "name": "AdCampaign",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "advertiser": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "banner",
+        "carousel",
+        "contextual",
+        "sponsored_listing"
+      ],
+      "default": "banner"
+    },
+    "placement": {
+      "type": "string",
+      "enum": [
+        "dashboard_hero",
+        "deals_carousel",
+        "ferry_schedule",
+        "restaurant_list",
+        "map_pin"
+      ],
+      "default": "deals_carousel"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "completed",
+        "draft"
+      ],
+      "default": "draft"
+    },
+    "budget": {
+      "type": "number",
+      "description": "Total campaign budget in USD"
+    },
+    "spent": {
+      "type": "number",
+      "default": 0,
+      "description": "Amount spent so far"
+    },
+    "cpm_rate": {
+      "type": "number",
+      "default": 5,
+      "description": "$ per 1000 impressions"
+    },
+    "cpc_rate": {
+      "type": "number",
+      "description": "$ per click (optional)"
+    },
+    "impressions": {
+      "type": "number",
+      "default": 0
+    },
+    "clicks": {
+      "type": "number",
+      "default": 0
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "promo_deal_id": {
+      "type": "string",
+      "description": "Linked PromoDeal if any"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "advertiser",
+    "budget"
+  ]
+}
