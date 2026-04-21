@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Home, Search, Bell, BookOpen, Map } from 'lucide-react';
+import GlobalMenu from '@/components/GlobalMenu';
 
 const NAV = [
   { path: '/dashboard', label: 'Home', icon: Home, exact: true },
@@ -19,9 +20,7 @@ export default function DashboardShell() {
         {/* Header */}
         <header className="bg-primary text-primary-foreground px-4 py-3 sticky top-0 z-50 shadow-md flex items-center justify-between">
           <h1 className="text-lg font-bold tracking-tight">🌴 BHI SuperApp</h1>
-          <Link to="/notifications" className="relative p-1.5 rounded-lg hover:bg-white/10 transition-colors">
-            <Bell className="w-5 h-5" />
-          </Link>
+          <GlobalMenu />
         </header>
 
         {/* Content */}

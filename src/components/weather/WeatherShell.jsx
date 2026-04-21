@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { CloudSun, MapPin } from 'lucide-react';
+import GlobalMenu from '@/components/GlobalMenu';
 
 const navItems = [
   { path: '/weather', label: 'Conditions', icon: CloudSun },
@@ -15,6 +16,7 @@ export default function WeatherShell() {
       <div className="w-full max-w-[430px] flex flex-col min-h-screen relative">
         <header className="bg-primary text-primary-foreground px-4 py-3 flex items-center gap-3 sticky top-0 z-50 shadow-md">
           <h1 className="text-lg font-bold tracking-tight">🌤️ BHI Conditions</h1>
+          <div className="ml-auto"><GlobalMenu /></div>
         </header>
 
         <main className="flex-1 overflow-y-auto pb-20">

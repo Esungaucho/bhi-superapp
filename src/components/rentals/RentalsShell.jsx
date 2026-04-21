@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Search, Bookmark, ChevronLeft } from 'lucide-react';
+import GlobalMenu from '@/components/GlobalMenu';
 
 const navItems = [
   { path: '/rentals', label: 'Browse', icon: Search },
@@ -22,6 +23,7 @@ export default function RentalsShell() {
             </button>
           )}
           <h1 className="text-lg font-bold tracking-tight">🛺 BHI Rentals</h1>
+          <div className="ml-auto"><GlobalMenu /></div>
         </header>
 
         <main className="flex-1 overflow-y-auto pb-20">

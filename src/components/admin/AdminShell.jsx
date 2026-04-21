@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { BarChart2, Megaphone, Users, ChevronLeft } from 'lucide-react';
+import GlobalMenu from '@/components/GlobalMenu';
 
 const NAV = [
   { path: '/admin/revenue', label: 'Revenue', icon: BarChart2 },
@@ -20,6 +21,7 @@ export default function AdminShell() {
             <ChevronLeft className="w-5 h-5" />
           </button>
           <h1 className="text-lg font-bold tracking-tight">⚙️ Admin</h1>
+          <div className="ml-auto"><GlobalMenu /></div>
         </header>
 
         {/* Tab bar */}

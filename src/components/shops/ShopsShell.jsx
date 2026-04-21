@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Search, ShoppingBag, ChevronLeft } from 'lucide-react';
+import GlobalMenu from '@/components/GlobalMenu';
 
 const navItems = [
   { path: '/shops', label: 'Directory', icon: Search },
@@ -22,6 +23,7 @@ export default function ShopsShell() {
             </button>
           )}
           <h1 className="text-lg font-bold tracking-tight">🛍️ BHI Shops</h1>
+          <div className="ml-auto"><GlobalMenu /></div>
         </header>
 
         <main className="flex-1 overflow-y-auto pb-20">

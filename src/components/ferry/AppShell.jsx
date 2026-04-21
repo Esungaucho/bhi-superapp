@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Calendar, Map, Brain, Ticket, ChevronLeft } from 'lucide-react';
+import GlobalMenu from '@/components/GlobalMenu';
 
 const navItems = [
   { path: '/ferry', label: 'Schedule', icon: Calendar },
@@ -27,6 +28,7 @@ export default function AppShell() {
             </button>
           )}
           <h1 className="text-lg font-bold tracking-tight">⛴️ BHI Ferry</h1>
+          <div className="ml-auto"><GlobalMenu /></div>
         </header>
 
         {/* Content */}
