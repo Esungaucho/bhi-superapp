@@ -4,6 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Loader2, Wind, Droplets, Thermometer, Eye, Waves, Sun, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ContextualAd, { getTriggeredAds } from '@/components/weather/ContextualAd';
+import BeachFinder from '@/components/weather/BeachFinder';
 
 const CONDITION_EMOJI = {
   sunny: '☀️', partly_cloudy: '⛅', cloudy: '☁️',
@@ -119,6 +120,9 @@ export default function WeatherDashboard() {
           <StatCard icon={<Thermometer className="w-4 h-4 text-orange-500" />} label="UV Index"
             value={<span className={uvMeta?.color}>{conditions.uv_index ?? '--'} — {uvMeta?.label}</span>} />
         </div>
+
+        {/* Beach Finder */}
+        <BeachFinder conditions={conditions} />
 
         {/* Tide */}
         <div className="bg-card rounded-2xl border p-4">
