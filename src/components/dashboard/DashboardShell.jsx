@@ -18,9 +18,17 @@ export default function DashboardShell() {
     <div className="min-h-screen bg-background flex justify-center">
       <div className="w-full max-w-[430px] flex flex-col min-h-screen relative">
         {/* Header */}
-        <header className="bg-primary text-primary-foreground px-4 py-3 sticky top-0 z-50 shadow-md flex items-center justify-between">
-          <h1 className="text-lg font-bold tracking-tight">🌴 BHI SuperApp</h1>
-          <GlobalMenu />
+        <header className="relative sticky top-0 z-50 h-16 overflow-hidden shadow-md">
+          <img
+            src="https://media.base44.com/images/public/69c9efaf81beb7831e6e5295/2dee2eee0_generated_image.png"
+            alt="Bald Head Island maritime forest"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/80 via-navy/55 to-navy-deep/40" />
+          <div className="relative h-full flex items-center justify-between px-4">
+            <h1 className="font-heading text-lg text-white tracking-luxe-sm">Bald Head Island</h1>
+            <GlobalMenu />
+          </div>
         </header>
 
         {/* Content */}
