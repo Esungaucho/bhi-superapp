@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CalendarDays, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 
-const HERO_IMAGE = 'https://media.base44.com/images/public/69c9efaf81beb7831e6e5295/ec0efabd8_generated_image.png';
+const HERO_IMAGE = 'https://media.base44.com/images/public/69c9efaf81beb7831e6e5295/ce60e6889_generated_image.png';
 
 export default function HeroWidget({ upcomingBooking, user }) {
   const tierGreeting = {
@@ -25,8 +25,7 @@ export default function HeroWidget({ upcomingBooking, user }) {
           alt="Bald Head Island at golden hour"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/75 to-navy/30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/70 via-navy-deep/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/70 via-transparent to-transparent" />
       </div>
 
       {/* Editorial content overlay */}
