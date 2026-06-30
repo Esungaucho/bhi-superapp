@@ -46,6 +46,11 @@ import AdminShell from '@/components/admin/AdminShell';
 import RevenueDashboard from '@/pages/admin/RevenueDashboard';
 import AdCampaigns from '@/pages/admin/AdCampaigns';
 import PartnerManagement from '@/pages/admin/PartnerManagement';
+import SubmissionReview from '@/pages/admin/SubmissionReview';
+import CommunityShell from '@/components/community/CommunityShell';
+import CommunityFeed from '@/pages/CommunityFeed';
+import SubmitContent from '@/pages/SubmitContent';
+import SubmissionDetail from '@/pages/SubmissionDetail';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -121,6 +126,12 @@ const AuthenticatedApp = () => {
         <Route path="/admin/revenue" element={<RevenueDashboard />} />
         <Route path="/admin/ads" element={<AdCampaigns />} />
         <Route path="/admin/partners" element={<PartnerManagement />} />
+        <Route path="/admin/submissions" element={<SubmissionReview />} />
+      </Route>
+      <Route element={<CommunityShell />}>
+        <Route path="/community" element={<CommunityFeed />} />
+        <Route path="/community/submit" element={<SubmitContent />} />
+        <Route path="/community/:id" element={<SubmissionDetail />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

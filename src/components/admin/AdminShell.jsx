@@ -1,12 +1,13 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { BarChart2, Megaphone, Users, ChevronLeft } from 'lucide-react';
+import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
 
 const NAV = [
   { path: '/admin/revenue', label: 'Revenue', icon: BarChart2 },
   { path: '/admin/ads', label: 'Campaigns', icon: Megaphone },
   { path: '/admin/partners', label: 'Partners', icon: Users },
+  { path: '/admin/submissions', label: 'Review', icon: FileCheck },
 ];
 
 export default function AdminShell() {

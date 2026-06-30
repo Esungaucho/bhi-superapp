@@ -1,0 +1,79 @@
+{
+  "name": "CommunitySubmission",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Submission title"
+    },
+    "body": {
+      "type": "string",
+      "description": "Full content text"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "local_guide",
+        "beach_access",
+        "hidden_gem",
+        "animal_sighting",
+        "lost_found",
+        "seasonal_tip"
+      ],
+      "description": "Content category"
+    },
+    "location_name": {
+      "type": "string",
+      "description": "Where on the island"
+    },
+    "author_name": {
+      "type": "string",
+      "description": "Display name of submitter"
+    },
+    "author_email": {
+      "type": "string",
+      "description": "Email of submitter"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Optional attached image"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending",
+      "description": "Review status \u2014 only 'approved' is published"
+    },
+    "ai_score": {
+      "type": "number",
+      "description": "AI helpfulness/positivity score 0-100"
+    },
+    "ai_summary": {
+      "type": "string",
+      "description": "AI review summary"
+    },
+    "reviewer_notes": {
+      "type": "string",
+      "description": "Manual reviewer notes"
+    },
+    "reviewed_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "title",
+    "body",
+    "category",
+    "author_name",
+    "author_email"
+  ]
+}

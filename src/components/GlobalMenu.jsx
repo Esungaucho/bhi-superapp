@@ -11,6 +11,7 @@ const SECTIONS = [
   { label: '🛺 Rentals', path: '/rentals' },
   { label: '🍽️ Food & Dining', path: '/food' },
   { label: '🛒 Shops', path: '/shops' },
+  { label: '📖 Community', path: '/community' },
   { label: '📋 My Bookings', path: '/bookings' },
   { label: '🔔 Notifications', path: '/notifications' },
   { label: '🤖 Concierge', path: '/agents' },
