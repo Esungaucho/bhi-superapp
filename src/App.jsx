@@ -43,6 +43,7 @@ import AdminShell from '@/components/admin/AdminShell';
 import RevenueDashboard from '@/pages/admin/RevenueDashboard';
 import AdCampaigns from '@/pages/admin/AdCampaigns';
 import PartnerManagement from '@/pages/admin/PartnerManagement';
+import LogisticsAgent from '@/pages/LogisticsAgent';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
