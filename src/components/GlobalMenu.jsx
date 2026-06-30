@@ -13,6 +13,7 @@ const SECTIONS = [
   { label: '🛒 Shops', path: '/shops' },
   { label: '📋 My Bookings', path: '/bookings' },
   { label: '🔔 Notifications', path: '/notifications' },
+  { label: '🤖 Concierge', path: '/agents' },
   { label: '🔍 Search', path: '/search' },
   { label: '⚙️ Admin', path: '/admin/revenue' },
 ];

@@ -37,13 +37,15 @@ import IslandMap from '@/pages/IslandMap';
 import DashboardShell from '@/components/dashboard/DashboardShell';
 import Dashboard from '@/pages/Dashboard';
 import UniversalSearch from '@/pages/UniversalSearch';
+import AgentShell from '@/components/agents/AgentShell';
+import Agents from '@/pages/Agents';
+import AgentChat from '@/pages/AgentChat';
 import Notifications from '@/pages/Notifications';
 import AllBookings from '@/pages/AllBookings';
 import AdminShell from '@/components/admin/AdminShell';
 import RevenueDashboard from '@/pages/admin/RevenueDashboard';
 import AdCampaigns from '@/pages/admin/AdCampaigns';
 import PartnerManagement from '@/pages/admin/PartnerManagement';
-import LogisticsAgent from '@/pages/LogisticsAgent';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -110,6 +112,10 @@ const AuthenticatedApp = () => {
       <Route element={<WeatherShell />}>
         <Route path="/weather" element={<WeatherDashboard />} />
         <Route path="/map" element={<IslandMap />} />
+      </Route>
+      <Route element={<AgentShell />}>
+        <Route path="/agents" element={<Agents />} />
+        <Route path="/agents/chat/:agentName" element={<AgentChat />} />
       </Route>
       <Route element={<AdminShell />}>
         <Route path="/admin/revenue" element={<RevenueDashboard />} />
