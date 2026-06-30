@@ -44,7 +44,7 @@ export default function Dashboard() {
     .sort((a, b) => new Date(a.departure_time) - new Date(b.departure_time))[0];
 
   return (
-    <div className="pb-6">
+    <div className="pb-12 pt-1">
       <HeroWidget upcomingBooking={soonestFerry} user={user} />
       <QuickActions />
       <UpcomingBookings

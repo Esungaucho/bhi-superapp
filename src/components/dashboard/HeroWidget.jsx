@@ -1,60 +1,86 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CalendarDays, MapPin, ArrowRight } from 'lucide-react';
+import { CalendarDays, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
+
+const HERO_IMAGE = 'https://media.base44.com/images/public/69c9efaf81beb7831e6e5295/ec0efabd8_generated_image.png';
 
 export default function HeroWidget({ upcomingBooking, user }) {
   const tierGreeting = {
     resident: 'Welcome home',
     owner: 'Welcome back',
     business: 'Good to see you',
-    visitor: 'Welcome to BHI',
+    visitor: 'Welcome to Bald Head',
   };
 
-  const greeting = tierGreeting[user?.tier] || 'Welcome to BHI';
+  const greeting = tierGreeting[user?.tier] || 'Welcome to Bald Head';
   const firstName = user?.full_name?.split(' ')[0] || 'Explorer';
 
-  if (upcomingBooking) {
-    const depTime = new Date(upcomingBooking.departure_time || upcomingBooking.check_in || upcomingBooking.start_date);
-    const daysUntil = Math.ceil((depTime - new Date()) / (1000 * 60 * 60 * 24));
-
-    return (
-      <div className="mx-4 mt-4 bg-gradient-to-br from-primary to-accent rounded-2xl p-5 text-primary-foreground shadow-lg">
-        <p className="text-xs font-medium opacity-70 uppercase tracking-wide">Your Next Trip</p>
-        <h2 className="text-xl font-bold mt-1">{daysUntil <= 0 ? "Today's the day! 🎉" : `${daysUntil} day${daysUntil !== 1 ? 's' : ''} away`}</h2>
-        <div className="flex items-center gap-2 mt-2 text-sm opacity-80">
-          <CalendarDays className="w-4 h-4" />
-          <span>{format(depTime, 'EEE, MMM d')}</span>
-        </div>
-        <Link
-          to="/ferry/bookings"
-          className="mt-4 flex items-center gap-1 text-sm font-semibold bg-white/20 hover:bg-white/30 transition-colors rounded-xl px-3 py-2 w-fit"
-        >
-          View Booking <ArrowRight className="w-3.5 h-3.5" />
-        </Link>
-      </div>
-    );
-  }
-
   return (
-    <div className="mx-4 mt-4 bg-gradient-to-br from-primary to-accent rounded-2xl p-5 text-primary-foreground shadow-lg">
-      <p className="text-xs font-medium opacity-70 uppercase tracking-wide">{greeting}</p>
-      <h2 className="text-xl font-bold mt-1">{firstName}! 🌴</h2>
-      <p className="text-sm opacity-80 mt-1">Ready to plan your island adventure?</p>
-      <div className="flex gap-2 mt-4">
-        <Link
-          to="/ferry"
-          className="flex items-center gap-1.5 text-sm font-semibold bg-white/20 hover:bg-white/30 transition-colors rounded-xl px-3 py-2"
-        >
-          ⛴️ Book Ferry
-        </Link>
-        <Link
-          to="/lodging"
-          className="flex items-center gap-1.5 text-sm font-semibold bg-white/20 hover:bg-white/30 transition-colors rounded-xl px-3 py-2"
-        >
-          🏡 Find Lodging
-        </Link>
+    <section className="relative mx-4 mt-4 rounded-2xl overflow-hidden shadow-[0_18px_40px_-20px_rgba(31,45,61,0.35)] animate-fade-in">
+      {/* Cinematic photograph */}
+      <div className="relative h-72 sm:h-80">
+        <img
+          src={HERO_IMAGE}
+          alt="Bald Head Island at golden hour"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/85 via-navy/45 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/50 via-transparent to-transparent" />
       </div>
-    </div>
+
+      {/* Editorial content overlay */}
+      <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
+        <p className="text-[10px] font-body tracking-luxe uppercase text-white/70">{greeting}</p>
+        <h1 className="font-heading text-3xl sm:text-4xl leading-tight mt-1 text-balance">
+          {upcomingBooking ? 'Your island awaits' : `Hello, ${firstName}`}
+        </h1>
+
+        {upcomingBooking ? (
+          <div className="mt-4 space-y-3">
+            <div className="flex items-center gap-2 text-sm text-white/80">
+              <CalendarDays className="w-4 h-4" strokeWidth={1.5} />
+              <span className="font-body">
+                {(() => {
+                  const depTime = new Date(upcomingBooking.departure_time || upcomingBooking.check_in || upcomingBooking.start_date);
+                  const daysUntil = Math.ceil((depTime - new Date()) / (1000 * 60 * 60 * 24));
+                  return daysUntil <= 0
+                    ? "Today's the day"
+                    : `${daysUntil} day${daysUntil !== 1 ? 's' : ''} away · ${format(depTime, 'EEE, MMM d')}`;
+                })()}
+              </span>
+            </div>
+            <Link
+              to="/ferry/bookings"
+              className="inline-flex items-center gap-2 text-sm font-body font-medium bg-white/15 backdrop-blur-md border border-white/25 hover:bg-white/25 transition-colors rounded-full px-4 py-2 w-fit"
+            >
+              View itinerary <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.5} />
+            </Link>
+          </div>
+        ) : (
+          <p className="text-sm font-body text-white/75 mt-2 max-w-xs leading-relaxed">
+            Serene shores, maritime forests, and quiet luxury — your island journey begins here.
+          </p>
+        )}
+      </div>
+
+      {/* Floating quick-CTAs (only when no upcoming booking) */}
+      {!upcomingBooking && (
+        <div className="absolute bottom-0 right-0 flex gap-2 p-4">
+          <Link
+            to="/ferry"
+            className="text-xs font-body font-medium bg-white/15 backdrop-blur-md border border-white/25 hover:bg-white/25 transition-colors rounded-full px-3.5 py-1.5 text-white"
+          >
+            Ferry
+          </Link>
+          <Link
+            to="/lodging"
+            className="text-xs font-body font-medium bg-white/15 backdrop-blur-md border border-white/25 hover:bg-white/25 transition-colors rounded-full px-3.5 py-1.5 text-white"
+          >
+            Stay
+          </Link>
+        </div>
+      )}
+    </section>
   );
 }

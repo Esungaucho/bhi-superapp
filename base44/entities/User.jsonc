@@ -37,5 +37,11 @@
       "default": false,
       "description": "Whether the user has completed onboarding"
     }
-  }
+  },
+  "required": [
+    "first_name",
+    "last_name",
+    "tier",
+    "avatar"
+  ]
 }

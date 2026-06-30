@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { Sparkles } from 'lucide-react';
 
 export default function DealsCarousel({ deals }) {
   const [current, setCurrent] = useState(0);
@@ -31,23 +32,26 @@ export default function DealsCarousel({ deals }) {
   if (!deals?.length) return null;
 
   const DEAL_TYPE_BADGE = {
-    flash_sale: { label: '⚡ Flash Sale', color: 'bg-red-500' },
-    featured_deal: { label: '🏷️ Deal', color: 'bg-accent' },
-    sponsored: { label: '📢 Sponsored', color: 'bg-amber-500' },
-    event: { label: '🎉 Event', color: 'bg-emerald-500' },
+    flash_sale: { label: 'Flash Sale', color: 'bg-driftwood text-white' },
+    featured_deal: { label: 'Featured', color: 'bg-sea-glass text-white' },
+    sponsored: { label: 'Sponsored', color: 'bg-navy text-white' },
+    event: { label: 'Event', color: 'bg-sea-glass-deep text-white' },
   };
 
   return (
-    <div className="mt-5">
-      <div className="px-4 flex justify-between items-center mb-3">
-        <h3 className="text-sm font-bold text-foreground">Island Deals</h3>
-        <span className="text-xs text-muted-foreground">{current + 1}/{deals.length}</span>
+    <section className="mt-8">
+      <div className="px-4 flex items-baseline justify-between mb-4">
+        <div>
+          <h2 className="font-heading text-xl text-foreground">Island offers</h2>
+          <p className="text-xs font-body text-muted-foreground mt-0.5">Curated experiences from our partners</p>
+        </div>
+        <span className="text-[10px] font-body tracking-luxe-sm uppercase text-muted-foreground">{current + 1} / {deals.length}</span>
       </div>
       <div
         ref={scrollRef}
-        className="flex gap-3 overflow-x-auto px-4 pb-2 no-scrollbar snap-x snap-mandatory"
+        className="flex gap-4 overflow-x-auto px-4 pb-2 no-scrollbar snap-x snap-mandatory"
         onScroll={e => {
-          const idx = Math.round(e.target.scrollLeft / (e.target.offsetWidth - 32 + 12));
+          const idx = Math.round(e.target.scrollLeft / (e.target.offsetWidth - 32 + 16));
           setCurrent(Math.min(idx, deals.length - 1));
         }}
       >
@@ -55,30 +59,35 @@ export default function DealsCarousel({ deals }) {
           const badge = DEAL_TYPE_BADGE[deal.deal_type] || DEAL_TYPE_BADGE.featured_deal;
           const card = (
             <div
-              className="flex-shrink-0 w-[calc(85vw)] max-w-[340px] snap-start rounded-2xl overflow-hidden border bg-card shadow-sm"
+              className="flex-shrink-0 w-[80vw] max-w-[340px] snap-start rounded-2xl overflow-hidden bg-card border border-border/70 shadow-[0_8px_28px_-16px_rgba(31,45,61,0.25)] hover:shadow-[0_14px_36px_-18px_rgba(31,45,61,0.35)] transition-shadow duration-300"
               onClick={() => deal.deep_link && trackClick(deal)}
             >
-              {deal.image_url && (
-                <div className="h-36 overflow-hidden relative">
+              {deal.image_url ? (
+                <div className="h-44 overflow-hidden relative">
                   <img src={deal.image_url} alt={deal.title} className="w-full h-full object-cover" />
-                  <span className={`absolute top-2 left-2 text-white text-[10px] font-bold px-2 py-1 rounded-full ${badge.color}`}>
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/60 via-transparent to-transparent" />
+                  <span className={`absolute top-3 left-3 text-[10px] font-body font-medium tracking-luxe-sm uppercase px-2.5 py-1 rounded-full ${badge.color}`}>
                     {badge.label}
                   </span>
                   {deal.discount_pct && (
-                    <span className="absolute top-2 right-2 bg-black/60 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      -{deal.discount_pct}%
+                    <span className="absolute top-3 right-3 bg-white/95 text-navy text-xs font-body font-semibold px-2.5 py-1 rounded-full">
+                      −{deal.discount_pct}%
                     </span>
                   )}
                 </div>
+              ) : (
+                <div className="h-44 bg-sand flex items-center justify-center">
+                  <Sparkles className="w-6 h-6 text-driftwood" strokeWidth={1.5} />
+                </div>
               )}
-              <div className="p-3">
-                <p className="font-bold text-sm text-foreground">{deal.title}</p>
-                <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{deal.description}</p>
-                <div className="flex justify-between items-center mt-2">
-                  <span className="text-[11px] text-muted-foreground">by {deal.sponsor_name}</span>
+              <div className="p-5">
+                <p className="font-heading text-base text-foreground leading-snug">{deal.title}</p>
+                <p className="text-xs font-body text-muted-foreground mt-1.5 line-clamp-2 leading-relaxed">{deal.description}</p>
+                <div className="flex justify-between items-center mt-4 pt-3 border-t border-border/60">
+                  <span className="text-[11px] font-body text-muted-foreground tracking-wide">{deal.sponsor_name}</span>
                   {deal.valid_until && (
-                    <span className="text-[10px] text-muted-foreground">
-                      Until {new Date(deal.valid_until).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                    <span className="text-[10px] font-body tracking-luxe-sm uppercase text-driftwood">
+                      Through {new Date(deal.valid_until).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                     </span>
                   )}
                 </div>
@@ -93,6 +102,6 @@ export default function DealsCarousel({ deals }) {
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }
