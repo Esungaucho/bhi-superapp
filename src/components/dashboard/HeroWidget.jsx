@@ -25,8 +25,8 @@ export default function HeroWidget({ upcomingBooking, user }) {
           alt="Bald Head Island at golden hour"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/85 via-navy/45 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/50 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/75 to-navy/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/70 via-navy-deep/30 to-transparent" />
       </div>
 
       {/* Editorial content overlay */}
