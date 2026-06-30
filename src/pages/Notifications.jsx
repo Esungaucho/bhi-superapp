@@ -16,6 +16,12 @@ export default function Notifications() {
     enabled: !!user?.email,
   });
 
+  const { data: foodOrders = [] } = useQuery({
+    queryKey: ['notifOrders', user?.email],
+    queryFn: () => base44.entities.FoodOrder.filter({ user_email: user.email }),
+    enabled: !!user?.email,
+  });
+
   const { data: deals = [] } = useQuery({
     queryKey: ['promoDeals'],
     queryFn: () => base44.entities.PromoDeal.filter({ is_active: true }),
@@ -40,17 +46,50 @@ export default function Notifications() {
           type: 'booking',
         };
       }),
+    // Active food order updates
+    ...foodOrders
+      .filter(o => o.status !== 'canceled' && o.status !== 'delivered')
+      .slice(0, 3)
+      .map(o => {
+        const statusLabels = {
+          placed: 'Order placed',
+          confirmed: 'Order confirmed',
+          preparing: 'Being prepared',
+          ready: 'Ready for pickup',
+          out_for_delivery: 'Out for delivery',
+        };
+        return {
+          id: `order-${o.id}`,
+          emoji: '🍽️',
+          title: statusLabels[o.status] || 'Order update',
+          body: `${o.restaurant_name} — ${o.items_count} item${o.items_count !== 1 ? 's' : ''} · $${o.total_price.toFixed(2)}`,
+          time: o.created_date ? new Date(o.created_date) : new Date(),
+          type: 'order',
+        };
+      }),
     // Active deals
     ...deals
-      .filter(d => d.deal_type !== 'sponsored')
+      .filter(d => d.deal_type !== 'sponsored' && d.deal_type !== 'event')
       .slice(0, 4)
       .map(d => ({
         id: `deal-${d.id}`,
-        emoji: d.deal_type === 'flash_sale' ? '⚡' : d.deal_type === 'event' ? '🎉' : '🏷️',
+        emoji: d.deal_type === 'flash_sale' ? '⚡' : '🏷️',
         title: d.title,
         body: d.description || `From ${d.sponsor_name}`,
         time: d.created_date ? new Date(d.created_date) : new Date(),
         type: 'deal',
+      })),
+    // Weekly island events
+    ...deals
+      .filter(d => d.deal_type === 'event')
+      .slice(0, 3)
+      .map(d => ({
+        id: `event-${d.id}`,
+        emoji: '🎉',
+        title: d.title,
+        body: d.description || `Island event — ${d.sponsor_name}`,
+        time: d.created_date ? new Date(d.created_date) : new Date(),
+        type: 'event',
       })),
     // Static island tips
     {
@@ -65,7 +104,9 @@ export default function Notifications() {
 
   const TYPE_COLORS = {
     booking: 'bg-accent/10 text-accent',
+    order: 'bg-orange-50 text-orange-600',
     deal: 'bg-emerald-50 text-emerald-600',
+    event: 'bg-purple-50 text-purple-600',
     tip: 'bg-muted text-muted-foreground',
   };
 
