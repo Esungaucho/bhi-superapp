@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck, CalendarDays, Mail } from 'lucide-react';
+import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck, CalendarDays, Mail, ShoppingBag } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
 
 const NAV = [
@@ -10,6 +10,7 @@ const NAV = [
   { path: '/admin/submissions', label: 'Review', icon: FileCheck },
   { path: '/admin/events', label: 'Events', icon: CalendarDays },
   { path: '/admin/newsletter', label: 'Newsletter', icon: Mail },
+  { path: '/admin/shop', label: 'Shop', icon: ShoppingBag },
 ];
 
 export default function AdminShell() {
@@ -23,7 +24,7 @@ export default function AdminShell() {
           <button onClick={() => navigate('/dashboard')} className="p-1 -ml-1 rounded-lg hover:bg-white/10 transition-colors">
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <h1 className="text-lg font-bold tracking-tight">⚙️ Admin</h1>
+          <h1 className="text-lg font-bold tracking-tight">Admin</h1>
           <div className="ml-auto"><GlobalMenu /></div>
         </header>
 

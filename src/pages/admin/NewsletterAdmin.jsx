@@ -1,12 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Search, Download, Send, Loader2, Mail, Users, Filter, X, Calendar } from 'lucide-react';
+import { Search, Download, Send, Loader2, Mail, Users, Filter, X, Calendar, LayoutTemplate } from 'lucide-react';
+import NewsletterBuilder from '@/components/admin/NewsletterBuilder';
 
 const INTEREST_FILTERS = [
   'ferry', 'weather', 'restaurants', 'live_music', 'kids_activities',
   'fishing', 'golf', 'nature', 'wildlife', 'turtle_season',
   'events', 'community', 'emergency', 'shopping', 'lodging_deals',
+  'holiday_outfits', 'family_activities',
 ];
 
 const METHOD_FILTERS = [
@@ -21,6 +23,7 @@ export default function NewsletterAdmin() {
   const [interestFilter, setInterestFilter] = useState('');
   const [methodFilter, setMethodFilter] = useState('');
   const [showComposer, setShowComposer] = useState(false);
+  const [showBuilder, setShowBuilder] = useState(false);
   const [draft, setDraft] = useState({ subject: '', body: '' });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -133,8 +136,14 @@ export default function NewsletterAdmin() {
           <Download className="w-4 h-4" /> Export CSV
         </button>
         <button
-          onClick={() => setShowComposer(true)}
+          onClick={() => setShowBuilder(true)}
           className="flex-1 flex items-center justify-center gap-2 h-10 rounded-lg bg-accent text-white text-sm font-medium hover:bg-accent/90 transition-colors"
+        >
+          <LayoutTemplate className="w-4 h-4" /> Build
+        </button>
+        <button
+          onClick={() => setShowComposer(true)}
+          className="flex-1 flex items-center justify-center gap-2 h-10 rounded-lg border border-border bg-card text-sm font-medium text-foreground hover:bg-sand/40 transition-colors"
         >
           <Send className="w-4 h-4" /> Compose
         </button>
@@ -227,6 +236,11 @@ export default function NewsletterAdmin() {
             </div>
           ))}
         </div>
+      )}
+
+      {/* Newsletter Builder */}
+      {showBuilder && (
+        <NewsletterBuilder subscribers={filtered} onClose={() => setShowBuilder(false)} />
       )}
 
       {/* Composer Modal */}

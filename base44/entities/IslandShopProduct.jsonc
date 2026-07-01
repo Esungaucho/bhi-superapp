@@ -1,0 +1,93 @@
+{
+  "name": "IslandShopProduct",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Product name"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Product image URL"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "apparel",
+        "accessories",
+        "beach_gear",
+        "toys",
+        "swimwear",
+        "home",
+        "gifts",
+        "golf",
+        "rain_gear",
+        "baby",
+        "outdoor"
+      ],
+      "default": "apparel",
+      "description": "Product category"
+    },
+    "collection": {
+      "type": "string",
+      "enum": [
+        "fourth_of_july_outfits",
+        "easter_church_outfits",
+        "beach_day_essentials",
+        "kids_beach_toys",
+        "bathing_suits",
+        "family_photo_shoot_outfits",
+        "golf_cart_essentials",
+        "rainy_day_items",
+        "turtle_walk_essentials",
+        "holiday_weekend_essentials",
+        "baby_toddler_travel",
+        "gifts_local_favorites"
+      ],
+      "description": "Curated collection"
+    },
+    "description": {
+      "type": "string",
+      "description": "Product description"
+    },
+    "price_range": {
+      "type": "string",
+      "description": "e.g. $25-$50"
+    },
+    "affiliate_link": {
+      "type": "string",
+      "description": "Affiliate URL \u2014 opens in new tab"
+    },
+    "retailer_name": {
+      "type": "string",
+      "description": "Retailer or brand name"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Product tags"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured in the app"
+    },
+    "is_seasonal": {
+      "type": "boolean",
+      "default": false,
+      "description": "Seasonal product"
+    },
+    "is_featured_in_newsletter": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured in newsletter"
+    }
+  },
+  "required": [
+    "name",
+    "collection",
+    "affiliate_link"
+  ]
+}

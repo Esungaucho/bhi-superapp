@@ -3,6 +3,7 @@ import {
   Ship, CloudSun, UtensilsCrossed, Music, Puzzle,
   Fish, Flag, Circle, Leaf, Feather, Shell,
   CalendarDays, Users, Siren, ShoppingBag, BedDouble,
+  Shirt, Baby, Gift,
 } from 'lucide-react';
 
 export const USER_TIERS = [
@@ -30,7 +31,9 @@ export const INTEREST_OPTIONS = [
   { id: 'events', label: 'Events', Icon: CalendarDays },
   { id: 'community', label: 'Community Updates', Icon: Users },
   { id: 'emergency', label: 'Emergency Alerts', Icon: Siren },
-  { id: 'shopping', label: 'Shopping', Icon: ShoppingBag },
+  { id: 'shopping', label: 'Shopping Guides', Icon: ShoppingBag },
+  { id: 'holiday_outfits', label: 'Holiday Outfit Guides', Icon: Shirt },
+  { id: 'family_activities', label: 'Family Activity Ideas', Icon: Puzzle },
   { id: 'lodging_deals', label: 'Lodging Deals', Icon: BedDouble },
 ];
 

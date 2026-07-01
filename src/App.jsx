@@ -40,6 +40,7 @@ import IslandMap from '@/pages/IslandMap';
 import DashboardShell from '@/components/dashboard/DashboardShell';
 import Dashboard from '@/pages/Dashboard';
 import Discovery from '@/pages/Discovery';
+import IslandShop from '@/pages/IslandShop';
 import BookExperiences from '@/pages/BookExperiences';
 import MyIsland from '@/pages/MyIsland';
 import Settings from '@/pages/Settings';
@@ -67,6 +68,7 @@ import SavedEvents from '@/pages/calendar/SavedEvents';
 import CalendarPreferences from '@/pages/calendar/CalendarPreferences';
 import EventManagement from '@/pages/admin/EventManagement';
 import NewsletterAdmin from '@/pages/admin/NewsletterAdmin';
+import IslandShopAdmin from '@/pages/admin/IslandShopAdmin';
 import CaptainShell from '@/components/captain/CaptainShell';
 import CaptainDashboard from '@/pages/CaptainDashboard';
 import SavedCaptains from '@/pages/SavedCaptains';
@@ -100,6 +102,7 @@ const AuthenticatedApp = () => {
       <Route element={<DashboardShell />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/discovery" element={<Discovery />} />
+        <Route path="/island-shop" element={<IslandShop />} />
         <Route path="/experiences" element={<BookExperiences />} />
         <Route path="/my-island" element={<MyIsland />} />
         <Route path="/settings" element={<Settings />} />
@@ -157,6 +160,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/community" element={<CommunityModeration />} />
         <Route path="/admin/events" element={<EventManagement />} />
         <Route path="/admin/newsletter" element={<NewsletterAdmin />} />
+        <Route path="/admin/shop" element={<IslandShopAdmin />} />
       </Route>
       <Route element={<CommunityShell />}>
         <Route path="/community" element={<CommunityFeed />} />
