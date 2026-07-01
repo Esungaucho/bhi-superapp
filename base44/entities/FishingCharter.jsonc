@@ -1,0 +1,124 @@
+{
+  "name": "FishingCharter",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Charter or trip name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Full description of the trip"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "inshore_charter",
+        "offshore_charter",
+        "family_fishing_trip",
+        "sunset_cruise",
+        "eco_tour",
+        "private_boat_rental",
+        "sailboat_charter"
+      ],
+      "description": "Type of fishing/boating experience"
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Photo gallery URLs"
+    },
+    "captain_name": {
+      "type": "string",
+      "description": "Captain's name"
+    },
+    "captain_bio": {
+      "type": "string",
+      "description": "Short captain profile"
+    },
+    "captain_photo_url": {
+      "type": "string",
+      "description": "Captain profile photo"
+    },
+    "trip_length_hours": {
+      "type": "number",
+      "description": "Trip duration in hours"
+    },
+    "target_fish_seasonal": {
+      "type": "string",
+      "description": "Target fish by season e.g. Spring: Spanish mackerel; Summer: Flounder, Red drum; Fall: King mackerel"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": [
+        "beginner",
+        "family",
+        "experienced"
+      ],
+      "default": "beginner",
+      "description": "Experience level required"
+    },
+    "price_range": {
+      "type": "string",
+      "enum": [
+        "$",
+        "$$",
+        "$$$"
+      ],
+      "default": "$$"
+    },
+    "price_from": {
+      "type": "number",
+      "description": "Starting price in USD"
+    },
+    "max_passengers": {
+      "type": "number",
+      "default": 6
+    },
+    "location_name": {
+      "type": "string",
+      "description": "Departure location"
+    },
+    "lat": {
+      "type": "number"
+    },
+    "lng": {
+      "type": "number"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Average rating 1-5"
+    },
+    "review_count": {
+      "type": "number",
+      "default": 0
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "contact_phone": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_available": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "category",
+    "difficulty"
+  ]
+}

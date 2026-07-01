@@ -3,10 +3,11 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Map as MapIcon, Anchor } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { getTriggeredAds } from '@/components/weather/ContextualAd';
+import FishingBoating from '@/components/charter/FishingBoating';
 
 const BHI_CENTER = [33.8626, -77.9858];
 
@@ -34,6 +35,7 @@ function makeIcon(emoji, sponsored = false) {
 export default function IslandMap() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedPin, setSelectedPin] = useState(null);
+  const [view, setView] = useState('map');
 
   const { data: pins = [], isLoading: loadingPins } = useQuery({
     queryKey: ['businessPins'],
@@ -56,10 +58,21 @@ export default function IslandMap() {
     [pins, activeCategory]
   );
 
+  if (view === 'fishing') {
+    return (
+      <div className="flex flex-col h-screen">
+        <ViewToggle view={view} setView={setView} />
+        <FishingBoating />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-screen">
+      <ViewToggle view={view} setView={setView} />
+
       {/* Category filter */}
-      <div className="bg-primary px-4 py-3">
+      <div className="bg-primary px-4 py-2.5">
         <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
           {ALL_CATEGORIES.map(cat => {
             const meta = CATEGORY_META[cat];
@@ -141,6 +154,25 @@ export default function IslandMap() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function ViewToggle({ view, setView }) {
+  return (
+    <div className="bg-navy px-4 py-2 flex gap-1.5">
+      <button
+        onClick={() => setView('map')}
+        className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${view === 'map' ? 'bg-white text-primary' : 'bg-white/10 text-white/70'}`}
+      >
+        <MapIcon className="w-3.5 h-3.5" /> Island Map
+      </button>
+      <button
+        onClick={() => setView('fishing')}
+        className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${view === 'fishing' ? 'bg-white text-primary' : 'bg-white/10 text-white/70'}`}
+      >
+        <Anchor className="w-3.5 h-3.5" /> Fishing & Boating
+      </button>
     </div>
   );
 }
