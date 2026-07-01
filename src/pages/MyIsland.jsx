@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useUserAccess } from '@/hooks/useUserAccess';
-import { Calendar, Bell, Settings, Bookmark, Anchor, Shield, ChevronRight, LogOut } from 'lucide-react';
+import { Calendar, Bell, Settings, Bookmark, Anchor, Shield, ChevronRight, LogOut, User } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const TIER_LABELS = {
@@ -62,6 +62,7 @@ export default function MyIsland() {
         <MenuItem to="/bookings" Icon={Calendar} label="My Bookings" desc="Ferry, lodging & rentals" />
         <MenuItem to="/saved" Icon={Bookmark} label="Saved" desc="Events & favorite captains" />
         <MenuItem to="/notifications" Icon={Bell} label="Notifications" desc="Alerts & updates" />
+        <MenuItem to="/profile" Icon={User} label="Edit Profile" desc="Name, photo & interests" />
         <MenuItem to="/settings" Icon={Settings} label="Settings" desc="Preferences & account" />
       </div>
 

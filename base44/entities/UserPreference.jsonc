@@ -17,6 +17,50 @@
       },
       "description": "List of interest IDs the user wants notifications for"
     },
+    "comm_push": {
+      "type": "boolean",
+      "default": true,
+      "description": "Receive push notifications"
+    },
+    "comm_email": {
+      "type": "boolean",
+      "default": true,
+      "description": "Receive email notifications"
+    },
+    "comm_sms": {
+      "type": "boolean",
+      "default": false,
+      "description": "Receive SMS/text notifications"
+    },
+    "newsletter_subscribed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Subscribed to weekly BHI Island Newsletter"
+    },
+    "notification_frequency": {
+      "type": "string",
+      "enum": [
+        "immediate",
+        "daily_summary",
+        "weekly_summary",
+        "emergency_only"
+      ],
+      "default": "immediate",
+      "description": "How often to receive non-emergency notifications"
+    },
+    "dnd_enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable Do Not Disturb hours"
+    },
+    "dnd_start": {
+      "type": "string",
+      "description": "DND start time HH:MM"
+    },
+    "dnd_end": {
+      "type": "string",
+      "description": "DND end time HH:MM"
+    },
     "notification_time_offset": {
       "type": "number",
       "default": 30,

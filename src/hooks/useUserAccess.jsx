@@ -28,8 +28,8 @@ export function useUserAccess() {
     isAdmin,
     isCaptain,
     isBusiness,
-    showCaptainHub: isCaptain || isAdmin,
-    showBusiness: isBusiness || isAdmin,
+    showCaptainHub: isCaptain || user?.tier === 'captain' || isAdmin,
+    showBusiness: isBusiness || user?.tier === 'business_owner' || isAdmin,
     showAdmin: isAdmin,
   };
 }

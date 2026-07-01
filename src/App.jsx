@@ -13,7 +13,10 @@ import FerryETA from '@/pages/FerryETA';
 import BookFerry from '@/pages/BookFerry';
 import FerryParking from '@/pages/FerryParking';
 import MyBookings from '@/pages/MyBookings';
-import TierSelect from '@/pages/onboarding/TierSelect';
+import OnboardingWizard from '@/pages/onboarding/OnboardingWizard';
+import EditProfile from '@/pages/EditProfile';
+import CommunicationSettings from '@/pages/CommunicationSettings';
+import Privacy from '@/pages/Privacy';
 import FerryRouteDetail from '@/pages/FerryRouteDetail';
 import LodgingShell from '@/components/lodging/LodgingShell';
 import LodgingSearch from '@/pages/LodgingSearch';
@@ -99,12 +102,15 @@ const AuthenticatedApp = () => {
         <Route path="/experiences" element={<BookExperiences />} />
         <Route path="/my-island" element={<MyIsland />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/profile" element={<EditProfile />} />
+        <Route path="/communication" element={<CommunicationSettings />} />
+        <Route path="/privacy" element={<Privacy />} />
         <Route path="/saved" element={<Saved />} />
         <Route path="/search" element={<UniversalSearch />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/bookings" element={<AllBookings />} />
       </Route>
-      <Route path="/onboarding/tier-select" element={<TierSelect />} />
+      <Route path="/onboarding" element={<OnboardingWizard />} />
       <Route path="/ferry/route/:routeId" element={<FerryRouteDetail />} />
       <Route element={<AppShell />}>
         <Route path="/ferry" element={<FerrySchedule />} />

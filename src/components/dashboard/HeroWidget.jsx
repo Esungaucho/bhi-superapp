@@ -8,8 +8,10 @@ const HERO_IMAGE = 'https://media.base44.com/images/public/69c9efaf81beb7831e6e5
 export default function HeroWidget({ upcomingBooking, user }) {
   const tierGreeting = {
     resident: 'Welcome home',
-    owner: 'Welcome back',
-    business: 'Good to see you',
+    homeowner: 'Welcome back',
+    business_owner: 'Good to see you',
+    captain: 'Welcome aboard',
+    employee: 'Good to see you',
     visitor: 'Welcome to Bald Head',
   };
 

@@ -21,16 +21,22 @@
     "tier": {
       "type": "string",
       "enum": [
-        "short_term_guest",
-        "long_term_renter",
+        "resident",
         "homeowner",
-        "contractor"
+        "visitor",
+        "business_owner",
+        "captain",
+        "employee"
       ],
-      "description": "User's membership tier"
+      "description": "User's membership tier on Bald Head Island"
     },
     "avatar": {
       "type": "string",
       "description": "Avatar image URL"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
     },
     "onboarding_complete": {
       "type": "boolean",
