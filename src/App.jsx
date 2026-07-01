@@ -41,6 +41,10 @@ import DashboardShell from '@/components/dashboard/DashboardShell';
 import Dashboard from '@/pages/Dashboard';
 import Discovery from '@/pages/Discovery';
 import IslandShop from '@/pages/IslandShop';
+import BirdieConcierge from '@/pages/BirdieConcierge';
+import BirdieNewRequest from '@/pages/BirdieNewRequest';
+import BirdieRequestDetail from '@/pages/BirdieRequestDetail';
+import BirdieShoppers from '@/pages/BirdieShoppers';
 import BookExperiences from '@/pages/BookExperiences';
 import MyIsland from '@/pages/MyIsland';
 import Settings from '@/pages/Settings';
@@ -69,6 +73,7 @@ import CalendarPreferences from '@/pages/calendar/CalendarPreferences';
 import EventManagement from '@/pages/admin/EventManagement';
 import NewsletterAdmin from '@/pages/admin/NewsletterAdmin';
 import IslandShopAdmin from '@/pages/admin/IslandShopAdmin';
+import BirdieAdmin from '@/pages/admin/BirdieAdmin';
 import CaptainShell from '@/components/captain/CaptainShell';
 import CaptainDashboard from '@/pages/CaptainDashboard';
 import SavedCaptains from '@/pages/SavedCaptains';
@@ -103,6 +108,10 @@ const AuthenticatedApp = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/discovery" element={<Discovery />} />
         <Route path="/island-shop" element={<IslandShop />} />
+        <Route path="/birdie" element={<BirdieConcierge />} />
+        <Route path="/birdie/new" element={<BirdieNewRequest />} />
+        <Route path="/birdie/request/:id" element={<BirdieRequestDetail />} />
+        <Route path="/birdie/shoppers" element={<BirdieShoppers />} />
         <Route path="/experiences" element={<BookExperiences />} />
         <Route path="/my-island" element={<MyIsland />} />
         <Route path="/settings" element={<Settings />} />
@@ -161,6 +170,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/events" element={<EventManagement />} />
         <Route path="/admin/newsletter" element={<NewsletterAdmin />} />
         <Route path="/admin/shop" element={<IslandShopAdmin />} />
+        <Route path="/admin/birdie" element={<BirdieAdmin />} />
       </Route>
       <Route element={<CommunityShell />}>
         <Route path="/community" element={<CommunityFeed />} />

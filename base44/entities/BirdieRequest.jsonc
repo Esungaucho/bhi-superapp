@@ -1,0 +1,173 @@
+{
+  "name": "BirdieRequest",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Requesting user email"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "Requesting user name"
+    },
+    "user_phone": {
+      "type": "string",
+      "description": "Contact phone for delivery"
+    },
+    "item_description": {
+      "type": "string",
+      "description": "What the user wants purchased"
+    },
+    "category": {
+      "type": "string",
+      "description": "Shopping category ID"
+    },
+    "quantity": {
+      "type": "number",
+      "default": 1
+    },
+    "brand_preference": {
+      "type": "string",
+      "description": "Preferred brand or specific details"
+    },
+    "selected_store": {
+      "type": "string",
+      "description": "Store name the user selected"
+    },
+    "store_address": {
+      "type": "string",
+      "description": "Selected store address"
+    },
+    "store_distance_miles": {
+      "type": "number",
+      "description": "Distance from ferry terminal"
+    },
+    "delivery_option": {
+      "type": "string",
+      "enum": [
+        "ferry_terminal",
+        "tram",
+        "home_delivery"
+      ],
+      "description": "Delivery method on the island"
+    },
+    "delivery_address": {
+      "type": "string",
+      "description": "Island delivery address if home delivery"
+    },
+    "schedule_type": {
+      "type": "string",
+      "enum": [
+        "asap",
+        "later_today",
+        "tomorrow",
+        "specific_date"
+      ],
+      "default": "asap"
+    },
+    "scheduled_for": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the user wants delivery"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "request_received",
+        "shopper_assigned",
+        "shopping",
+        "heading_to_ferry",
+        "checked_in_at_ferry",
+        "loaded_on_ferry",
+        "arrived_on_island",
+        "placed_in_tram",
+        "delivered",
+        "cancelled"
+      ],
+      "default": "request_received",
+      "description": "Current tracking status"
+    },
+    "shopper_id": {
+      "type": "string",
+      "description": "Assigned BirdieShopper ID"
+    },
+    "shopper_name": {
+      "type": "string",
+      "description": "Shopper name snapshot"
+    },
+    "merchandise_cost": {
+      "type": "number",
+      "description": "Estimated merchandise cost"
+    },
+    "shopping_fee": {
+      "type": "number",
+      "default": 15
+    },
+    "mileage_fee": {
+      "type": "number",
+      "default": 0
+    },
+    "ferry_fee": {
+      "type": "number",
+      "default": 23
+    },
+    "service_fee": {
+      "type": "number",
+      "default": 5
+    },
+    "delivery_fee": {
+      "type": "number",
+      "default": 0
+    },
+    "tip": {
+      "type": "number",
+      "default": 0
+    },
+    "total_cost": {
+      "type": "number",
+      "description": "Total estimated cost"
+    },
+    "tram_number": {
+      "type": "string",
+      "description": "Island tram number"
+    },
+    "tram_compartment": {
+      "type": "string",
+      "description": "Tram compartment or box number"
+    },
+    "tram_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When placed on tram"
+    },
+    "tram_photo_url": {
+      "type": "string",
+      "description": "Photo of package on tram"
+    },
+    "estimated_arrival": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Estimated delivery time"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Special instructions"
+    },
+    "store_options": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Other store options considered"
+    },
+    "admin_notes": {
+      "type": "string",
+      "description": "Admin resolution notes"
+    }
+  },
+  "required": [
+    "user_email",
+    "item_description",
+    "delivery_option"
+  ]
+}

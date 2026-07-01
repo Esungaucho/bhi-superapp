@@ -1,0 +1,41 @@
+{
+  "name": "BirdieTrackingEvent",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Linked BirdieRequest ID"
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "request_received",
+        "shopper_assigned",
+        "shopping",
+        "heading_to_ferry",
+        "checked_in_at_ferry",
+        "loaded_on_ferry",
+        "arrived_on_island",
+        "placed_in_tram",
+        "delivered"
+      ],
+      "description": "Tracking stage"
+    },
+    "note": {
+      "type": "string",
+      "description": "Optional detail message"
+    },
+    "photo_url": {
+      "type": "string",
+      "description": "Optional photo attachment"
+    },
+    "actor": {
+      "type": "string",
+      "description": "Who triggered this event: system, shopper, admin"
+    }
+  },
+  "required": [
+    "request_id",
+    "stage"
+  ]
+}

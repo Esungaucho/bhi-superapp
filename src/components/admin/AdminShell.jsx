@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck, CalendarDays, Mail, ShoppingBag } from 'lucide-react';
+import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck, CalendarDays, Mail, ShoppingBag, Bird } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
 
 const NAV = [
@@ -11,6 +11,7 @@ const NAV = [
   { path: '/admin/events', label: 'Events', icon: CalendarDays },
   { path: '/admin/newsletter', label: 'Newsletter', icon: Mail },
   { path: '/admin/shop', label: 'Shop', icon: ShoppingBag },
+  { path: '/admin/birdie', label: 'Birdie', icon: Bird },
 ];
 
 export default function AdminShell() {
