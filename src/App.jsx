@@ -83,6 +83,12 @@ import ConciergeAdmin from '@/pages/admin/ConciergeAdmin';
 import CaptainShell from '@/components/captain/CaptainShell';
 import CaptainDashboard from '@/pages/CaptainDashboard';
 import SavedCaptains from '@/pages/SavedCaptains';
+import ThankYou from '@/pages/ThankYou';
+import Babysitting from '@/pages/Babysitting';
+import SitterProfile from '@/pages/SitterProfile';
+import BabysittingBookingDetail from '@/pages/BabysittingBookingDetail';
+import BabysittingMessage from '@/pages/BabysittingMessage';
+import BabysittingAdmin from '@/pages/admin/BabysittingAdmin';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -123,6 +129,10 @@ const AuthenticatedApp = () => {
         <Route path="/concierge/track/:id" element={<ConciergeTrack />} />
         <Route path="/concierge/providers" element={<ConciergeProviders />} />
         <Route path="/concierge/dashboard" element={<ConciergeProviderDashboard />} />
+        <Route path="/babysitting" element={<Babysitting />} />
+        <Route path="/babysitting/sitter/:id" element={<SitterProfile />} />
+        <Route path="/babysitting/booking/:id" element={<BabysittingBookingDetail />} />
+        <Route path="/babysitting/message/:sitterId" element={<BabysittingMessage />} />
         <Route path="/experiences" element={<BookExperiences />} />
         <Route path="/my-island" element={<MyIsland />} />
         <Route path="/settings" element={<Settings />} />
@@ -134,6 +144,7 @@ const AuthenticatedApp = () => {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/bookings" element={<AllBookings />} />
       </Route>
+      <Route path="/thank-you" element={<ThankYou />} />
       <Route path="/onboarding" element={<OnboardingWizard />} />
       <Route path="/ferry/route/:routeId" element={<FerryRouteDetail />} />
       <Route element={<AppShell />}>
@@ -183,6 +194,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/shop" element={<IslandShopAdmin />} />
         <Route path="/admin/birdie" element={<BirdieAdmin />} />
         <Route path="/admin/concierge" element={<ConciergeAdmin />} />
+        <Route path="/admin/babysitting" element={<BabysittingAdmin />} />
       </Route>
       <Route element={<CommunityShell />}>
         <Route path="/community" element={<CommunityFeed />} />
