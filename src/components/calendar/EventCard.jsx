@@ -18,8 +18,9 @@ export default function EventCard({ event, isSaved, onToggleSave }) {
         )}
         <div className="p-3.5">
           <div className="flex items-center gap-1.5 mb-1.5">
-            <span className="bg-accent/10 rounded-full px-2.5 py-0.5 text-[10px] font-semibold text-accent">
-              {cat.emoji} {cat.label}
+            <span className="inline-flex items-center gap-1 bg-ocean/8 rounded-full px-2.5 py-0.5 text-[10px] font-medium text-ocean">
+              {cat.Icon && <cat.Icon className="w-3 h-3" strokeWidth={1.5} />}
+              {cat.label}
             </span>
             {event.is_featured && <Star className="w-3 h-3 text-amber-400 fill-amber-400" />}
           </div>

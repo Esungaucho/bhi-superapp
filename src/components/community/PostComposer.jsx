@@ -109,7 +109,7 @@ export default function PostComposer() {
                   onClick={() => setCategory(c.id)}
                   className={`flex-shrink-0 text-[11px] font-medium px-2.5 py-1 rounded-full border transition-colors ${category === c.id ? 'bg-accent text-accent-foreground border-accent' : 'bg-card text-muted-foreground border-border'}`}
                 >
-                  {c.emoji} {c.label}
+                  <c.Icon className="w-3 h-3" strokeWidth={1.5} /> {c.label}
                 </button>
               ))}
             </div>

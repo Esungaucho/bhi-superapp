@@ -3,7 +3,7 @@ import { Calendar, ChevronLeft, ChevronRight, Fish, Clock, Worm, Scale, Info, An
 import { FISHING_GUIDE } from '@/lib/fishingGuide';
 import LocalCaptains from './LocalCaptains';
 
-const MONTHS = FISHING_GUIDE.map(g => ({ month: g.month, label: g.label, emoji: g.emoji }));
+const MONTHS = FISHING_GUIDE.map(g => ({ month: g.month, label: g.label }));
 
 export default function SeasonalFishingGuide() {
   const currentMonth = new Date().getMonth();
@@ -55,7 +55,7 @@ export default function SeasonalFishingGuide() {
             <ChevronLeft className="w-4 h-4" />
           </button>
           <div className="flex items-center gap-2">
-            <span className="text-2xl">{guide.emoji}</span>
+            <Calendar className="w-5 h-5 text-ocean" strokeWidth={1.5} />
             <span className="font-heading text-lg text-foreground">{guide.label}</span>
           </div>
           <button
@@ -78,8 +78,7 @@ export default function SeasonalFishingGuide() {
                   : 'bg-card text-muted-foreground border-border'
               }`}
             >
-              <span className="text-sm">{m.emoji}</span>
-              <span className="text-[9px] font-medium mt-0.5">{m.label.slice(0, 3)}</span>
+              <span className="text-[10px] font-medium tracking-wide">{m.label.slice(0, 3)}</span>
             </button>
           ))}
         </div>
@@ -99,8 +98,8 @@ export default function SeasonalFishingGuide() {
           <div key={idx} className="bg-card rounded-2xl border border-border overflow-hidden">
             {/* Fish header */}
             <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-sea-glass/10 to-transparent">
-              <div className="w-10 h-10 rounded-full bg-accent/15 flex items-center justify-center text-xl flex-shrink-0">
-                {fish.icon}
+              <div className="w-10 h-10 rounded-full bg-ocean/8 flex items-center justify-center flex-shrink-0">
+                <Fish className="w-5 h-5 text-ocean" strokeWidth={1.5} />
               </div>
               <h3 className="text-sm font-semibold text-foreground">{fish.name}</h3>
             </div>

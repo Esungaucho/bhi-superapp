@@ -4,13 +4,13 @@ import { Search } from 'lucide-react';
 
 export default function SearchBar() {
   return (
-    <div className="px-4 -mt-6 relative z-10">
+    <div className="px-5 -mt-7 relative z-10">
       <Link
         to="/search"
-        className="flex items-center gap-3 bg-card border border-border/50 rounded-2xl px-4 py-3.5 shadow-[0_8px_30px_-12px_rgba(31,45,61,0.25)] hover:shadow-[0_12px_36px_-12px_rgba(31,45,61,0.3)] transition-shadow"
+        className="flex items-center gap-3 bg-card border border-border/40 rounded-2xl px-5 py-4 shadow-luxe hover:shadow-luxe-lg transition-all duration-300"
       >
-        <Search className="w-5 h-5 text-muted-foreground flex-shrink-0" strokeWidth={1.5} />
-        <span className="text-sm text-muted-foreground font-body">Search the island…</span>
+        <Search className="w-[18px] h-[18px] text-muted-foreground/60 flex-shrink-0" strokeWidth={1.5} />
+        <span className="text-sm text-muted-foreground/50 font-body">Search the island…</span>
       </Link>
     </div>
   );

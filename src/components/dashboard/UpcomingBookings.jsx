@@ -4,28 +4,28 @@ import { format } from 'date-fns';
 import { Ship, Home, Bike, ArrowRight } from 'lucide-react';
 
 const STATUS_STYLE = {
-  confirmed: 'text-sea-glass-deep bg-sea-glass/10',
-  active: 'text-sea-glass-deep bg-sea-glass/10',
-  pending: 'text-driftwood bg-driftwood/10',
+  confirmed: 'text-success bg-success/8',
+  active: 'text-success bg-success/8',
+  pending: 'text-warning bg-warning/8',
 };
 
 function BookingRow({ Icon, label, date, status, linkTo }) {
   return (
     <Link
       to={linkTo}
-      className="group flex items-center gap-4 py-3.5 border-b border-border/60 last:border-0 hover:bg-sand/40 transition-colors rounded-lg px-2 -mx-2"
+      className="group flex items-center gap-4 py-4 border-b border-border/30 last:border-0 hover:bg-sand/30 transition-colors rounded-xl px-2 -mx-2"
     >
-      <span className="flex items-center justify-center w-9 h-9 rounded-full bg-sand text-navy flex-shrink-0">
+      <span className="flex items-center justify-center w-9 h-9 rounded-full bg-sand text-ocean flex-shrink-0">
         <Icon className="w-4 h-4" strokeWidth={1.5} />
       </span>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-body font-medium text-foreground truncate">{label}</p>
         <p className="text-xs font-body text-muted-foreground mt-0.5">{date}</p>
       </div>
-      <span className={`text-[10px] font-body font-medium tracking-luxe-sm uppercase px-2.5 py-1 rounded-full ${STATUS_STYLE[status] || STATUS_STYLE.confirmed}`}>
+      <span className={`text-[9px] font-body font-medium tracking-luxe-sm uppercase px-2.5 py-1 rounded-full ${STATUS_STYLE[status] || STATUS_STYLE.confirmed}`}>
         {status}
       </span>
-      <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-foreground group-hover:translate-x-0.5 transition-all" strokeWidth={1.5} />
+      <ArrowRight className="w-3.5 h-3.5 text-muted-foreground/40 group-hover:text-foreground group-hover:translate-x-0.5 transition-all" strokeWidth={1.5} />
     </Link>
   );
 }
@@ -71,14 +71,14 @@ export default function UpcomingBookings({ ferryBookings, lodgingBookings, renta
   if (upcoming.length === 0) return null;
 
   return (
-    <section className="px-4 mt-8">
+    <section className="px-5 mt-9">
       <div className="flex items-baseline justify-between mb-4">
         <h2 className="font-heading text-xl text-foreground">Your upcoming journeys</h2>
-        <Link to="/bookings" className="text-xs font-body text-sea-glass-deep hover:text-sea-glass transition-colors tracking-luxe-sm uppercase">
+        <Link to="/bookings" className="text-[11px] font-body text-ocean hover:text-ocean-deep transition-colors tracking-luxe-xs uppercase">
           View all
         </Link>
       </div>
-      <div className="bg-card border border-border/70 rounded-2xl px-4 py-1 shadow-[0_4px_16px_-12px_rgba(31,45,61,0.18)]">
+      <div className="bg-card border border-border/30 rounded-2xl px-4 py-1 shadow-luxe-sm">
         {upcoming.map((item, i) => (
           <BookingRow key={i} {...item} />
         ))}

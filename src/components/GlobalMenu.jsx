@@ -26,42 +26,40 @@ export default function GlobalMenu() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="p-1.5 rounded-lg hover:bg-foreground/10 transition-colors"
+        className="p-2 rounded-full hover:bg-foreground/5 transition-colors"
         aria-label="Open menu"
       >
-        <Menu className="w-5 h-5" />
+        <Menu className="w-[18px] h-[18px]" strokeWidth={1.5} />
       </button>
 
-      {/* Overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-black/50 z-[100] backdrop-blur-sm"
+          className="fixed inset-0 bg-black/40 z-[100] backdrop-blur-sm"
           onClick={() => setOpen(false)}
         />
       )}
 
-      {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-72 bg-card shadow-2xl z-[101] transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-full w-80 bg-card shadow-luxe-lg z-[101] transition-transform duration-300 ease-out ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex items-center justify-between px-5 py-4 bg-primary text-primary-foreground">
-          <span className="font-heading text-sm tracking-luxe-sm">Bald Head Island</span>
-          <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-white/10 transition-colors">
-            <X className="w-5 h-5" />
+        <div className="flex items-center justify-between px-7 h-16 border-b border-border/30">
+          <span className="font-heading text-sm tracking-luxe-sm text-foreground">Bald Head Island</span>
+          <button onClick={() => setOpen(false)} className="p-1.5 rounded-full hover:bg-sand/50 transition-colors">
+            <X className="w-[18px] h-[18px] text-muted-foreground" strokeWidth={1.5} />
           </button>
         </div>
 
-        <nav className="py-2 overflow-y-auto h-[calc(100%-60px)]">
+        <nav className="py-3 overflow-y-auto h-[calc(100%-65px)]">
           {allSections.map(({ label, path, Icon }) => (
             <Link
               key={path}
               to={path}
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-foreground hover:bg-secondary transition-colors border-b border-border/40 last:border-0"
+              className="flex items-center gap-4 px-7 py-4 text-sm font-medium text-foreground hover:bg-sand/40 transition-colors"
             >
-              <Icon className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
+              <Icon className="w-[18px] h-[18px] text-muted-foreground" strokeWidth={1.5} />
               {label}
             </Link>
           ))}

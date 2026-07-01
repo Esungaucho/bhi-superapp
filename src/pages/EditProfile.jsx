@@ -155,16 +155,16 @@ export default function EditProfile() {
       <div className="mb-6">
         <label className="text-[11px] font-medium tracking-luxe-sm uppercase text-muted-foreground mb-2 block">I am a…</label>
         <div className="grid grid-cols-2 gap-2.5">
-          {USER_TIERS.map(t => (
+          {USER_TIERS.map(({ value, Icon, label }) => (
             <button
-              key={t.value}
-              onClick={() => setTier(t.value)}
+              key={value}
+              onClick={() => setTier(value)}
               className={`flex items-center gap-2.5 rounded-xl border p-3 text-left transition-all ${
-                tier === t.value ? 'border-accent bg-accent/10 ring-1 ring-accent/30' : 'border-border bg-card'
+                tier === value ? 'border-ocean bg-ocean/5 ring-1 ring-ocean/20' : 'border-border bg-card'
               }`}
             >
-              <span className="text-lg">{t.emoji}</span>
-              <span className="text-xs font-medium text-foreground">{t.label}</span>
+              <Icon className="w-5 h-5 text-foreground/60" strokeWidth={1.5} />
+              <span className="text-xs font-medium text-foreground">{label}</span>
             </button>
           ))}
         </div>
@@ -174,15 +174,15 @@ export default function EditProfile() {
       <div className="mb-8">
         <label className="text-[11px] font-medium tracking-luxe-sm uppercase text-muted-foreground mb-2 block">Favorite Activities & Interests</label>
         <div className="grid grid-cols-2 gap-2">
-          {INTEREST_OPTIONS.map(({ id, label, emoji }) => (
+          {INTEREST_OPTIONS.map(({ id, label, Icon }) => (
             <button
               key={id}
               onClick={() => toggleInterest(id)}
               className={`flex items-center gap-2 rounded-lg border p-2.5 text-left transition-all ${
-                interests.includes(id) ? 'border-accent bg-accent/10' : 'border-border bg-card'
+                interests.includes(id) ? 'border-ocean bg-ocean/5' : 'border-border bg-card'
               }`}
             >
-              <span className="text-sm">{emoji}</span>
+              <Icon className="w-[18px] h-[18px] text-foreground/60" strokeWidth={1.5} />
               <span className="text-[11px] font-medium text-foreground">{label}</span>
             </button>
           ))}

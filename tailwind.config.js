@@ -48,6 +48,14 @@ module.exports = {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
+        success: {
+          DEFAULT: 'hsl(var(--success))',
+          foreground: 'hsl(var(--success-foreground))'
+        },
+        warning: {
+          DEFAULT: 'hsl(var(--warning))',
+          foreground: 'hsl(var(--warning-foreground))'
+        },
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
@@ -59,6 +67,10 @@ module.exports = {
           DEFAULT: 'hsl(var(--sea-glass))',
           deep: 'hsl(var(--sea-glass-deep))'
         },
+        ocean: {
+          DEFAULT: 'hsl(var(--ocean))',
+          deep: 'hsl(var(--ocean-deep))'
+        },
         navy: {
           DEFAULT: 'hsl(var(--navy))',
           deep: 'hsl(var(--navy-deep))'
@@ -67,6 +79,8 @@ module.exports = {
           DEFAULT: 'hsl(var(--driftwood))',
           light: 'hsl(var(--driftwood-light))'
         },
+        charcoal: 'hsl(var(--charcoal))',
+        'warm-gray': 'hsl(var(--warm-gray))',
   			chart: {
   				'1': 'hsl(var(--chart-1))',
   				'2': 'hsl(var(--chart-2))',
@@ -95,14 +109,23 @@ module.exports = {
   				to: { height: '0' }
   			},
         'fade-in': {
-          from: { opacity: '0', transform: 'translateY(8px)' },
+          from: { opacity: '0' },
+          to: { opacity: '1' }
+        },
+        'fade-up': {
+          from: { opacity: '0', transform: 'translateY(12px)' },
           to: { opacity: '1', transform: 'translateY(0)' }
+        },
+        'shimmer': {
+          '100%': { transform: 'translateX(100%)' }
         }
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
-        'fade-in': 'fade-in 0.6s ease-out'
+        'fade-in': 'fade-in 0.6s ease-out',
+        'fade-up': 'fade-up 0.7s ease-out',
+        'shimmer': 'shimmer 1.5s infinite'
   		}
   	}
   },

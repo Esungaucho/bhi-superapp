@@ -212,15 +212,15 @@ export default function CommunicationSettings() {
       {/* Interests */}
       <h3 className="text-[11px] font-medium tracking-luxe-sm uppercase text-muted-foreground mb-2 px-1">Topics You Care About</h3>
       <div className="grid grid-cols-2 gap-2 mb-8">
-        {INTEREST_OPTIONS.map(({ id, label, emoji }) => (
+        {INTEREST_OPTIONS.map(({ id, label, Icon }) => (
           <button
             key={id}
             onClick={() => toggleInterest(id)}
             className={`flex items-center gap-2 rounded-lg border p-2.5 text-left transition-all ${
-              form.interests.includes(id) ? 'border-accent bg-accent/10' : 'border-border bg-card'
+              form.interests.includes(id) ? 'border-ocean bg-ocean/5' : 'border-border bg-card'
             }`}
           >
-            <span className="text-sm">{emoji}</span>
+            <Icon className="w-[18px] h-[18px] text-foreground/60" strokeWidth={1.5} />
             <span className="text-[11px] font-medium text-foreground">{label}</span>
           </button>
         ))}

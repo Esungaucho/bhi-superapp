@@ -32,26 +32,26 @@ export default function DealsCarousel({ deals }) {
   if (!deals?.length) return null;
 
   const DEAL_TYPE_BADGE = {
-    flash_sale: { label: 'Flash Sale', color: 'bg-driftwood text-white' },
+    flash_sale: { label: 'Flash Sale', color: 'bg-warning text-white' },
     featured_deal: { label: 'Featured', color: 'bg-sea-glass text-white' },
-    sponsored: { label: 'Sponsored', color: 'bg-navy text-white' },
+    sponsored: { label: 'Sponsored', color: 'bg-ocean text-white' },
     event: { label: 'Event', color: 'bg-sea-glass-deep text-white' },
   };
 
   return (
-    <section className="mt-8">
-      <div className="px-4 flex items-baseline justify-between mb-4">
+    <section className="mt-10">
+      <div className="px-5 flex items-baseline justify-between mb-4">
         <div>
           <h2 className="font-heading text-xl text-foreground">Island offers</h2>
           <p className="text-xs font-body text-muted-foreground mt-0.5">Curated experiences from our partners</p>
         </div>
-        <span className="text-[10px] font-body tracking-luxe-sm uppercase text-muted-foreground">{current + 1} / {deals.length}</span>
+        <span className="text-[10px] font-body tracking-luxe-xs uppercase text-muted-foreground/60">{current + 1} / {deals.length}</span>
       </div>
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto px-4 pb-2 no-scrollbar snap-x snap-mandatory"
+        className="flex gap-4 overflow-x-auto px-5 pb-2 no-scrollbar snap-x snap-mandatory"
         onScroll={e => {
-          const idx = Math.round(e.target.scrollLeft / (e.target.offsetWidth - 32 + 16));
+          const idx = Math.round(e.target.scrollLeft / (e.target.offsetWidth - 40 + 16));
           setCurrent(Math.min(idx, deals.length - 1));
         }}
       >
@@ -59,18 +59,18 @@ export default function DealsCarousel({ deals }) {
           const badge = DEAL_TYPE_BADGE[deal.deal_type] || DEAL_TYPE_BADGE.featured_deal;
           const card = (
             <div
-              className="flex-shrink-0 w-[80vw] max-w-[340px] snap-start rounded-2xl overflow-hidden bg-card border border-border/70 shadow-[0_8px_28px_-16px_rgba(31,45,61,0.25)] hover:shadow-[0_14px_36px_-18px_rgba(31,45,61,0.35)] transition-shadow duration-300"
+              className="flex-shrink-0 w-[80vw] max-w-[340px] snap-start rounded-2xl overflow-hidden bg-card border border-border/30 shadow-luxe hover:shadow-luxe-lg transition-shadow duration-300"
               onClick={() => deal.deep_link && trackClick(deal)}
             >
               {deal.image_url ? (
                 <div className="h-44 overflow-hidden relative">
                   <img src={deal.image_url} alt={deal.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/60 via-transparent to-transparent" />
-                  <span className={`absolute top-3 left-3 text-[10px] font-body font-medium tracking-luxe-sm uppercase px-2.5 py-1 rounded-full ${badge.color}`}>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  <span className={`absolute top-3 left-3 text-[9px] font-body font-medium tracking-luxe-xs uppercase px-2.5 py-1 rounded-full ${badge.color}`}>
                     {badge.label}
                   </span>
                   {deal.discount_pct && (
-                    <span className="absolute top-3 right-3 bg-white/95 text-navy text-xs font-body font-semibold px-2.5 py-1 rounded-full">
+                    <span className="absolute top-3 right-3 bg-white/95 text-charcoal text-xs font-body font-semibold px-2.5 py-1 rounded-full">
                       −{deal.discount_pct}%
                     </span>
                   )}
@@ -83,14 +83,14 @@ export default function DealsCarousel({ deals }) {
               <div className="p-5">
                 <p className="font-heading text-base text-foreground leading-snug">{deal.title}</p>
                 <p className="text-xs font-body text-muted-foreground mt-1.5 line-clamp-2 leading-relaxed">{deal.description}</p>
-                <div className="flex justify-between items-center mt-4 pt-3 border-t border-border/60">
+                <div className="flex justify-between items-center mt-4 pt-3 border-t border-border/30">
                   <span className="text-[11px] font-body text-muted-foreground tracking-wide">{deal.sponsor_name}</span>
                   {deal.valid_until && (
-                    <span className="text-[10px] font-body tracking-luxe-sm uppercase text-driftwood">
+                    <span className="text-[10px] font-body tracking-luxe-xs uppercase text-driftwood">
                       Through {new Date(deal.valid_until).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                     </span>
                   )}
-                </div>
+                  </div>
               </div>
             </div>
           );

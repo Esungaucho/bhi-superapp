@@ -70,7 +70,7 @@ export default function PostCard({ post }) {
         <div className={`flex items-center gap-1.5 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-wide ${isUrgent ? 'bg-amber-50 text-amber-700' : 'bg-accent/10 text-accent'}`}>
           {post.is_pinned && <><Pin className="w-3 h-3" /> Pinned by Admin</>}
           {post.is_pinned && isUrgent && <span>·</span>}
-          {isUrgent && <>🚨 Urgent Update</>}
+          {isUrgent && <>Urgent Update</>}
         </div>
       )}
 
@@ -82,7 +82,10 @@ export default function PostCard({ post }) {
         <div className="flex-1 min-w-0">
           <p className="text-sm font-semibold text-foreground">{post.author_name}</p>
           <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mt-0.5">
-            <span className="text-accent font-medium">{cat.emoji} {cat.label}</span>
+            <span className="inline-flex items-center gap-1 text-ocean font-medium">
+              {cat.Icon && <cat.Icon className="w-3 h-3" strokeWidth={1.5} />}
+              {cat.label}
+            </span>
             <span>·</span>
             <span>{format(new Date(post.created_date), 'MMM d · h:mm a')}</span>
           </div>

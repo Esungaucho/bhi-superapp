@@ -11,23 +11,25 @@ import { getTriggeredAds } from '@/components/weather/ContextualAd';
 const BHI_CENTER = [33.8626, -77.9858];
 
 const CATEGORY_META = {
-  restaurant:   { emoji: '🍽️', color: '#e85d04' },
-  rental:       { emoji: '🛺', color: '#2d6a4f' },
-  lodging:      { emoji: '🏡', color: '#7b2d8b' },
-  activity:     { emoji: '🏄', color: '#0077b6' },
-  shop:         { emoji: '🛍️', color: '#e9c46a' },
-  service:      { emoji: '🔧', color: '#6c757d' },
-  beach_access: { emoji: '🏖️', color: '#48cae4' },
+  restaurant:   { color: '#3F6D80', label: 'Dining' },
+  rental:       { color: '#8FAEA7', label: 'Rentals' },
+  lodging:      { color: '#7B7B7B', label: 'Lodging' },
+  activity:     { color: '#3F6D80', label: 'Activities' },
+  shop:         { color: '#8FAEA7', label: 'Shops' },
+  service:      { color: '#7B7B7B', label: 'Services' },
+  beach_access: { color: '#8FAEA7', label: 'Beach' },
 };
 
 const ALL_CATEGORIES = ['all', ...Object.keys(CATEGORY_META)];
 
-function makeIcon(emoji, sponsored = false) {
+function makeIcon(color, sponsored = false) {
+  const size = sponsored ? 16 : 13;
+  const ring = sponsored ? `<div style="position:absolute;inset:-5px;border:2px solid ${color};border-radius:50%;opacity:0.3;"></div>` : '';
   return L.divIcon({
     className: '',
-    html: `<div style="font-size:${sponsored ? '26px' : '22px'};filter:drop-shadow(0 2px 3px rgba(0,0,0,0.4));${sponsored ? 'animation: pulse 2s infinite;' : ''}">${emoji}${sponsored ? '<span style="position:absolute;top:-4px;right:-4px;background:#f59e0b;color:white;font-size:8px;font-weight:bold;padding:1px 3px;border-radius:4px;">AD</span>' : ''}</div>`,
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
+    html: `<div style="position:relative;width:${size}px;height:${size}px;border-radius:50%;background:${color};box-shadow:0 2px 8px rgba(0,0,0,0.25);border:2px solid white;">${ring}</div>`,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
   });
 }
 
@@ -65,12 +67,12 @@ export default function IslandMap() {
             const meta = CATEGORY_META[cat];
             return (
               <button key={cat} onClick={() => setActiveCategory(cat)}
-                className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${
+                className={`flex-shrink-0 px-4 py-2 rounded-full text-xs font-medium tracking-wide transition-all border ${
                   activeCategory === cat
-                    ? 'bg-white text-primary border-white'
-                    : 'bg-white/10 text-white/80 border-white/20 hover:bg-white/20'
+                    ? 'bg-white text-ocean border-white'
+                    : 'bg-white/10 text-white/70 border-white/15 hover:bg-white/20'
                 }`}>
-                {meta ? `${meta.emoji} ${cat.replace('_', ' ')}` : '🗺️ all'}
+                {meta ? meta.label : 'All'}
               </button>
             );
           })}
@@ -87,12 +89,12 @@ export default function IslandMap() {
         <MapContainer center={BHI_CENTER} zoom={14} className="h-full w-full" zoomControl={false} attributionControl={false}>
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           {filtered.map(pin => {
-            const meta = CATEGORY_META[pin.category] || { emoji: '📍' };
+            const meta = CATEGORY_META[pin.category] || { color: '#7B7B7B', label: pin.category };
             const isAd = triggeredAdIds.has(pin.id);
             return (
               <Marker key={pin.id}
                 position={[pin.lat, pin.lng]}
-                icon={makeIcon(meta.emoji, isAd)}
+                icon={makeIcon(meta.color, isAd)}
                 eventHandlers={{ click: () => setSelectedPin(pin) }}>
                 <Popup>
                   <div className="text-sm min-w-[160px]">
@@ -117,13 +119,13 @@ export default function IslandMap() {
 
       {/* Bottom conditions strip */}
       {conditions && (
-        <div className="bg-card border-t px-4 py-2.5 flex items-center justify-between">
+        <div className="bg-card border-t border-border/30 px-4 py-2.5 flex items-center justify-between">
           <Link to="/weather" className="flex items-center gap-2 text-sm">
-            <span className="text-lg">
-              {conditions.condition === 'sunny' ? '☀️' :
-               conditions.condition === 'partly_cloudy' ? '⛅' :
-               conditions.condition === 'rain' ? '🌧️' : '🌤️'}
-            </span>
+            <span className="w-2.5 h-2.5 rounded-full" style={{
+              background: conditions.condition === 'sunny' ? '#F3EEE7' :
+               conditions.condition === 'partly_cloudy' ? '#8FAEA7' :
+               conditions.condition === 'rain' ? '#3F6D80' : '#8FAEA7'
+            }} />
             <span className="font-bold">{conditions.temp_f}°F</span>
             <span className="text-muted-foreground text-xs capitalize">{conditions.condition?.replace('_', ' ')}</span>
           </Link>

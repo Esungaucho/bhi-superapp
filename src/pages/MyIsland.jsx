@@ -6,8 +6,10 @@ import { base44 } from '@/api/base44Client';
 
 const TIER_LABELS = {
   resident: 'Resident',
-  owner: 'Island Owner',
-  business: 'Business',
+  homeowner: 'Homeowner',
+  business_owner: 'Business Owner',
+  captain: 'Captain',
+  employee: 'Employee',
   visitor: 'Visitor',
 };
 

@@ -34,23 +34,23 @@ export default function SponsoredBanner({ deals }) {
   };
 
   const Inner = (
-    <div className="mx-4 mt-8 rounded-2xl overflow-hidden border border-driftwood/30 bg-sand/60 backdrop-blur-sm flex items-center gap-4 px-5 py-4 shadow-[0_4px_16px_-12px_rgba(31,45,61,0.18)]">
+    <div className="mx-5 mt-10 rounded-2xl overflow-hidden border border-border/30 bg-card flex items-center gap-4 px-5 py-4 shadow-luxe-sm">
       {banner.sponsor_logo_url && (
         <img src={banner.sponsor_logo_url} alt={banner.sponsor_name} className="w-11 h-11 rounded-full object-cover flex-shrink-0 border border-border/60" />
       )}
       <div className="flex-1 min-w-0">
-        <p className="text-[10px] font-body tracking-luxe uppercase text-driftwood">Partner</p>
+        <p className="text-[10px] font-body tracking-luxe-xs uppercase text-muted-foreground/60">Partner</p>
         <p className="text-sm font-heading text-foreground truncate mt-0.5">{banner.title}</p>
         <p className="text-xs font-body text-muted-foreground truncate mt-0.5">{banner.description}</p>
       </div>
-      <ArrowRight className="w-4 h-4 text-navy flex-shrink-0" strokeWidth={1.5} />
+      <ArrowRight className="w-4 h-4 text-ocean flex-shrink-0" strokeWidth={1.5} />
       {sponsored.length > 1 && (
         <div className="flex gap-1.5 flex-shrink-0 ml-1">
           {sponsored.map((_, i) => (
             <button
               key={i}
               onClick={e => { e.preventDefault(); setBannerIdx(i); }}
-              className={`w-1.5 h-1.5 rounded-full transition-colors ${i === bannerIdx ? 'bg-navy' : 'bg-driftwood/30'}`}
+              className={`w-1.5 h-1.5 rounded-full transition-colors ${i === bannerIdx ? 'bg-ocean' : 'bg-border'}`}
               aria-label={`Sponsored ${i + 1}`}
             />
           ))}

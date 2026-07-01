@@ -59,9 +59,9 @@ export default function CommunityFeed() {
           <button
             key={c.id}
             onClick={() => setActiveCat(c.id)}
-            className={`flex-shrink-0 text-xs font-medium px-3.5 py-2 rounded-full border transition-colors flex items-center gap-1 ${activeCat === c.id ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-muted-foreground border-border'}`}
+            className={`flex-shrink-0 text-xs font-medium px-3.5 py-2 rounded-full border transition-colors flex items-center gap-1.5 ${activeCat === c.id ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-muted-foreground border-border'}`}
           >
-            <span>{c.emoji}</span> {c.label}
+            <c.Icon className="w-3 h-3" strokeWidth={1.5} /> {c.label}
           </button>
         ))}
       </div>
@@ -74,7 +74,6 @@ export default function CommunityFeed() {
         <div className="flex justify-center py-16"><Loader2 className="w-6 h-6 animate-spin text-accent" /></div>
       ) : pinnedPosts.length === 0 && regularPosts.length === 0 ? (
         <div className="text-center py-16 text-muted-foreground">
-          <p className="text-4xl mb-3">🏝️</p>
           <p className="font-medium text-foreground">No posts yet</p>
           <p className="text-sm mt-1">Be the first to share something with the island</p>
         </div>

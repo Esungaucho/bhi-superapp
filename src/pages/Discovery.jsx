@@ -3,34 +3,47 @@ import { Link } from 'react-router-dom';
 import { Map, Sun, Home, Bike, UtensilsCrossed, ShoppingBag } from 'lucide-react';
 
 const ITEMS = [
-  { label: 'Island Map', Icon: Map, path: '/map', desc: 'Navigate every corner', gradient: 'from-sea-glass/15 to-sea-glass-deep/5' },
-  { label: 'Weather', Icon: Sun, path: '/weather', desc: 'Conditions & forecast', gradient: 'from-amber-400/15 to-orange-400/5' },
-  { label: 'Lodging', Icon: Home, path: '/lodging', desc: 'Stays & vacation rentals', gradient: 'from-purple-500/12 to-indigo-500/5' },
-  { label: 'Rentals', Icon: Bike, path: '/rentals', desc: 'Bikes, carts & gear', gradient: 'from-emerald-500/12 to-teal-500/5' },
-  { label: 'Food & Dining', Icon: UtensilsCrossed, path: '/food', desc: 'Restaurants & orders', gradient: 'from-rose-500/12 to-red-500/5' },
-  { label: 'Shops', Icon: ShoppingBag, path: '/shops', desc: 'Boutiques & essentials', gradient: 'from-driftwood/15 to-driftwood/5' },
+  { label: 'Island Map', Icon: Map, path: '/map', desc: 'Navigate every corner', img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=600&auto=format' },
+  { label: 'Weather', Icon: Sun, path: '/weather', desc: 'Conditions & forecast', img: 'https://images.unsplash.com/photo-1561484930-998b6a7b22e8?q=80&w=600&auto=format' },
+  { label: 'Lodging', Icon: Home, path: '/lodging', desc: 'Stays & vacation rentals', img: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=600&auto=format' },
+  { label: 'Rentals', Icon: Bike, path: '/rentals', desc: 'Bikes, carts & gear', img: 'https://images.unsplash.com/photo-1526287765458-4b8d3a3a5c3f?q=80&w=600&auto=format' },
+  { label: 'Food & Dining', Icon: UtensilsCrossed, path: '/food', desc: 'Restaurants & orders', img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=600&auto=format' },
+  { label: 'Shops', Icon: ShoppingBag, path: '/shops', desc: 'Boutiques & essentials', img: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?q=80&w=600&auto=format' },
 ];
 
 export default function Discovery() {
   return (
-    <div className="px-4 pt-4 pb-8 animate-fade-in">
-      <header className="mb-6">
-        <h1 className="font-heading text-2xl text-foreground">Discovery</h1>
-        <p className="text-sm text-muted-foreground mt-1">Everything the island has to offer</p>
+    <div className="px-5 pt-5 pb-8 animate-fade-in">
+      <header className="mb-7">
+        <p className="text-[10px] font-body tracking-luxe uppercase text-muted-foreground/60 mb-2">Explore</p>
+        <h1 className="font-heading text-[2rem] text-foreground leading-tight">Discovery</h1>
+        <p className="text-sm text-muted-foreground mt-2 leading-relaxed max-w-[18rem]">
+          Everything the island has to offer, curated for your stay.
+        </p>
       </header>
 
       <div className="grid grid-cols-2 gap-3">
-        {ITEMS.map(({ label, Icon, path, desc, gradient }) => (
+        {ITEMS.map(({ label, Icon, path, desc, img }) => (
           <Link
             key={path}
             to={path}
-            className={`group relative bg-gradient-to-br ${gradient} rounded-2xl border border-border/50 p-5 hover:shadow-[0_12px_32px_-16px_rgba(31,45,61,0.3)] hover:border-accent/20 transition-all duration-300 active:scale-[0.97] overflow-hidden`}
+            className="group relative bg-card rounded-2xl overflow-hidden border border-border/20 shadow-luxe-sm hover:shadow-luxe transition-all duration-300 active:scale-[0.98]"
           >
-            <span className="flex items-center justify-center w-11 h-11 rounded-xl bg-card/80 backdrop-blur-sm border border-border/30 mb-4 group-hover:bg-card transition-colors">
-              <Icon className="w-5 h-5 text-foreground/70 group-hover:text-accent transition-colors" strokeWidth={1.5} />
-            </span>
-            <h3 className="text-sm font-heading font-medium text-foreground leading-tight">{label}</h3>
-            <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{desc}</p>
+            <div className="h-32 overflow-hidden">
+              <img
+                src={img}
+                alt={label}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            </div>
+            <div className="p-4">
+              <h3 className="text-sm font-heading font-medium text-foreground leading-tight">{label}</h3>
+              <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{desc}</p>
+            </div>
+            <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center">
+              <Icon className="w-4 h-4 text-charcoal" strokeWidth={1.5} />
+            </div>
           </Link>
         ))}
       </div>

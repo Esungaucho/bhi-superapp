@@ -20,7 +20,6 @@ export default function WeekView({ events, savedIds, onToggleSave }) {
   if (grouped.length === 0) {
     return (
       <div className="text-center py-12 text-muted-foreground">
-        <p className="text-3xl mb-2">📆</p>
         <p className="text-sm font-medium text-foreground">No events this week</p>
       </div>
     );

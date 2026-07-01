@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Loader2, Wind, Droplets, Thermometer, Eye, Waves, Sun, Users } from 'lucide-react';
+import { Loader2, Wind, Droplets, Thermometer, Eye, Waves, Sun, Users, CloudSun, Cloud, CloudRain, CloudLightning, CloudFog } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ContextualAd, { getTriggeredAds } from '@/components/weather/ContextualAd';
 import BeachFinder from '@/components/weather/BeachFinder';
 
-const CONDITION_EMOJI = {
-  sunny: '☀️', partly_cloudy: '⛅', cloudy: '☁️',
-  rain: '🌧️', storm: '⛈️', foggy: '🌫️',
+const CONDITION_ICON = {
+  sunny: Sun, partly_cloudy: CloudSun, cloudy: Cloud,
+  rain: CloudRain, storm: CloudLightning, foggy: CloudFog,
 };
 
 const CONDITION_BG = {
@@ -42,7 +42,7 @@ const UV_META = (uv) => {
   return { label: 'Extreme', color: 'text-purple-700' };
 };
 
-const TIDE_EMOJI = { low: '🌊↓', rising: '🌊↑', high: '🌊⬆', falling: '🌊↘' };
+const TIDE_DIRECTION = { low: '↓', rising: '↑', high: '⬆', falling: '↘' };
 
 export default function WeatherDashboard() {
   const { data: conditionsAll = [], isLoading } = useQuery({
@@ -59,7 +59,7 @@ export default function WeatherDashboard() {
   const triggeredAds = useMemo(() => getTriggeredAds(pins, conditions).slice(0, 2), [pins, conditions]);
 
   const bg = CONDITION_BG[conditions?.condition] || 'from-sky-400 to-blue-600';
-  const emoji = CONDITION_EMOJI[conditions?.condition] || '🌤️';
+  const ConditionIcon = CONDITION_ICON[conditions?.condition] || CloudSun;
   const uvMeta = conditions ? UV_META(conditions.uv_index || 0) : null;
   const flagInfo = FLAG_INFO[conditions?.beach_flag] || FLAG_INFO.green;
   const crowdMeta = CROWD_META[conditions?.crowd_level] || CROWD_META.moderate;
@@ -68,7 +68,6 @@ export default function WeatherDashboard() {
 
   if (!conditions) return (
     <div className="px-4 py-12 text-center text-muted-foreground">
-      <p className="text-4xl mb-2">🌤️</p>
       <p className="font-medium">No conditions data yet</p>
       <p className="text-sm">Check back soon</p>
     </div>
@@ -82,7 +81,7 @@ export default function WeatherDashboard() {
         <div className="flex items-end justify-between">
           <div>
             <div className="flex items-center gap-3">
-              <span className="text-6xl">{emoji}</span>
+              <ConditionIcon className="w-14 h-14 text-white/90" strokeWidth={1.5} />
               <div>
                 <p className="text-5xl font-bold leading-none">{conditions.temp_f}°</p>
                 <p className="text-sm text-white/70 mt-1 capitalize">{conditions.condition?.replace('_', ' ')}</p>
@@ -126,11 +125,12 @@ export default function WeatherDashboard() {
 
         {/* Tide */}
         <div className="bg-card rounded-2xl border p-4">
-          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-3">🌊 Tide Status</p>
+          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-3">Tide Status</p>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xl font-bold capitalize flex items-center gap-2">
-                {TIDE_EMOJI[conditions.tide_status] || '🌊'} {conditions.tide_status?.replace('_', ' ') || '--'}
+                <Waves className="w-5 h-5 text-ocean" strokeWidth={1.5} />
+                {conditions.tide_status?.replace('_', ' ') || '--'}
               </p>
               {conditions.tide_next_event && (
                 <p className="text-sm text-muted-foreground mt-1">{conditions.tide_next_event}</p>
@@ -147,7 +147,7 @@ export default function WeatherDashboard() {
         {/* Crowd */}
         <div className="bg-card rounded-2xl border p-4 flex items-center justify-between">
           <div>
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-1">👥 Beach Crowd</p>
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-1">Beach Crowd</p>
             <p className="text-lg font-bold">{crowdMeta.label}</p>
           </div>
           <span className={`text-sm font-semibold px-3 py-1.5 rounded-full ${crowdMeta.color}`}>
@@ -166,7 +166,7 @@ export default function WeatherDashboard() {
 
         {/* Map link */}
         <Link to="/map" className="block bg-primary text-primary-foreground rounded-2xl p-4 text-center font-semibold">
-          🗺️ View Business Map →
+          View Business Map →
         </Link>
       </div>
     </div>
