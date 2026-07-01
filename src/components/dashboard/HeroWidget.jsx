@@ -17,7 +17,7 @@ export default function HeroWidget({ upcomingBooking, user }) {
   const firstName = user?.full_name?.split(' ')[0] || 'Explorer';
 
   return (
-    <section className="relative mx-4 mt-4 rounded-2xl overflow-hidden shadow-[0_18px_40px_-20px_rgba(31,45,61,0.35)] animate-fade-in">
+    <section className="relative overflow-hidden animate-fade-in">
       {/* Cinematic photograph */}
       <div className="relative h-72 sm:h-80">
         <img
