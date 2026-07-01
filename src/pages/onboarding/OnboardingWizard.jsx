@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Loader2, ChevronRight, ChevronLeft } from 'lucide-react';
+import StepVisitPurpose from './StepVisitPurpose';
 import StepProfile from './StepProfile';
 import StepInterests from './StepInterests';
 import StepCommunications from './StepCommunications';
 import StepNotifications from './StepNotifications';
 
 const STEPS = [
+  { id: 'visit_purpose', title: 'Welcome', subtitle: 'Why are you visiting Bald Head Island?' },
   { id: 'profile', title: 'Your Profile', subtitle: 'Let\'s get to know you' },
-  { id: 'interests', title: 'Your Interests', subtitle: 'What brings you to the island?' },
+  { id: 'interests', title: 'Your Interests', subtitle: 'What are you into?' },
   { id: 'communications', title: 'Stay Connected', subtitle: 'How would you like to hear from us?' },
   { id: 'notifications', title: 'Notification Style', subtitle: 'When should we reach out?' },
 ];
@@ -19,6 +21,7 @@ export default function OnboardingWizard() {
   const [step, setStep] = useState(0);
   const [saving, setSaving] = useState(false);
 
+  const [visitPurpose, setVisitPurpose] = useState('');
   const [profile, setProfile] = useState({
     first_name: '',
     last_name: '',
@@ -41,9 +44,10 @@ export default function OnboardingWizard() {
   });
 
   const isStepValid = () => {
-    if (step === 0) return profile.first_name.trim() && profile.last_name.trim() && profile.tier;
-    if (step === 1) return interests.length > 0;
-    if (step === 2) return communications.comm_push || communications.comm_email || communications.comm_sms;
+    if (step === 0) return !!visitPurpose;
+    if (step === 1) return profile.first_name.trim() && profile.last_name.trim() && profile.tier;
+    if (step === 2) return interests.length > 0;
+    if (step === 3) return communications.comm_push || communications.comm_email || communications.comm_sms;
     return true;
   };
 
@@ -76,6 +80,7 @@ export default function OnboardingWizard() {
       const prefData = {
         user_email: user.email,
         user_name: `${profile.first_name} ${profile.last_name}`.trim(),
+        visit_purpose: visitPurpose,
         interests,
         comm_push: communications.comm_push,
         comm_email: communications.comm_email,
@@ -128,10 +133,11 @@ export default function OnboardingWizard() {
             <p className="text-sm text-muted-foreground mt-1">{currentStep.subtitle}</p>
 
             <div className="mt-6">
-              {step === 0 && <StepProfile profile={profile} setProfile={setProfile} />}
-              {step === 1 && <StepInterests interests={interests} setInterests={setInterests} />}
-              {step === 2 && <StepCommunications communications={communications} setCommunications={setCommunications} />}
-              {step === 3 && <StepNotifications notifications={notifications} setNotifications={setNotifications} />}
+              {step === 0 && <StepVisitPurpose visitPurpose={visitPurpose} setVisitPurpose={setVisitPurpose} />}
+              {step === 1 && <StepProfile profile={profile} setProfile={setProfile} />}
+              {step === 2 && <StepInterests interests={interests} setInterests={setInterests} />}
+              {step === 3 && <StepCommunications communications={communications} setCommunications={setCommunications} />}
+              {step === 4 && <StepNotifications notifications={notifications} setNotifications={setNotifications} />}
             </div>
           </div>
         </div>

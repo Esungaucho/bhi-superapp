@@ -10,6 +10,10 @@
       "type": "string",
       "description": "User display name"
     },
+    "visit_purpose": {
+      "type": "string",
+      "description": "Why the user is visiting BHI (resident, homeowner, vacation_guest, visiting_family, wedding_guest, fishing_trip, business, family_vacation)"
+    },
     "interests": {
       "type": "array",
       "items": {
