@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Menu, X, Home, Compass, Waves, CalendarDays, Users, User, Anchor, Shield, ShoppingBag, Bird, ConciergeBell, Baby, CalendarHeart } from 'lucide-react';
 import { useUserAccess } from '@/hooks/useUserAccess';
@@ -43,51 +44,58 @@ export default function GlobalMenu() {
         <Menu className="w-[18px] h-[18px]" strokeWidth={1.5} />
       </button>
 
-      {open && (
-        <div
-          className="fixed inset-0 bg-black/40 z-[100] backdrop-blur-sm"
-          onClick={() => setOpen(false)}
-        />
-      )}
+      {createPortal(
+        <>
+          {/* Backdrop */}
+          {open && (
+            <div
+              className="fixed inset-0 bg-black/40 z-[9998] backdrop-blur-sm"
+              onClick={() => setOpen(false)}
+            />
+          )}
 
-      <div
-        className={`fixed top-0 right-0 h-full w-80 bg-card shadow-luxe-lg z-[101] transition-transform duration-300 ease-out ${
-          open ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
-        <div className="flex items-center justify-between px-7 h-16 border-b border-border/30">
-          <span className="font-heading text-sm tracking-luxe-sm text-foreground">Bald Head Island</span>
-          <button onClick={() => setOpen(false)} className="p-1.5 rounded-full hover:bg-sand/50 transition-colors">
-            <X className="w-[18px] h-[18px] text-muted-foreground" strokeWidth={1.5} />
-          </button>
-        </div>
+          {/* Slide-out panel — portaled to body so backdrop-filter ancestors don't shrink it */}
+          <div
+            className={`fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-card shadow-luxe-lg z-[9999] transition-transform duration-300 ease-out ${
+              open ? 'translate-x-0' : 'translate-x-full'
+            }`}
+          >
+            <div className="flex items-center justify-between px-7 h-16 border-b border-border/30">
+              <span className="font-heading text-sm tracking-luxe-sm text-foreground">Bald Head Island</span>
+              <button onClick={() => setOpen(false)} className="p-1.5 rounded-full hover:bg-sand/50 transition-colors">
+                <X className="w-[18px] h-[18px] text-muted-foreground" strokeWidth={1.5} />
+              </button>
+            </div>
 
-        <nav className="py-3 overflow-y-auto h-[calc(100%-65px)]">
-          {allSections.map(({ label, path, Icon, children }) => (
-            <React.Fragment key={path}>
-              <Link
-                to={path}
-                onClick={() => setOpen(false)}
-                className="flex items-center gap-4 px-7 py-4 text-sm font-medium text-foreground hover:bg-sand/40 transition-colors"
-              >
-                <Icon className="w-[18px] h-[18px] text-muted-foreground" strokeWidth={1.5} />
-                {label}
-              </Link>
-              {children?.map(({ label: childLabel, path: childPath, Icon: ChildIcon }) => (
-                <Link
-                  key={childPath}
-                  to={childPath}
-                  onClick={() => setOpen(false)}
-                  className="flex items-center gap-4 pl-12 pr-7 py-3 text-sm text-muted-foreground hover:bg-sand/40 hover:text-foreground transition-colors"
-                >
-                  <ChildIcon className="w-[16px] h-[16px]" strokeWidth={1.5} />
-                  {childLabel}
-                </Link>
+            <nav className="py-3 overflow-y-auto h-[calc(100%-65px)]">
+              {allSections.map(({ label, path, Icon, children }) => (
+                <React.Fragment key={path}>
+                  <Link
+                    to={path}
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-4 px-7 py-4 text-sm font-medium text-foreground hover:bg-sand/40 transition-colors"
+                  >
+                    <Icon className="w-[18px] h-[18px] text-muted-foreground" strokeWidth={1.5} />
+                    {label}
+                  </Link>
+                  {children?.map(({ label: childLabel, path: childPath, Icon: ChildIcon }) => (
+                    <Link
+                      key={childPath}
+                      to={childPath}
+                      onClick={() => setOpen(false)}
+                      className="flex items-center gap-4 pl-12 pr-7 py-3 text-sm text-muted-foreground hover:bg-sand/40 hover:text-foreground transition-colors"
+                    >
+                      <ChildIcon className="w-[16px] h-[16px]" strokeWidth={1.5} />
+                      {childLabel}
+                    </Link>
+                  ))}
+                </React.Fragment>
               ))}
-            </React.Fragment>
-          ))}
-        </nav>
-      </div>
+            </nav>
+          </div>
+        </>,
+        document.body
+      )}
     </>
   );
 }
