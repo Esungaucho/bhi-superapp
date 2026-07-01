@@ -1,0 +1,166 @@
+{
+  "name": "ConciergeRequest",
+  "type": "object",
+  "properties": {
+    "user_name": {
+      "type": "string",
+      "description": "Requesting user name"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Requesting user email"
+    },
+    "user_phone": {
+      "type": "string",
+      "description": "Contact phone"
+    },
+    "island_address": {
+      "type": "string",
+      "description": "Island address or rental address"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "personal_shopping",
+        "grocery_delivery",
+        "family_services",
+        "home_vacation_services",
+        "experiences_reservations",
+        "transportation_errands",
+        "special_requests"
+      ],
+      "description": "Concierge category"
+    },
+    "subcategory": {
+      "type": "string",
+      "description": "Specific service within category e.g. babysitters, pharmacy_items"
+    },
+    "item_requested": {
+      "type": "string",
+      "description": "Item or service requested"
+    },
+    "store_preference": {
+      "type": "string",
+      "description": "Preferred store or vendor"
+    },
+    "budget_range": {
+      "type": "string",
+      "description": "e.g. $25-$50, flexible"
+    },
+    "timing": {
+      "type": "string",
+      "enum": [
+        "asap",
+        "today",
+        "tomorrow",
+        "scheduled"
+      ],
+      "default": "asap"
+    },
+    "scheduled_for": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "delivery_preference": {
+      "type": "string",
+      "enum": [
+        "ferry_pickup",
+        "tram_delivery",
+        "home_delivery"
+      ],
+      "default": "ferry_pickup"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Special instructions"
+    },
+    "photo_url": {
+      "type": "string",
+      "description": "Optional uploaded photo"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "request_submitted",
+        "concierge_assigned",
+        "in_progress",
+        "heading_to_ferry",
+        "checked_in_at_ferry",
+        "loaded_on_ferry",
+        "arrived_on_island",
+        "placed_on_tram",
+        "completed",
+        "cancelled"
+      ],
+      "default": "request_submitted"
+    },
+    "provider_id": {
+      "type": "string",
+      "description": "Assigned ConciergeProvider ID"
+    },
+    "provider_name": {
+      "type": "string",
+      "description": "Provider name snapshot"
+    },
+    "item_cost": {
+      "type": "number",
+      "description": "Estimated merchandise/service cost"
+    },
+    "service_fee": {
+      "type": "number",
+      "default": 15
+    },
+    "mileage_fee": {
+      "type": "number",
+      "default": 0
+    },
+    "ferry_fee": {
+      "type": "number",
+      "default": 23
+    },
+    "app_fee": {
+      "type": "number",
+      "default": 5
+    },
+    "tip": {
+      "type": "number",
+      "default": 0
+    },
+    "total_cost": {
+      "type": "number"
+    },
+    "tram_number": {
+      "type": "string"
+    },
+    "box_number": {
+      "type": "string"
+    },
+    "tram_timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tram_photo_url": {
+      "type": "string"
+    },
+    "receipt_photo_url": {
+      "type": "string"
+    },
+    "delivery_photo_url": {
+      "type": "string"
+    },
+    "estimated_arrival": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "admin_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_name",
+    "user_email",
+    "category",
+    "item_requested",
+    "delivery_preference"
+  ]
+}

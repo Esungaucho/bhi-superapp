@@ -19,17 +19,26 @@ export function useUserAccess() {
     enabled: !!user?.email,
   });
 
+  const { data: conciergeProviders = [] } = useQuery({
+    queryKey: ['myConciergeProvider', user?.email],
+    queryFn: () => base44.entities.ConciergeProvider.filter({ email: user.email }),
+    enabled: !!user?.email,
+  });
+
   const isAdmin = user?.role === 'admin';
   const isCaptain = charters.length > 0;
   const isBusiness = shops.length > 0;
+  const isConcierge = conciergeProviders.some(p => p.approval_status === 'approved');
 
   return {
     user,
     isAdmin,
     isCaptain,
     isBusiness,
+    isConcierge,
     showCaptainHub: isCaptain || user?.tier === 'captain' || isAdmin,
     showBusiness: isBusiness || user?.tier === 'business_owner' || isAdmin,
     showAdmin: isAdmin,
+    showConciergeDashboard: isConcierge,
   };
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Home, Compass, Waves, CalendarDays, Users, User, Anchor, Shield, ShoppingBag, Bird } from 'lucide-react';
+import { Menu, X, Home, Compass, Waves, CalendarDays, Users, User, Anchor, Shield, ShoppingBag, Bird, ConciergeBell } from 'lucide-react';
 import { useUserAccess } from '@/hooks/useUserAccess';
 
 const SECTIONS = [
@@ -11,6 +11,7 @@ const SECTIONS = [
   { label: 'Community', path: '/community', Icon: Users },
   { label: 'Island Shop', path: '/island-shop', Icon: ShoppingBag },
   { label: 'Birdie Concierge', path: '/birdie', Icon: Bird },
+  { label: 'BHI Concierge', path: '/concierge', Icon: ConciergeBell },
   { label: 'My Island', path: '/my-island', Icon: User },
 ];
 

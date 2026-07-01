@@ -45,6 +45,11 @@ import BirdieConcierge from '@/pages/BirdieConcierge';
 import BirdieNewRequest from '@/pages/BirdieNewRequest';
 import BirdieRequestDetail from '@/pages/BirdieRequestDetail';
 import BirdieShoppers from '@/pages/BirdieShoppers';
+import BHIConcierge from '@/pages/BHIConcierge';
+import ConciergeRequest from '@/pages/ConciergeRequest';
+import ConciergeTrack from '@/pages/ConciergeTrack';
+import ConciergeProviders from '@/pages/ConciergeProviders';
+import ConciergeProviderDashboard from '@/pages/ConciergeProviderDashboard';
 import BookExperiences from '@/pages/BookExperiences';
 import MyIsland from '@/pages/MyIsland';
 import Settings from '@/pages/Settings';
@@ -74,6 +79,7 @@ import EventManagement from '@/pages/admin/EventManagement';
 import NewsletterAdmin from '@/pages/admin/NewsletterAdmin';
 import IslandShopAdmin from '@/pages/admin/IslandShopAdmin';
 import BirdieAdmin from '@/pages/admin/BirdieAdmin';
+import ConciergeAdmin from '@/pages/admin/ConciergeAdmin';
 import CaptainShell from '@/components/captain/CaptainShell';
 import CaptainDashboard from '@/pages/CaptainDashboard';
 import SavedCaptains from '@/pages/SavedCaptains';
@@ -112,6 +118,11 @@ const AuthenticatedApp = () => {
         <Route path="/birdie/new" element={<BirdieNewRequest />} />
         <Route path="/birdie/request/:id" element={<BirdieRequestDetail />} />
         <Route path="/birdie/shoppers" element={<BirdieShoppers />} />
+        <Route path="/concierge" element={<BHIConcierge />} />
+        <Route path="/concierge/request" element={<ConciergeRequest />} />
+        <Route path="/concierge/track/:id" element={<ConciergeTrack />} />
+        <Route path="/concierge/providers" element={<ConciergeProviders />} />
+        <Route path="/concierge/dashboard" element={<ConciergeProviderDashboard />} />
         <Route path="/experiences" element={<BookExperiences />} />
         <Route path="/my-island" element={<MyIsland />} />
         <Route path="/settings" element={<Settings />} />
@@ -171,6 +182,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/newsletter" element={<NewsletterAdmin />} />
         <Route path="/admin/shop" element={<IslandShopAdmin />} />
         <Route path="/admin/birdie" element={<BirdieAdmin />} />
+        <Route path="/admin/concierge" element={<ConciergeAdmin />} />
       </Route>
       <Route element={<CommunityShell />}>
         <Route path="/community" element={<CommunityFeed />} />

@@ -1,0 +1,76 @@
+{
+  "name": "ConciergeProvider",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Island Concierge full name"
+    },
+    "profile_photo_url": {
+      "type": "string",
+      "description": "Profile photo URL"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Short professional bio"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Average rating 1-5",
+      "default": 5
+    },
+    "completed_requests": {
+      "type": "number",
+      "description": "Total completed concierge requests",
+      "default": 0
+    },
+    "current_location": {
+      "type": "string",
+      "description": "Current location or area"
+    },
+    "vehicle_type": {
+      "type": "string",
+      "description": "Vehicle type if applicable"
+    },
+    "is_available": {
+      "type": "boolean",
+      "default": true,
+      "description": "Currently available for requests"
+    },
+    "background_check_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "passed",
+        "failed",
+        "not_required"
+      ],
+      "default": "pending"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "suspended"
+      ],
+      "default": "pending"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "specialties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Service specialties e.g. personal_shopping, grocery_delivery"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useUserAccess } from '@/hooks/useUserAccess';
-import { Calendar, Bell, Settings, Bookmark, Anchor, Shield, ChevronRight, LogOut, User } from 'lucide-react';
+import { Calendar, Bell, Settings, Bookmark, Anchor, Shield, ChevronRight, LogOut, User, ConciergeBell } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const TIER_LABELS = {
@@ -32,7 +32,7 @@ function MenuItem({ to, Icon, label, desc }) {
 }
 
 export default function MyIsland() {
-  const { user, showCaptainHub, showAdmin, showBusiness } = useUserAccess();
+  const { user, showCaptainHub, showAdmin, showBusiness, showConciergeDashboard } = useUserAccess();
 
   const handleLogout = () => base44.auth.logout();
 
@@ -69,10 +69,13 @@ export default function MyIsland() {
       </div>
 
       {/* Captain / Business / Admin section — conditional */}
-      {(showCaptainHub || showBusiness || showAdmin) && (
+      {(showCaptainHub || showBusiness || showAdmin || showConciergeDashboard) && (
         <>
           <h3 className="text-[11px] font-medium tracking-luxe-sm uppercase text-muted-foreground mb-2 px-1">Management</h3>
           <div className="bg-card border border-border/50 rounded-2xl px-4 mb-6 shadow-[0_2px_12px_-8px_rgba(31,45,61,0.12)]">
+            {showConciergeDashboard && (
+              <MenuItem to="/concierge/dashboard" Icon={ConciergeBell} label="Concierge Dashboard" desc="View & manage your requests" />
+            )}
             {showCaptainHub && (
               <MenuItem to="/captain/dashboard" Icon={Anchor} label="Captain Hub" desc="Manage charters & availability" />
             )}
