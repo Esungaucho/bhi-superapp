@@ -1,0 +1,52 @@
+{
+  "name": "CaptainCatch",
+  "type": "object",
+  "properties": {
+    "charter_id": {
+      "type": "string",
+      "description": "ID of the linked FishingCharter"
+    },
+    "captain_name": {
+      "type": "string",
+      "description": "Captain snapshot"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Captain user email"
+    },
+    "fish_type": {
+      "type": "string",
+      "description": "Species caught"
+    },
+    "weight_lbs": {
+      "type": "number",
+      "description": "Weight in lbs"
+    },
+    "length_in": {
+      "type": "number",
+      "description": "Length in inches"
+    },
+    "catch_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of catch"
+    },
+    "photo_url": {
+      "type": "string",
+      "description": "Catch photo"
+    },
+    "description": {
+      "type": "string",
+      "description": "Story or details"
+    },
+    "location_name": {
+      "type": "string",
+      "description": "Where it was caught"
+    }
+  },
+  "required": [
+    "charter_id",
+    "fish_type",
+    "catch_date"
+  ]
+}

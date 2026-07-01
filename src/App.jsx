@@ -58,6 +58,9 @@ import EventDetail from '@/pages/EventDetail';
 import SavedEvents from '@/pages/calendar/SavedEvents';
 import CalendarPreferences from '@/pages/calendar/CalendarPreferences';
 import EventManagement from '@/pages/admin/EventManagement';
+import CaptainShell from '@/components/captain/CaptainShell';
+import CaptainDashboard from '@/pages/CaptainDashboard';
+import SavedCaptains from '@/pages/SavedCaptains';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -141,6 +144,10 @@ const AuthenticatedApp = () => {
         <Route path="/community" element={<CommunityFeed />} />
         <Route path="/community/submit" element={<SubmitContent />} />
         <Route path="/community/:id" element={<SubmissionDetail />} />
+      </Route>
+      <Route element={<CaptainShell />}>
+        <Route path="/captain/dashboard" element={<CaptainDashboard />} />
+        <Route path="/captain/saved" element={<SavedCaptains />} />
       </Route>
       <Route element={<CalendarShell />}>
         <Route path="/calendar" element={<IslandCalendar />} />

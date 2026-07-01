@@ -1,0 +1,64 @@
+{
+  "name": "CaptainAvailability",
+  "type": "object",
+  "properties": {
+    "charter_id": {
+      "type": "string",
+      "description": "ID of the linked FishingCharter"
+    },
+    "captain_name": {
+      "type": "string",
+      "description": "Captain snapshot"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Captain user email"
+    },
+    "trip_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the trip departs"
+    },
+    "trip_label": {
+      "type": "string",
+      "description": "e.g. 4hr Inshore, Full Day Offshore"
+    },
+    "max_passengers": {
+      "type": "number",
+      "default": 6
+    },
+    "booked_passengers": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "last_minute",
+        "full",
+        "cancelled"
+      ],
+      "default": "available",
+      "description": "Current booking status"
+    },
+    "is_last_minute": {
+      "type": "boolean",
+      "default": false,
+      "description": "Last-minute opening"
+    },
+    "price": {
+      "type": "number",
+      "description": "Trip price in USD"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional details"
+    }
+  },
+  "required": [
+    "charter_id",
+    "trip_date",
+    "status"
+  ]
+}

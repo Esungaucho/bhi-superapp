@@ -16,6 +16,8 @@ const SECTIONS = [
   { label: '📋 My Bookings', path: '/bookings' },
   { label: '🔔 Notifications', path: '/notifications' },
   { label: '🤖 Concierge', path: '/agents' },
+  { label: '⚓ Captain\'s Hub', path: '/captain/dashboard' },
+  { label: '❤️ Saved Captains', path: '/captain/saved' },
   { label: '🔍 Search', path: '/search' },
   { label: '⚙️ Admin', path: '/admin/revenue' },
 ];

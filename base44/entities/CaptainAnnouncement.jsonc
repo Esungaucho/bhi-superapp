@@ -1,0 +1,55 @@
+{
+  "name": "CaptainAnnouncement",
+  "type": "object",
+  "properties": {
+    "charter_id": {
+      "type": "string",
+      "description": "ID of the linked FishingCharter"
+    },
+    "captain_name": {
+      "type": "string",
+      "description": "Captain snapshot"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Captain user email"
+    },
+    "title": {
+      "type": "string",
+      "description": "Announcement headline"
+    },
+    "body": {
+      "type": "string",
+      "description": "Full announcement text"
+    },
+    "announcement_type": {
+      "type": "string",
+      "enum": [
+        "special_trip",
+        "seasonal_opportunity",
+        "last_minute_opening",
+        "general"
+      ],
+      "default": "general",
+      "description": "Type of announcement"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Optional image"
+    },
+    "valid_until": {
+      "type": "string",
+      "format": "date",
+      "description": "When announcement expires"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "charter_id",
+    "title",
+    "announcement_type"
+  ]
+}

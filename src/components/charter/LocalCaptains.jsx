@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Loader2, Star, MapPin, Users, Anchor, Phone, Globe } from 'lucide-react';
 import { DIFFICULTY_META, PRICE_RANGE_LABELS } from '@/lib/charterConstants';
+import SaveCaptainButton from '@/components/captain/SaveCaptainButton';
 
 export default function LocalCaptains() {
   const { data: charters = [], isLoading } = useQuery({
@@ -128,29 +129,28 @@ function CaptainCard({ charter }) {
           )}
         </div>
 
-        {/* Contact */}
-        {(charter.contact_phone || charter.website) && (
-          <div className="flex gap-2 pt-1">
-            {charter.contact_phone && (
-              <a
-                href={`tel:${charter.contact_phone}`}
-                className="flex-1 flex items-center justify-center gap-1.5 text-xs font-medium bg-primary text-primary-foreground rounded-xl py-2 hover:opacity-90 transition-opacity"
-              >
-                <Phone className="w-3.5 h-3.5" /> Call
-              </a>
-            )}
-            {charter.website && (
-              <a
-                href={charter.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-1.5 text-xs font-medium border border-border text-foreground rounded-xl py-2 hover:bg-secondary transition-colors"
-              >
-                <Globe className="w-3.5 h-3.5" /> Website
-              </a>
-            )}
-          </div>
-        )}
+        {/* Contact + Save */}
+        <div className="flex flex-wrap gap-2 pt-1">
+          {charter.contact_phone && (
+            <a
+              href={`tel:${charter.contact_phone}`}
+              className="flex-1 min-w-[80px] flex items-center justify-center gap-1.5 text-xs font-medium bg-primary text-primary-foreground rounded-xl py-2 hover:opacity-90 transition-opacity"
+            >
+              <Phone className="w-3.5 h-3.5" /> Call
+            </a>
+          )}
+          {charter.website && (
+            <a
+              href={charter.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 min-w-[80px] flex items-center justify-center gap-1.5 text-xs font-medium border border-border text-foreground rounded-xl py-2 hover:bg-secondary transition-colors"
+            >
+              <Globe className="w-3.5 h-3.5" /> Website
+            </a>
+          )}
+          <SaveCaptainButton charter={charter} captainName={charter.captain_name} />
+        </div>
       </div>
     </div>
   );

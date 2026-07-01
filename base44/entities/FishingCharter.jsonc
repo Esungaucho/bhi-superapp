@@ -48,7 +48,7 @@
     },
     "target_fish_seasonal": {
       "type": "string",
-      "description": "Target fish by season e.g. Spring: Spanish mackerel; Summer: Flounder, Red drum; Fall: King mackerel"
+      "description": "Target fish by season"
     },
     "difficulty": {
       "type": "string",
@@ -106,6 +106,10 @@
     },
     "website": {
       "type": "string"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Email of the captain user who manages this charter"
     },
     "is_featured": {
       "type": "boolean",
