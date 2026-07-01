@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Calendar, ChevronLeft, ChevronRight, Fish, Clock, Worm, Scale, Info } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, Fish, Clock, Worm, Scale, Info, Anchor } from 'lucide-react';
 import { FISHING_GUIDE } from '@/lib/fishingGuide';
+import LocalCaptains from './LocalCaptains';
 
 const MONTHS = FISHING_GUIDE.map(g => ({ month: g.month, label: g.label, emoji: g.emoji }));
 
 export default function SeasonalFishingGuide() {
   const currentMonth = new Date().getMonth();
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+  const [activeTab, setActiveTab] = useState('guide');
 
   const guide = FISHING_GUIDE[selectedMonth];
 
@@ -23,6 +25,26 @@ export default function SeasonalFishingGuide() {
         </p>
       </div>
 
+      {/* Tab switcher */}
+      <div className="flex gap-1.5 bg-secondary/60 rounded-full p-1">
+        <button
+          onClick={() => setActiveTab('guide')}
+          className={`flex-1 flex items-center justify-center gap-1.5 text-xs font-medium px-3 py-2 rounded-full transition-colors ${activeTab === 'guide' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
+        >
+          <Fish className="w-3.5 h-3.5" /> Guide
+        </button>
+        <button
+          onClick={() => setActiveTab('captains')}
+          className={`flex-1 flex items-center justify-center gap-1.5 text-xs font-medium px-3 py-2 rounded-full transition-colors ${activeTab === 'captains' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
+        >
+          <Anchor className="w-3.5 h-3.5" /> Local Captains
+        </button>
+      </div>
+
+      {activeTab === 'captains' ? (
+        <LocalCaptains />
+      ) : (
+      <>
       {/* Month selector */}
       <div>
         <div className="flex items-center justify-between mb-2">
@@ -122,6 +144,8 @@ export default function SeasonalFishingGuide() {
           A valid NC saltwater fishing license is required for all anglers 16 and older.
         </p>
       </div>
+      </>
+      )}
     </div>
   );
 }
