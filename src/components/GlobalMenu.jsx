@@ -17,10 +17,16 @@ export default function GlobalMenu() {
   const { showCaptainHub, showAdmin } = useUserAccess();
 
   const allSections = [
-    ...SECTIONS,
-    ...(showCaptainHub ? [{ label: "Captain Hub", path: '/captain/dashboard', Icon: Anchor }] : []),
-    ...(showAdmin ? [{ label: 'Admin Console', path: '/admin/revenue', Icon: Shield }] : []),
+    ...SECTIONS.map(s => ({ ...s, children: [] })),
+    ...(showAdmin ? [{ label: 'Admin Console', path: '/admin/revenue', Icon: Shield, children: [] }] : []),
   ];
+
+  if (showCaptainHub) {
+    const bookExp = allSections.find(s => s.path === '/experiences');
+    if (bookExp) {
+      bookExp.children = [{ label: 'Captain Hub', path: '/captain/dashboard', Icon: Anchor }];
+    }
+  }
 
   return (
     <>
@@ -52,16 +58,28 @@ export default function GlobalMenu() {
         </div>
 
         <nav className="py-3 overflow-y-auto h-[calc(100%-65px)]">
-          {allSections.map(({ label, path, Icon }) => (
-            <Link
-              key={path}
-              to={path}
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-4 px-7 py-4 text-sm font-medium text-foreground hover:bg-sand/40 transition-colors"
-            >
-              <Icon className="w-[18px] h-[18px] text-muted-foreground" strokeWidth={1.5} />
-              {label}
-            </Link>
+          {allSections.map(({ label, path, Icon, children }) => (
+            <React.Fragment key={path}>
+              <Link
+                to={path}
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-4 px-7 py-4 text-sm font-medium text-foreground hover:bg-sand/40 transition-colors"
+              >
+                <Icon className="w-[18px] h-[18px] text-muted-foreground" strokeWidth={1.5} />
+                {label}
+              </Link>
+              {children?.map(({ label: childLabel, path: childPath, Icon: ChildIcon }) => (
+                <Link
+                  key={childPath}
+                  to={childPath}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-4 pl-12 pr-7 py-3 text-sm text-muted-foreground hover:bg-sand/40 hover:text-foreground transition-colors"
+                >
+                  <ChildIcon className="w-[16px] h-[16px]" strokeWidth={1.5} />
+                  {childLabel}
+                </Link>
+              ))}
+            </React.Fragment>
           ))}
         </nav>
       </div>
