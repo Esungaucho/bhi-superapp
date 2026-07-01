@@ -1,35 +1,32 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Home, Compass, Waves, CalendarDays, Users, User, Anchor, Shield } from 'lucide-react';
+import { useUserAccess } from '@/hooks/useUserAccess';
 
 const SECTIONS = [
-  { label: '🏠 Home', path: '/dashboard' },
-  { label: '📅 Island Calendar', path: '/calendar' },
-  { label: '⛴️ Ferry Schedule', path: '/ferry' },
-  { label: '🗺️ Island Map', path: '/map' },
-  { label: '🌤️ Weather', path: '/weather' },
-  { label: '🏡 Lodging', path: '/lodging' },
-  { label: '🛺 Rentals', path: '/rentals' },
-  { label: '🍽️ Food & Dining', path: '/food' },
-  { label: '🛒 Shops', path: '/shops' },
-  { label: '📖 Community', path: '/community' },
-  { label: '📋 My Bookings', path: '/bookings' },
-  { label: '🔔 Notifications', path: '/notifications' },
-  { label: '🤖 Concierge', path: '/agents' },
-  { label: '⚓ Captain\'s Hub', path: '/captain/dashboard' },
-  { label: '❤️ Saved Captains', path: '/captain/saved' },
-  { label: '🔍 Search', path: '/search' },
-  { label: '⚙️ Admin', path: '/admin/revenue' },
+  { label: 'Home', path: '/dashboard', Icon: Home },
+  { label: 'Discovery', path: '/discovery', Icon: Compass },
+  { label: 'Book Experiences', path: '/experiences', Icon: Waves },
+  { label: 'Island Calendar', path: '/calendar', Icon: CalendarDays },
+  { label: 'Community', path: '/community', Icon: Users },
+  { label: 'My Island', path: '/my-island', Icon: User },
 ];
 
 export default function GlobalMenu() {
   const [open, setOpen] = useState(false);
+  const { showCaptainHub, showAdmin } = useUserAccess();
+
+  const allSections = [
+    ...SECTIONS,
+    ...(showCaptainHub ? [{ label: "Captain Hub", path: '/captain/dashboard', Icon: Anchor }] : []),
+    ...(showAdmin ? [{ label: 'Admin Console', path: '/admin/revenue', Icon: Shield }] : []),
+  ];
 
   return (
     <>
       <button
         onClick={() => setOpen(true)}
-        className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+        className="p-1.5 rounded-lg hover:bg-foreground/10 transition-colors"
         aria-label="Open menu"
       >
         <Menu className="w-5 h-5" />
@@ -45,25 +42,26 @@ export default function GlobalMenu() {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-card shadow-2xl z-[101] transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-full w-72 bg-card shadow-2xl z-[101] transition-transform duration-300 ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex items-center justify-between px-4 py-4 bg-primary text-primary-foreground">
-          <span className="font-bold text-sm">🌴 BHI SuperApp</span>
-          <button onClick={() => setOpen(false)} className="p-1 rounded-lg hover:bg-white/10 transition-colors">
+        <div className="flex items-center justify-between px-5 py-4 bg-primary text-primary-foreground">
+          <span className="font-heading text-sm tracking-luxe-sm">Bald Head Island</span>
+          <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-white/10 transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <nav className="py-2 overflow-y-auto h-[calc(100%-60px)]">
-          {SECTIONS.map(({ label, path }) => (
+          {allSections.map(({ label, path, Icon }) => (
             <Link
               key={path}
               to={path}
               onClick={() => setOpen(false)}
-              className="flex items-center px-5 py-3.5 text-sm font-medium text-foreground hover:bg-secondary transition-colors border-b border-border/50 last:border-0"
+              className="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-foreground hover:bg-secondary transition-colors border-b border-border/40 last:border-0"
             >
+              <Icon className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
               {label}
             </Link>
           ))}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Compass } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import FishingExplorer from './FishingExplorer';
 import FishingBoating from './FishingBoating';
 
@@ -8,12 +8,12 @@ const EXPERIENCE_CATEGORIES = [
     id: 'fishing',
     label: 'Fishing Charters',
     emoji: '🎣',
-    desc: 'Captains, trip types, calendar & species guide',
+    desc: 'Inshore, offshore & family trips with local captains',
     gradient: 'from-blue-600/20 to-cyan-500/10',
   },
   {
     id: 'boat_tours',
-    label: 'Boat Tours & Cruises',
+    label: 'Boat Tours',
     emoji: '⛵',
     desc: 'Sunset cruises, sailing & scenic tours',
     gradient: 'from-orange-500/20 to-amber-500/10',
@@ -21,7 +21,7 @@ const EXPERIENCE_CATEGORIES = [
   },
   {
     id: 'kayaks',
-    label: 'Kayaks & Paddle Boards',
+    label: 'Kayak & Paddleboard',
     emoji: '🛶',
     desc: 'Paddle the island waterways',
     gradient: 'from-teal-500/20 to-green-500/10',
@@ -35,8 +35,15 @@ const EXPERIENCE_CATEGORIES = [
     gradient: 'from-green-500/20 to-lime-500/10',
   },
   {
+    id: 'golf_cart',
+    label: 'Golf Cart Rentals',
+    emoji: '🛺',
+    desc: 'Cruise the island in comfort',
+    gradient: 'from-amber-500/20 to-yellow-500/10',
+  },
+  {
     id: 'nature',
-    label: 'Nature & Wildlife Tours',
+    label: 'Nature Tours',
     emoji: '🌿',
     desc: 'Eco tours, birding & island wildlife',
     gradient: 'from-emerald-500/20 to-teal-500/10',
@@ -44,10 +51,17 @@ const EXPERIENCE_CATEGORIES = [
   },
   {
     id: 'surf',
-    label: 'Surf & Water Sports',
+    label: 'Surf Lessons',
     emoji: '🏄',
-    desc: 'Surfing, paddleboarding & more',
+    desc: 'Surfing, paddleboarding & water sports',
     gradient: 'from-cyan-500/20 to-blue-500/10',
+  },
+  {
+    id: 'family',
+    label: 'Family Activities',
+    emoji: '🎪',
+    desc: 'Kid-friendly adventures & island fun',
+    gradient: 'from-rose-500/20 to-pink-500/10',
   },
 ];
 
@@ -94,28 +108,23 @@ export default function ExperiencesHub() {
   }
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto">
+    <div className="flex flex-col">
       {/* Header */}
-      <div className="bg-gradient-to-br from-sea-glass/20 to-navy/10 px-4 py-5 border-b border-border">
-        <div className="flex items-center gap-2 mb-1">
-          <Compass className="w-5 h-5 text-accent" />
-          <h2 className="font-heading text-xl text-foreground">Book Experiences</h2>
-        </div>
-        <p className="text-xs text-muted-foreground">
-          Charters, tours, rentals & adventures on Bald Head Island
-        </p>
+      <div className="px-4 pt-4 pb-4">
+        <h1 className="font-heading text-2xl text-foreground">Book Experiences</h1>
+        <p className="text-sm text-muted-foreground mt-1">Charters, tours, rentals & adventures</p>
       </div>
 
       {/* Category grid */}
-      <div className="px-4 py-4 grid grid-cols-2 gap-3 pb-8">
+      <div className="px-4 pb-8 grid grid-cols-2 gap-3">
         {EXPERIENCE_CATEGORIES.map(cat => (
           <button
             key={cat.id}
             onClick={() => setSelected(cat.id)}
-            className={`bg-gradient-to-br ${cat.gradient} rounded-2xl border border-border p-4 text-left hover:shadow-md hover:border-accent/30 transition-all active:scale-[0.98]`}
+            className={`bg-gradient-to-br ${cat.gradient} rounded-2xl border border-border/50 p-4 text-left hover:shadow-[0_12px_32px_-16px_rgba(31,45,61,0.3)] hover:border-accent/20 transition-all duration-300 active:scale-[0.97]`}
           >
             <span className="text-3xl block mb-2">{cat.emoji}</span>
-            <h3 className="text-sm font-semibold text-foreground leading-tight">{cat.label}</h3>
+            <h3 className="text-sm font-heading font-medium text-foreground leading-tight">{cat.label}</h3>
             <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{cat.desc}</p>
           </button>
         ))}
@@ -126,7 +135,7 @@ export default function ExperiencesHub() {
 
 function BackBar({ label, onBack }) {
   return (
-    <div className="bg-card border-b border-border px-4 py-2.5 flex items-center gap-2 sticky top-0 z-10">
+    <div className="bg-card border-b border-border/50 px-4 py-2.5 flex items-center gap-2 sticky top-0 z-10">
       <button onClick={onBack} className="flex items-center gap-1 text-xs font-medium text-accent">
         <ArrowLeft className="w-4 h-4" /> All Experiences
       </button>

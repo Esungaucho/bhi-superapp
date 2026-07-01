@@ -1,0 +1,35 @@
+import { useQuery } from '@tanstack/react-query';
+import { base44 } from '@/api/base44Client';
+
+export function useUserAccess() {
+  const { data: user } = useQuery({
+    queryKey: ['currentUser'],
+    queryFn: () => base44.auth.me(),
+  });
+
+  const { data: charters = [] } = useQuery({
+    queryKey: ['myCharters', user?.email],
+    queryFn: () => base44.entities.FishingCharter.filter({ owner_email: user.email }),
+    enabled: !!user?.email,
+  });
+
+  const { data: shops = [] } = useQuery({
+    queryKey: ['myShops', user?.email],
+    queryFn: () => base44.entities.Shop.filter({ owner_email: user.email }),
+    enabled: !!user?.email,
+  });
+
+  const isAdmin = user?.role === 'admin';
+  const isCaptain = charters.length > 0;
+  const isBusiness = shops.length > 0;
+
+  return {
+    user,
+    isAdmin,
+    isCaptain,
+    isBusiness,
+    showCaptainHub: isCaptain || isAdmin,
+    showBusiness: isBusiness || isAdmin,
+    showAdmin: isAdmin,
+  };
+}

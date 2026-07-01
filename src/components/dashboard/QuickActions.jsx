@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Ship, Home, UtensilsCrossed, Compass, Calendar } from 'lucide-react';
+import { Ship, Home, UtensilsCrossed, Waves } from 'lucide-react';
 
 const ACTIONS = [
   { label: 'Stay', Icon: Home, path: '/lodging' },
   { label: 'Ferry', Icon: Ship, path: '/ferry' },
   { label: 'Dine', Icon: UtensilsCrossed, path: '/food' },
-  { label: 'Experiences', Icon: Compass, path: '/map' },
+  { label: 'Experiences', Icon: Waves, path: '/experiences' },
 ];
 
 export default function QuickActions() {

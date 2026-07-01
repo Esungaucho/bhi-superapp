@@ -36,6 +36,11 @@ import WeatherDashboard from '@/pages/WeatherDashboard';
 import IslandMap from '@/pages/IslandMap';
 import DashboardShell from '@/components/dashboard/DashboardShell';
 import Dashboard from '@/pages/Dashboard';
+import Discovery from '@/pages/Discovery';
+import BookExperiences from '@/pages/BookExperiences';
+import MyIsland from '@/pages/MyIsland';
+import Settings from '@/pages/Settings';
+import Saved from '@/pages/Saved';
 import UniversalSearch from '@/pages/UniversalSearch';
 import AgentShell from '@/components/agents/AgentShell';
 import Agents from '@/pages/Agents';
@@ -90,6 +95,11 @@ const AuthenticatedApp = () => {
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route element={<DashboardShell />}>
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/discovery" element={<Discovery />} />
+        <Route path="/experiences" element={<BookExperiences />} />
+        <Route path="/my-island" element={<MyIsland />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/saved" element={<Saved />} />
         <Route path="/search" element={<UniversalSearch />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/bookings" element={<AllBookings />} />
