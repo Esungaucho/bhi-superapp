@@ -32,7 +32,7 @@ export default function Settings() {
       <div className="bg-card border border-border/50 rounded-2xl px-4 mb-6 shadow-[0_2px_12px_-8px_rgba(31,45,61,0.12)]">
         <Row to="/profile" Icon={User} label="Edit Profile" desc="Name, photo, phone & interests" />
         <Row to="/communication" Icon={Bell} label="Communication" desc="Notifications, newsletter & DND" />
-        <Row to="/privacy" Icon={Shield} label="Privacy & Data" desc="Download data, delete account" />
+        <Row to="/privacy" Icon={Shield} label="Privacy & Data" desc="Download data, password reset & policies" />
       </div>
 
       <h3 className="text-[11px] font-medium tracking-luxe-sm uppercase text-muted-foreground mb-2 px-1">About</h3>
