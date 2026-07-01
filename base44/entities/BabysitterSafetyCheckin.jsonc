@@ -1,0 +1,44 @@
+{
+  "name": "BabysitterSafetyCheckin",
+  "type": "object",
+  "properties": {
+    "booking_id": {
+      "type": "string"
+    },
+    "sitter_name": {
+      "type": "string"
+    },
+    "checkin_type": {
+      "type": "string",
+      "enum": [
+        "water_life_jacket",
+        "water_safety",
+        "golf_cart_start",
+        "golf_cart_end",
+        "location"
+      ],
+      "description": "Type of safety check-in"
+    },
+    "photo_url": {
+      "type": "string",
+      "description": "Required photo confirmation"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Safety check-in notes"
+    },
+    "location": {
+      "type": "string",
+      "description": "Current location"
+    },
+    "children_status": {
+      "type": "string",
+      "description": "e.g. 'All children wearing life jackets and accounted for'"
+    }
+  },
+  "required": [
+    "booking_id",
+    "checkin_type",
+    "photo_url"
+  ]
+}

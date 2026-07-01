@@ -1,0 +1,26 @@
+{
+  "name": "SavedBabysitter",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Parent email"
+    },
+    "sitter_id": {
+      "type": "string"
+    },
+    "sitter_name": {
+      "type": "string"
+    },
+    "sitter_photo_url": {
+      "type": "string"
+    },
+    "sitter_hourly_rate": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "user_email",
+    "sitter_id"
+  ]
+}

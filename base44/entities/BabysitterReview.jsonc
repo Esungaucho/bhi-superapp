@@ -1,0 +1,92 @@
+{
+  "name": "BabysitterReview",
+  "type": "object",
+  "properties": {
+    "booking_id": {
+      "type": "string"
+    },
+    "reviewer_email": {
+      "type": "string"
+    },
+    "reviewer_name": {
+      "type": "string"
+    },
+    "reviewer_role": {
+      "type": "string",
+      "enum": [
+        "parent",
+        "sitter"
+      ]
+    },
+    "reviewee_email": {
+      "type": "string"
+    },
+    "reviewee_name": {
+      "type": "string"
+    },
+    "reviewee_role": {
+      "type": "string",
+      "enum": [
+        "parent",
+        "sitter"
+      ]
+    },
+    "sitter_id": {
+      "type": "string",
+      "description": "Linked sitter if reviewing a sitter"
+    },
+    "rating": {
+      "type": "number",
+      "description": "1-5 stars"
+    },
+    "written_review": {
+      "type": "string"
+    },
+    "would_book_again": {
+      "type": "boolean"
+    },
+    "safety_rating": {
+      "type": "number",
+      "description": "1-5 safety/trust rating"
+    },
+    "communication_rating": {
+      "type": "number",
+      "description": "1-5 communication rating"
+    },
+    "ai_moderation_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "flagged",
+        "escalated"
+      ],
+      "default": "pending"
+    },
+    "ai_flag_reason": {
+      "type": "string"
+    },
+    "admin_review_status": {
+      "type": "string",
+      "enum": [
+        "none",
+        "under_review",
+        "resolved_safe",
+        "resolved_removed"
+      ],
+      "default": "none"
+    },
+    "is_visible": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "booking_id",
+    "reviewer_email",
+    "reviewer_name",
+    "reviewer_role",
+    "reviewee_email",
+    "rating"
+  ]
+}

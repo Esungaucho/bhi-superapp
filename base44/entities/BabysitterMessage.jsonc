@@ -1,0 +1,64 @@
+{
+  "name": "BabysitterMessage",
+  "type": "object",
+  "properties": {
+    "thread_id": {
+      "type": "string",
+      "description": "Sitter ID + parent email combined"
+    },
+    "booking_id": {
+      "type": "string",
+      "description": "Optional linked booking"
+    },
+    "sender_email": {
+      "type": "string"
+    },
+    "sender_name": {
+      "type": "string"
+    },
+    "sender_role": {
+      "type": "string",
+      "enum": [
+        "parent",
+        "sitter"
+      ]
+    },
+    "recipient_email": {
+      "type": "string"
+    },
+    "recipient_name": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string",
+      "description": "Message text"
+    },
+    "photo_url": {
+      "type": "string",
+      "description": "Optional photo attachment"
+    },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "text",
+        "booking_question",
+        "safety_instruction",
+        "photo_update",
+        "arrival_confirmation",
+        "completion_confirmation"
+      ],
+      "default": "text"
+    },
+    "read_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "thread_id",
+    "sender_email",
+    "sender_name",
+    "recipient_email",
+    "body"
+  ]
+}

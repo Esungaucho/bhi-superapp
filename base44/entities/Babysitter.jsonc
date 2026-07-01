@@ -1,0 +1,238 @@
+{
+  "name": "Babysitter",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "description": "First name shown publicly"
+    },
+    "last_initial": {
+      "type": "string",
+      "description": "Last initial shown publicly e.g. 'S.'"
+    },
+    "profile_photo_url": {
+      "type": "string",
+      "description": "Modest professional photo"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Short professional bio"
+    },
+    "age_range": {
+      "type": "string",
+      "enum": [
+        "18-21",
+        "22-25",
+        "26-30",
+        "31-40",
+        "40+",
+        "adult_sitter"
+      ],
+      "default": "adult_sitter",
+      "description": "Sitter age range"
+    },
+    "on_island": {
+      "type": "boolean",
+      "default": false,
+      "description": "Lives on Bald Head Island"
+    },
+    "travel_time_to_ferry": {
+      "type": "string",
+      "description": "Estimated travel time to ferry/island e.g. '5 min', '20 min ferry ride'"
+    },
+    "hourly_rate": {
+      "type": "number",
+      "description": "Hourly rate in USD"
+    },
+    "min_booking_hours": {
+      "type": "number",
+      "default": 3,
+      "description": "Minimum booking length in hours"
+    },
+    "years_experience": {
+      "type": "number",
+      "default": 0
+    },
+    "infant_experience": {
+      "type": "boolean",
+      "default": false
+    },
+    "toddler_experience": {
+      "type": "boolean",
+      "default": false
+    },
+    "multi_child_experience": {
+      "type": "boolean",
+      "default": false
+    },
+    "beach_pool_comfort": {
+      "type": "string",
+      "enum": [
+        "none",
+        "comfortable",
+        "very_comfortable",
+        "certified"
+      ],
+      "default": "comfortable"
+    },
+    "golf_cart_comfort": {
+      "type": "string",
+      "enum": [
+        "none",
+        "comfortable",
+        "very_comfortable"
+      ],
+      "default": "comfortable"
+    },
+    "light_housework": {
+      "type": "boolean",
+      "default": false
+    },
+    "meal_prep": {
+      "type": "boolean",
+      "default": false
+    },
+    "bedtime_routine": {
+      "type": "boolean",
+      "default": false
+    },
+    "cpr_certified": {
+      "type": "boolean",
+      "default": false
+    },
+    "first_aid_certified": {
+      "type": "boolean",
+      "default": false
+    },
+    "lifeguard_certified": {
+      "type": "boolean",
+      "default": false
+    },
+    "water_safety_certified": {
+      "type": "boolean",
+      "default": false
+    },
+    "childcare_training": {
+      "type": "boolean",
+      "default": false
+    },
+    "background_check_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "passed",
+        "failed",
+        "not_required"
+      ],
+      "default": "pending"
+    },
+    "references_verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "rating": {
+      "type": "number",
+      "default": 0
+    },
+    "review_count": {
+      "type": "number",
+      "default": 0
+    },
+    "completed_bookings": {
+      "type": "number",
+      "default": 0
+    },
+    "availability": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "start_time": {
+            "type": "string"
+          },
+          "end_time": {
+            "type": "string"
+          },
+          "is_available": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "description": "Availability calendar entries"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "suspended",
+        "banned"
+      ],
+      "default": "pending"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Email of sitter's user account"
+    },
+    "full_legal_name": {
+      "type": "string",
+      "description": "PRIVATE \u2014 not shown publicly"
+    },
+    "government_id_url": {
+      "type": "string",
+      "description": "PRIVATE \u2014 government ID upload"
+    },
+    "drivers_license_url": {
+      "type": "string",
+      "description": "PRIVATE \u2014 driver license upload"
+    },
+    "license_plate": {
+      "type": "string",
+      "description": "PRIVATE \u2014 vehicle plate"
+    },
+    "background_check_url": {
+      "type": "string",
+      "description": "PRIVATE \u2014 background check document"
+    },
+    "emergency_contact_name": {
+      "type": "string",
+      "description": "PRIVATE"
+    },
+    "emergency_contact_phone": {
+      "type": "string",
+      "description": "PRIVATE"
+    },
+    "certification_documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "PRIVATE \u2014 certification document URLs"
+    },
+    "consent_share_info": {
+      "type": "boolean",
+      "default": false,
+      "description": "Sitter consent: info shared only after booking accepted"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "first_name",
+    "last_initial",
+    "hourly_rate",
+    "on_island"
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "name": "BabysitterBooking",
+  "type": "object",
+  "properties": {
+    "parent_email": {
+      "type": "string"
+    },
+    "parent_name": {
+      "type": "string"
+    },
+    "parent_phone": {
+      "type": "string"
+    },
+    "sitter_id": {
+      "type": "string"
+    },
+    "sitter_name": {
+      "type": "string"
+    },
+    "sitter_photo_url": {
+      "type": "string"
+    },
+    "sitter_owner_email": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "start_time": {
+      "type": "string",
+      "description": "HH:MM"
+    },
+    "end_time": {
+      "type": "string",
+      "description": "HH:MM"
+    },
+    "num_children": {
+      "type": "number",
+      "default": 1
+    },
+    "children_ages": {
+      "type": "string",
+      "description": "e.g. '3, 5, 8'"
+    },
+    "island_address": {
+      "type": "string",
+      "description": "Island address or rental location"
+    },
+    "special_needs": {
+      "type": "string"
+    },
+    "bedtime_instructions": {
+      "type": "string"
+    },
+    "food_instructions": {
+      "type": "string"
+    },
+    "emergency_contact_name": {
+      "type": "string"
+    },
+    "emergency_contact_phone": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "allow_beach_pool": {
+      "type": "boolean",
+      "default": false,
+      "description": "Parent allows sitter to supervise child near beach/pool"
+    },
+    "allow_golf_cart": {
+      "type": "boolean",
+      "default": false,
+      "description": "Parent allows sitter to transport child by golf cart"
+    },
+    "require_water_photo_checkins": {
+      "type": "boolean",
+      "default": false
+    },
+    "require_cart_photo_checkins": {
+      "type": "boolean",
+      "default": false
+    },
+    "no_water_activities": {
+      "type": "boolean",
+      "default": false
+    },
+    "no_golf_cart": {
+      "type": "boolean",
+      "default": false
+    },
+    "light_housework_requested": {
+      "type": "boolean",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted",
+        "declined",
+        "cancelled",
+        "in_progress",
+        "completed",
+        "disputed"
+      ],
+      "default": "pending"
+    },
+    "sitter_accepted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "info_shared": {
+      "type": "boolean",
+      "default": false,
+      "description": "Sitter's verification info revealed to parent"
+    },
+    "hourly_rate": {
+      "type": "number"
+    },
+    "estimated_hours": {
+      "type": "number"
+    },
+    "estimated_total": {
+      "type": "number"
+    },
+    "booking_fee": {
+      "type": "number",
+      "default": 5
+    },
+    "tip": {
+      "type": "number",
+      "default": 0
+    },
+    "total_cost": {
+      "type": "number"
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": [
+        "unpaid",
+        "paid",
+        "refunded",
+        "disputed"
+      ],
+      "default": "unpaid"
+    },
+    "payment_id": {
+      "type": "string"
+    },
+    "arrival_confirmed": {
+      "type": "boolean",
+      "default": false
+    },
+    "arrival_confirmed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "admin_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "parent_email",
+    "parent_name",
+    "sitter_id",
+    "sitter_name",
+    "date",
+    "start_time",
+    "end_time",
+    "num_children",
+    "island_address"
+  ]
+}
