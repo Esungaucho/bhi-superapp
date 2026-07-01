@@ -47,6 +47,7 @@ import RevenueDashboard from '@/pages/admin/RevenueDashboard';
 import AdCampaigns from '@/pages/admin/AdCampaigns';
 import PartnerManagement from '@/pages/admin/PartnerManagement';
 import SubmissionReview from '@/pages/admin/SubmissionReview';
+import CommunityModeration from '@/pages/admin/CommunityModeration';
 import CommunityShell from '@/components/community/CommunityShell';
 import CommunityFeed from '@/pages/CommunityFeed';
 import SubmitContent from '@/pages/SubmitContent';
@@ -127,6 +128,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/ads" element={<AdCampaigns />} />
         <Route path="/admin/partners" element={<PartnerManagement />} />
         <Route path="/admin/submissions" element={<SubmissionReview />} />
+        <Route path="/admin/community" element={<CommunityModeration />} />
       </Route>
       <Route element={<CommunityShell />}>
         <Route path="/community" element={<CommunityFeed />} />

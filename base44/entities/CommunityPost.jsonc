@@ -17,15 +17,19 @@
     "category": {
       "type": "string",
       "enum": [
-        "local_guide",
-        "beach_access",
-        "hidden_gem",
-        "animal_sighting",
+        "general_chat",
         "lost_found",
-        "seasonal_tip",
-        "community_chat"
+        "weather_alert",
+        "ferry_update",
+        "bug_report",
+        "beach_conditions",
+        "wildlife_sighting",
+        "recommendations",
+        "events",
+        "help_needed",
+        "urgent_update"
       ],
-      "default": "community_chat",
+      "default": "general_chat",
       "description": "Post category"
     },
     "tags": {
@@ -57,7 +61,12 @@
     "is_hidden": {
       "type": "boolean",
       "default": false,
-      "description": "Hidden if too many reports"
+      "description": "Hidden by admin or auto-hidden by reports"
+    },
+    "is_pinned": {
+      "type": "boolean",
+      "default": false,
+      "description": "Pinned by admin to top of feed"
     }
   },
   "required": [
