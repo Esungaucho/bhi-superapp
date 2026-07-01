@@ -1,11 +1,11 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Loader2 } from 'lucide-react';
 import HeroWidget from '@/components/dashboard/HeroWidget';
+import SearchBar from '@/components/dashboard/SearchBar';
 import QuickActions from '@/components/dashboard/QuickActions';
-import DealsCarousel from '@/components/dashboard/DealsCarousel';
 import UpcomingBookings from '@/components/dashboard/UpcomingBookings';
+import DealsCarousel from '@/components/dashboard/DealsCarousel';
 import SponsoredBanner from '@/components/dashboard/SponsoredBanner';
 
 export default function Dashboard() {
@@ -37,22 +37,24 @@ export default function Dashboard() {
     queryFn: () => base44.entities.PromoDeal.filter({ is_active: true }),
   });
 
-  // Find soonest upcoming ferry booking for hero
   const now = new Date();
   const soonestFerry = ferryBookings
     .filter(b => new Date(b.departure_time) >= now)
     .sort((a, b) => new Date(a.departure_time) - new Date(b.departure_time))[0];
 
+  const nonSponsoredDeals = deals.filter(d => d.deal_type !== 'sponsored');
+
   return (
-    <div className="pb-12 pt-1">
+    <div className="pb-12">
       <HeroWidget upcomingBooking={soonestFerry} user={user} />
+      <SearchBar />
       <QuickActions />
       <UpcomingBookings
         ferryBookings={ferryBookings}
         lodgingBookings={lodgingBookings}
         rentalBookings={rentalBookings}
       />
-      <DealsCarousel deals={deals.filter(d => d.deal_type !== 'sponsored')} />
+      {nonSponsoredDeals.length > 0 && <DealsCarousel deals={nonSponsoredDeals} />}
       <SponsoredBanner deals={deals} />
     </div>
   );

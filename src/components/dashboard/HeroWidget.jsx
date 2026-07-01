@@ -19,24 +19,24 @@ export default function HeroWidget({ upcomingBooking, user }) {
   return (
     <section className="relative overflow-hidden animate-fade-in">
       {/* Cinematic photograph */}
-      <div className="relative h-72 sm:h-80">
+      <div className="relative h-80">
         <img
           src={HERO_IMAGE}
           alt="Bald Head Island at golden hour"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/80 via-navy/55 to-navy-deep/40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy-deep/50 via-navy-deep/30 to-navy-deep/70" />
       </div>
 
       {/* Editorial content overlay */}
       <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
-        <p className="text-[10px] font-body tracking-luxe uppercase text-white/70">{greeting}</p>
-        <h1 className="font-heading text-3xl sm:text-4xl leading-tight mt-1 text-balance">
+        <p className="text-[10px] font-body tracking-luxe uppercase text-white/60">{greeting}</p>
+        <h1 className="font-heading text-3xl sm:text-[2rem] leading-[1.1] mt-1.5 text-balance">
           {upcomingBooking ? 'Your island awaits' : `Hello, ${firstName}`}
         </h1>
 
         {upcomingBooking ? (
-          <div className="mt-4 space-y-3">
+          <div className="mt-5 space-y-3">
             <div className="flex items-center gap-2 text-sm text-white/80">
               <CalendarDays className="w-4 h-4" strokeWidth={1.5} />
               <span className="font-body">
@@ -51,35 +51,17 @@ export default function HeroWidget({ upcomingBooking, user }) {
             </div>
             <Link
               to="/ferry/bookings"
-              className="inline-flex items-center gap-2 text-sm font-body font-medium bg-white/15 backdrop-blur-md border border-white/25 hover:bg-white/25 transition-colors rounded-full px-4 py-2 w-fit"
+              className="inline-flex items-center gap-2 text-sm font-body font-medium bg-white text-navy-deep hover:bg-white/90 transition-colors rounded-full px-5 py-2.5 w-fit"
             >
               View itinerary <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.5} />
             </Link>
           </div>
         ) : (
-          <p className="text-sm font-body text-white/75 mt-2 max-w-xs leading-relaxed">
+          <p className="text-sm font-body text-white/70 mt-2 max-w-xs leading-relaxed">
             Serene shores, maritime forests, and quiet luxury — your island journey begins here.
           </p>
         )}
       </div>
-
-      {/* Floating quick-CTAs (only when no upcoming booking) */}
-      {!upcomingBooking && (
-        <div className="absolute bottom-0 right-0 flex gap-2 p-4">
-          <Link
-            to="/ferry"
-            className="text-xs font-body font-medium bg-white/15 backdrop-blur-md border border-white/25 hover:bg-white/25 transition-colors rounded-full px-3.5 py-1.5 text-white"
-          >
-            Ferry
-          </Link>
-          <Link
-            to="/lodging"
-            className="text-xs font-body font-medium bg-white/15 backdrop-blur-md border border-white/25 hover:bg-white/25 transition-colors rounded-full px-3.5 py-1.5 text-white"
-          >
-            Stay
-          </Link>
-        </div>
-      )}
     </section>
   );
 }
