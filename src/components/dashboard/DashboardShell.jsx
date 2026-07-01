@@ -25,7 +25,7 @@ export default function DashboardShell() {
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/80 via-navy/55 to-navy-deep/40" />
-          <div className="relative h-full flex items-center justify-between px-4">
+          <div className="relative h-full flex items-center justify-between px-4 text-white">
             <h1 className="font-heading text-lg text-white tracking-luxe-sm">Bald Head Island</h1>
             <GlobalMenu />
           </div>
