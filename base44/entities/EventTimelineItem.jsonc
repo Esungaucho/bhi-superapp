@@ -1,0 +1,65 @@
+{
+  "name": "EventTimelineItem",
+  "type": "object",
+  "properties": {
+    "event_plan_id": {
+      "type": "string",
+      "description": "Linked EventPlan ID"
+    },
+    "phase": {
+      "type": "string",
+      "enum": [
+        "twelve_months",
+        "nine_months",
+        "six_months",
+        "three_months",
+        "one_month",
+        "event_week",
+        "day_before",
+        "event_day",
+        "post_event"
+      ],
+      "description": "Timeline phase"
+    },
+    "title": {
+      "type": "string",
+      "description": "Task title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Task details"
+    },
+    "is_completed": {
+      "type": "boolean",
+      "default": false
+    },
+    "assigned_to": {
+      "type": "string",
+      "enum": [
+        "host",
+        "planner",
+        "vendor",
+        "concierge"
+      ],
+      "default": "host",
+      "description": "Who is responsible"
+    },
+    "assigned_name": {
+      "type": "string",
+      "description": "Specific person or vendor name"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "event_plan_id",
+    "phase",
+    "title"
+  ]
+}

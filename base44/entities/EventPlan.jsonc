@@ -1,0 +1,153 @@
+{
+  "name": "EventPlan",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Event owner email"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "Event owner name"
+    },
+    "event_title": {
+      "type": "string",
+      "description": "Custom event name e.g. 'Sarah & Mike's Wedding'"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "wedding",
+        "rehearsal_dinner",
+        "family_reunion",
+        "birthday_anniversary",
+        "corporate_retreat",
+        "charity_event",
+        "private_dinner",
+        "other"
+      ],
+      "description": "Type of event"
+    },
+    "desired_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Preferred event date"
+    },
+    "date_range_start": {
+      "type": "string",
+      "format": "date",
+      "description": "Start of date range if flexible"
+    },
+    "date_range_end": {
+      "type": "string",
+      "format": "date",
+      "description": "End of date range if flexible"
+    },
+    "is_date_flexible": {
+      "type": "boolean",
+      "default": false,
+      "description": "Date is flexible within a range"
+    },
+    "estimated_guest_count": {
+      "type": "number",
+      "default": 50,
+      "description": "Estimated number of guests"
+    },
+    "budget_range": {
+      "type": "string",
+      "description": "Budget range ID e.g. 25k_50k"
+    },
+    "ceremony_location_preference": {
+      "type": "string",
+      "description": "Preferred ceremony or event location on BHI"
+    },
+    "accommodation_needs": {
+      "type": "string",
+      "description": "Lodging requirements for guests"
+    },
+    "childcare_needs": {
+      "type": "string",
+      "description": "Childcare requirements during event"
+    },
+    "transportation_needs": {
+      "type": "string",
+      "description": "Transportation requirements e.g. ferry, golf carts"
+    },
+    "catering_needs": {
+      "type": "string",
+      "description": "Food and beverage requirements"
+    },
+    "photography_videography_needs": {
+      "type": "string",
+      "description": "Photo/video coverage needed"
+    },
+    "floral_decor_needs": {
+      "type": "string",
+      "description": "Floral arrangements and decor"
+    },
+    "rental_equipment_needs": {
+      "type": "string",
+      "description": "Tents, chairs, tables, equipment"
+    },
+    "planning_help_type": {
+      "type": "string",
+      "enum": [
+        "have_planner",
+        "need_planner",
+        "compass_concierge"
+      ],
+      "default": "compass_concierge",
+      "description": "Planning assistance preference"
+    },
+    "planner_name": {
+      "type": "string",
+      "description": "Existing planner name if applicable"
+    },
+    "planner_email": {
+      "type": "string",
+      "description": "Existing planner email"
+    },
+    "planner_phone": {
+      "type": "string",
+      "description": "Existing planner phone"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planning",
+        "in_progress",
+        "confirmed",
+        "completed",
+        "archived"
+      ],
+      "default": "planning",
+      "description": "Event plan status"
+    },
+    "assigned_concierge": {
+      "type": "string",
+      "description": "Compass Concierge team member assigned"
+    },
+    "concierge_notes": {
+      "type": "string",
+      "description": "Internal concierge notes"
+    },
+    "admin_notes": {
+      "type": "string",
+      "description": "Admin-only internal notes"
+    },
+    "weather_backup_plan": {
+      "type": "string",
+      "description": "Weather contingency plan"
+    },
+    "cover_image_url": {
+      "type": "string",
+      "description": "Event cover image"
+    }
+  },
+  "required": [
+    "user_email",
+    "event_type",
+    "estimated_guest_count",
+    "planning_help_type"
+  ]
+}

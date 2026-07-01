@@ -1,0 +1,107 @@
+{
+  "name": "EventQuoteRequest",
+  "type": "object",
+  "properties": {
+    "event_plan_id": {
+      "type": "string",
+      "description": "Linked EventPlan ID"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "vendor_id": {
+      "type": "string",
+      "description": "Linked EventVendor ID"
+    },
+    "vendor_name": {
+      "type": "string",
+      "description": "Vendor name snapshot"
+    },
+    "vendor_category": {
+      "type": "string",
+      "description": "Vendor category snapshot"
+    },
+    "event_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Requested event date"
+    },
+    "guest_count": {
+      "type": "number",
+      "description": "Estimated guest count"
+    },
+    "budget": {
+      "type": "string",
+      "description": "Budget range for this service"
+    },
+    "service_details": {
+      "type": "string",
+      "description": "Description of services requested"
+    },
+    "special_requests": {
+      "type": "string",
+      "description": "Special requirements or preferences"
+    },
+    "inspiration_photo_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Inspiration/attachment photo URLs"
+    },
+    "preferred_response_deadline": {
+      "type": "string",
+      "format": "date",
+      "description": "Preferred vendor response date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "quoted",
+        "accepted",
+        "declined",
+        "expired",
+        "booked"
+      ],
+      "default": "pending",
+      "description": "Quote request status"
+    },
+    "quoted_price": {
+      "type": "number",
+      "description": "Vendor quoted price"
+    },
+    "quoted_details": {
+      "type": "string",
+      "description": "Vendor response details"
+    },
+    "vendor_response_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": [
+        "not_applicable",
+        "pending",
+        "deposit_paid",
+        "paid",
+        "refunded"
+      ],
+      "default": "not_applicable"
+    },
+    "admin_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_plan_id",
+    "user_email",
+    "vendor_id",
+    "vendor_name",
+    "service_details"
+  ]
+}

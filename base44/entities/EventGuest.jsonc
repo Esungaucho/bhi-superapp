@@ -1,0 +1,79 @@
+{
+  "name": "EventGuest",
+  "type": "object",
+  "properties": {
+    "event_plan_id": {
+      "type": "string",
+      "description": "Linked EventPlan ID"
+    },
+    "guest_name": {
+      "type": "string",
+      "description": "Guest full name"
+    },
+    "guest_email": {
+      "type": "string"
+    },
+    "guest_phone": {
+      "type": "string"
+    },
+    "arrival_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "departure_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "ferry_needs": {
+      "type": "string",
+      "description": "Ferry transportation needs e.g. 'arriving Friday 2pm ferry'"
+    },
+    "rental_home_assignment": {
+      "type": "string",
+      "description": "Assigned rental home or lodging"
+    },
+    "golf_cart_needs": {
+      "type": "string",
+      "description": "Golf cart requirements"
+    },
+    "childcare_needs": {
+      "type": "string",
+      "description": "Childcare needs during event"
+    },
+    "welcome_bag": {
+      "type": "boolean",
+      "default": false,
+      "description": "Welcome bag to prepare"
+    },
+    "dietary_restrictions": {
+      "type": "string",
+      "description": "Food allergies and dietary needs"
+    },
+    "accessibility_notes": {
+      "type": "string",
+      "description": "Accessibility or mobility requirements"
+    },
+    "rsvp_status": {
+      "type": "string",
+      "enum": [
+        "invited",
+        "confirmed",
+        "declined",
+        "maybe"
+      ],
+      "default": "invited"
+    },
+    "plus_ones": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of plus-ones or additional guests"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_plan_id",
+    "guest_name"
+  ]
+}

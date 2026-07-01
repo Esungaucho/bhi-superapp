@@ -1,0 +1,127 @@
+{
+  "name": "EventVendor",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Vendor or business name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "wedding_planners",
+        "venues_locations",
+        "caterers",
+        "florists",
+        "photographers",
+        "videographers",
+        "hair_makeup",
+        "bakers",
+        "bartenders",
+        "musicians_djs",
+        "event_rentals",
+        "tents_chairs_tables",
+        "transportation",
+        "golf_carts",
+        "childcare",
+        "grocery_stocking",
+        "cleaning",
+        "security",
+        "private_chefs",
+        "activities_excursions"
+      ],
+      "description": "Vendor service category"
+    },
+    "description": {
+      "type": "string",
+      "description": "Vendor bio and service description"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Photo gallery URLs"
+    },
+    "price_range": {
+      "type": "string",
+      "enum": [
+        "$",
+        "$$",
+        "$$$",
+        "$$$$",
+        "custom"
+      ],
+      "default": "$$",
+      "description": "Price tier"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "service_area": {
+      "type": "string",
+      "description": "Geographic service area"
+    },
+    "specialties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific specialties or offerings"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Searchable tags"
+    },
+    "is_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Verified local partner badge"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "suspended"
+      ],
+      "default": "pending",
+      "description": "Admin approval status"
+    },
+    "admin_notes": {
+      "type": "string",
+      "description": "Admin-only notes"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured in marketplace"
+    },
+    "rating": {
+      "type": "number",
+      "default": 0,
+      "description": "Average rating 1-5"
+    },
+    "review_count": {
+      "type": "number",
+      "default": 0
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Vendor account email for self-management"
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ]
+}

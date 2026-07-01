@@ -89,6 +89,16 @@ import SitterProfile from '@/pages/SitterProfile';
 import BabysittingBookingDetail from '@/pages/BabysittingBookingDetail';
 import BabysittingMessage from '@/pages/BabysittingMessage';
 import BabysittingAdmin from '@/pages/admin/BabysittingAdmin';
+import EventsHub from '@/pages/EventsHub';
+import StartEvent from '@/pages/StartEvent';
+import EventDashboard from '@/pages/EventDashboard';
+import EventVendors from '@/pages/EventVendors';
+import EventVendorProfile from '@/pages/EventVendorProfile';
+import EventGuestLogistics from '@/pages/EventGuestLogistics';
+import EventTimeline from '@/pages/EventTimeline';
+import EventRequests from '@/pages/EventRequests';
+import EventConciergeHelp from '@/pages/EventConciergeHelp';
+import EventsAdmin from '@/pages/admin/EventsAdmin';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -133,6 +143,16 @@ const AuthenticatedApp = () => {
         <Route path="/babysitting/sitter/:id" element={<SitterProfile />} />
         <Route path="/babysitting/booking/:id" element={<BabysittingBookingDetail />} />
         <Route path="/babysitting/message/:sitterId" element={<BabysittingMessage />} />
+        <Route path="/events" element={<EventsHub />} />
+        <Route path="/events/start" element={<StartEvent />} />
+        <Route path="/events/dashboard/:id" element={<EventDashboard />} />
+        <Route path="/events/vendors" element={<EventVendors />} />
+        <Route path="/events/vendors/:vendorId" element={<EventVendorProfile />} />
+        <Route path="/events/:id/guests" element={<EventGuestLogistics />} />
+        <Route path="/events/:id/timeline" element={<EventTimeline />} />
+        <Route path="/events/:id/requests" element={<EventRequests />} />
+        <Route path="/events/:id/concierge" element={<EventConciergeHelp />} />
+        <Route path="/events/concierge" element={<EventConciergeHelp />} />
         <Route path="/experiences" element={<BookExperiences />} />
         <Route path="/my-island" element={<MyIsland />} />
         <Route path="/settings" element={<Settings />} />
@@ -195,6 +215,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/birdie" element={<BirdieAdmin />} />
         <Route path="/admin/concierge" element={<ConciergeAdmin />} />
         <Route path="/admin/babysitting" element={<BabysittingAdmin />} />
+        <Route path="/admin/events" element={<EventsAdmin />} />
       </Route>
       <Route element={<CommunityShell />}>
         <Route path="/community" element={<CommunityFeed />} />
