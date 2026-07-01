@@ -1,0 +1,72 @@
+{
+  "name": "FishingSpot",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Spot name"
+    },
+    "description": {
+      "type": "string",
+      "description": "What this spot offers"
+    },
+    "spot_type": {
+      "type": "string",
+      "enum": [
+        "marina",
+        "bait_shop",
+        "cleaning_station",
+        "fishing_spot",
+        "charter_departure"
+      ],
+      "description": "Type of fishing point of interest"
+    },
+    "address": {
+      "type": "string",
+      "description": "Location description or address"
+    },
+    "lat": {
+      "type": "number",
+      "description": "Latitude"
+    },
+    "lng": {
+      "type": "number",
+      "description": "Longitude"
+    },
+    "hours": {
+      "type": "string",
+      "description": "Operating hours if applicable"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "amenities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "e.g. ice, fuel, restrooms, parking"
+    },
+    "is_public": {
+      "type": "boolean",
+      "default": true,
+      "description": "Publicly accessible"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "spot_type",
+    "lat",
+    "lng"
+  ]
+}
