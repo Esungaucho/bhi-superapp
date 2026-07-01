@@ -1,0 +1,82 @@
+{
+  "name": "WeddingInquiry",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "user_phone": {
+      "type": "string"
+    },
+    "wedding_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Desired wedding date"
+    },
+    "guest_count": {
+      "type": "number",
+      "description": "Estimated guest count"
+    },
+    "venue_location": {
+      "type": "string",
+      "description": "Venue or location preference"
+    },
+    "budget_range": {
+      "type": "string",
+      "description": "Budget range ID"
+    },
+    "services_needed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of service IDs needed"
+    },
+    "style_vibe": {
+      "type": "string",
+      "description": "Wedding style or vibe e.g. beachfront casual, black-tie formal"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes"
+    },
+    "selected_partner_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Partners the user is interested in"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "reviewing",
+        "matched",
+        "consultation_scheduled",
+        "quoted",
+        "booked",
+        "archived"
+      ],
+      "default": "submitted"
+    },
+    "assigned_concierge": {
+      "type": "string"
+    },
+    "admin_notes": {
+      "type": "string"
+    },
+    "estimated_package_price": {
+      "type": "number",
+      "description": "Estimated total package price"
+    }
+  },
+  "required": [
+    "user_email",
+    "wedding_date",
+    "guest_count"
+  ]
+}

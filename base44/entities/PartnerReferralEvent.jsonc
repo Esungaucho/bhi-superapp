@@ -1,0 +1,52 @@
+{
+  "name": "PartnerReferralEvent",
+  "type": "object",
+  "properties": {
+    "partner_id": {
+      "type": "string",
+      "description": "Linked PreferredPartner ID"
+    },
+    "partner_name": {
+      "type": "string",
+      "description": "Partner name snapshot"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "User who triggered the event (if known)"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "profile_view",
+        "button_click",
+        "website_click",
+        "booking_request",
+        "quote_request",
+        "promo_code_usage",
+        "referral_click"
+      ],
+      "description": "Type of referral event"
+    },
+    "referral_source": {
+      "type": "string",
+      "description": "Where the user came from e.g. concierge_page, newsletter, search"
+    },
+    "promo_code_used": {
+      "type": "string",
+      "description": "Promo code if used"
+    },
+    "estimated_commission": {
+      "type": "number",
+      "default": 0,
+      "description": "Estimated commission amount"
+    },
+    "metadata": {
+      "type": "string",
+      "description": "Additional JSON metadata"
+    }
+  },
+  "required": [
+    "partner_id",
+    "event_type"
+  ]
+}

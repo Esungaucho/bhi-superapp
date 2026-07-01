@@ -1,0 +1,176 @@
+{
+  "name": "PreferredPartner",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Business name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "photography_media",
+        "weddings_events",
+        "real_estate_property",
+        "wellness_beauty",
+        "food_hosting"
+      ],
+      "description": "Partner category"
+    },
+    "subcategory": {
+      "type": "string",
+      "description": "Specific service type e.g. wedding_photographers, florists"
+    },
+    "description": {
+      "type": "string",
+      "description": "Business description"
+    },
+    "cover_image_url": {
+      "type": "string",
+      "description": "Professional cover image"
+    },
+    "logo_url": {
+      "type": "string",
+      "description": "Business logo"
+    },
+    "photo_gallery": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Photo gallery URLs"
+    },
+    "service_area": {
+      "type": "string",
+      "description": "Geographic service area"
+    },
+    "website": {
+      "type": "string",
+      "description": "Business website URL"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "booking_link": {
+      "type": "string",
+      "description": "External booking link if available"
+    },
+    "referral_link": {
+      "type": "string",
+      "description": "Referral tracking link"
+    },
+    "affiliate_link": {
+      "type": "string",
+      "description": "Affiliate link"
+    },
+    "promo_code": {
+      "type": "string",
+      "description": "Promo code for users"
+    },
+    "pricing_guide": {
+      "type": "string",
+      "description": "Optional pricing guide text"
+    },
+    "is_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Verified trusted partner badge"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured partner"
+    },
+    "is_bookable_through_app": {
+      "type": "boolean",
+      "default": false,
+      "description": "Can be booked through the app"
+    },
+    "listing_type": {
+      "type": "string",
+      "enum": [
+        "free",
+        "paid",
+        "featured",
+        "referral_commission",
+        "affiliate"
+      ],
+      "default": "free",
+      "description": "Listing and partnership type"
+    },
+    "commission_rate": {
+      "type": "number",
+      "default": 0,
+      "description": "Commission percentage (0-100)"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Searchable tags"
+    },
+    "rating": {
+      "type": "number",
+      "default": 0,
+      "description": "Average rating 1-5"
+    },
+    "review_count": {
+      "type": "number",
+      "default": 0
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "hidden",
+        "suspended"
+      ],
+      "default": "pending"
+    },
+    "admin_notes": {
+      "type": "string",
+      "description": "Admin-only notes"
+    },
+    "featured_in_newsletter": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured in weekly newsletter"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Partner account email for self-management"
+    },
+    "profile_views": {
+      "type": "number",
+      "default": 0,
+      "description": "Total profile views"
+    },
+    "button_clicks": {
+      "type": "number",
+      "default": 0,
+      "description": "Total button clicks"
+    },
+    "website_clicks": {
+      "type": "number",
+      "default": 0,
+      "description": "Total website clicks"
+    },
+    "quote_requests_count": {
+      "type": "number",
+      "default": 0
+    },
+    "booking_requests_count": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ]
+}

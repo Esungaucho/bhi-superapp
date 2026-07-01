@@ -99,6 +99,11 @@ import EventTimeline from '@/pages/EventTimeline';
 import EventRequests from '@/pages/EventRequests';
 import EventConciergeHelp from '@/pages/EventConciergeHelp';
 import EventsAdmin from '@/pages/admin/EventsAdmin';
+import ConciergeServices from '@/pages/ConciergeServices';
+import PreferredPartners from '@/pages/PreferredPartners';
+import PartnerProfile from '@/pages/PartnerProfile';
+import WeddingInquiryPage from '@/pages/WeddingInquiryPage';
+import PartnersAdmin from '@/pages/admin/PartnersAdmin';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -153,6 +158,10 @@ const AuthenticatedApp = () => {
         <Route path="/events/:id/requests" element={<EventRequests />} />
         <Route path="/events/:id/concierge" element={<EventConciergeHelp />} />
         <Route path="/events/concierge" element={<EventConciergeHelp />} />
+        <Route path="/concierge/services" element={<ConciergeServices />} />
+        <Route path="/concierge/partners" element={<PreferredPartners />} />
+        <Route path="/concierge/partners/:partnerId" element={<PartnerProfile />} />
+        <Route path="/concierge/wedding-inquiry" element={<WeddingInquiryPage />} />
         <Route path="/experiences" element={<BookExperiences />} />
         <Route path="/my-island" element={<MyIsland />} />
         <Route path="/settings" element={<Settings />} />
@@ -216,6 +225,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/concierge" element={<ConciergeAdmin />} />
         <Route path="/admin/babysitting" element={<BabysittingAdmin />} />
         <Route path="/admin/events" element={<EventsAdmin />} />
+        <Route path="/admin/partners" element={<PartnersAdmin />} />
       </Route>
       <Route element={<CommunityShell />}>
         <Route path="/community" element={<CommunityFeed />} />

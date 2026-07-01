@@ -1,0 +1,46 @@
+{
+  "name": "PartnerReview",
+  "type": "object",
+  "properties": {
+    "partner_id": {
+      "type": "string",
+      "description": "Linked PreferredPartner ID"
+    },
+    "reviewer_email": {
+      "type": "string"
+    },
+    "reviewer_name": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number",
+      "description": "1-5 stars"
+    },
+    "written_review": {
+      "type": "string"
+    },
+    "is_verified_customer": {
+      "type": "boolean",
+      "default": false
+    },
+    "ai_moderation_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "flagged"
+      ],
+      "default": "pending"
+    },
+    "is_visible": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "partner_id",
+    "reviewer_email",
+    "reviewer_name",
+    "rating"
+  ]
+}
