@@ -1,12 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Newspaper, PenSquare, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
-
-const NAV = [
-  { path: '/community', label: 'Feed', icon: Newspaper, exact: true },
-  { path: '/community/submit', label: 'Submit', icon: PenSquare },
-];
 
 export default function CommunityShell() {
   const location = useLocation();
@@ -26,24 +21,9 @@ export default function CommunityShell() {
           <GlobalMenu />
         </header>
 
-        <main className="flex-1 overflow-y-auto pb-20">
+        <main className="flex-1 overflow-y-auto pb-8">
           <Outlet />
         </main>
-
-        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border px-2 py-1 z-50">
-          <div className="flex justify-around">
-            {NAV.map(item => {
-              const isActive = item.exact ? location.pathname === item.path : location.pathname.startsWith(item.path);
-              const Icon = item.icon;
-              return (
-                <Link key={item.path} to={item.path} className={`flex flex-col items-center py-2 px-3 rounded-lg ${isActive ? 'text-accent' : 'text-muted-foreground'}`}>
-                  <Icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
-                  <span className="text-[10px] font-medium mt-0.5">{item.label}</span>
-                </Link>
-              );
-            })}
-          </div>
-        </nav>
       </div>
     </div>
   );

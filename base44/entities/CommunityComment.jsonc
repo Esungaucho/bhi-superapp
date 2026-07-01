@@ -1,0 +1,28 @@
+{
+  "name": "CommunityComment",
+  "type": "object",
+  "properties": {
+    "post_id": {
+      "type": "string",
+      "description": "ID of the linked CommunityPost"
+    },
+    "author_name": {
+      "type": "string",
+      "description": "Display name of commenter"
+    },
+    "author_email": {
+      "type": "string",
+      "description": "Email of commenter"
+    },
+    "body": {
+      "type": "string",
+      "description": "Comment text"
+    }
+  },
+  "required": [
+    "post_id",
+    "author_name",
+    "author_email",
+    "body"
+  ]
+}

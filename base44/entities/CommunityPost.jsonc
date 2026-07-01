@@ -1,0 +1,69 @@
+{
+  "name": "CommunityPost",
+  "type": "object",
+  "properties": {
+    "author_name": {
+      "type": "string",
+      "description": "Display name of post author"
+    },
+    "author_email": {
+      "type": "string",
+      "description": "Email of post author"
+    },
+    "body": {
+      "type": "string",
+      "description": "Post content text"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "local_guide",
+        "beach_access",
+        "hidden_gem",
+        "animal_sighting",
+        "lost_found",
+        "seasonal_tip",
+        "community_chat"
+      ],
+      "default": "community_chat",
+      "description": "Post category"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "User-added tags"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Optional attached image"
+    },
+    "likes_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Total likes"
+    },
+    "comments_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Total comments"
+    },
+    "report_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of reports"
+    },
+    "is_hidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hidden if too many reports"
+    }
+  },
+  "required": [
+    "author_name",
+    "author_email",
+    "body",
+    "category"
+  ]
+}
