@@ -1,0 +1,170 @@
+{
+  "name": "IslandEvent",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Event title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Full event description"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "live_music",
+        "dining_special",
+        "happy_hour",
+        "kids_activities",
+        "family_events",
+        "outdoor_adventures",
+        "conservancy_programs",
+        "ferry_schedule",
+        "weather_alert",
+        "beach_updates",
+        "wildlife",
+        "holiday_celebrations",
+        "fitness",
+        "wellness",
+        "arts_crafts",
+        "golf",
+        "tennis",
+        "pickleball",
+        "fishing",
+        "community_events"
+      ],
+      "default": "community_events",
+      "description": "Event category"
+    },
+    "start_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Event start"
+    },
+    "end_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Event end"
+    },
+    "location_name": {
+      "type": "string",
+      "description": "Where on the island"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Optional event image"
+    },
+    "is_seasonal": {
+      "type": "boolean",
+      "default": false,
+      "description": "Is this a seasonal highlight"
+    },
+    "season_type": {
+      "type": "string",
+      "enum": [
+        "turtle_nesting",
+        "turtle_hatching",
+        "shorebird_nesting",
+        "bird_migration",
+        "butterfly_season",
+        "wildflower_blooms",
+        "fishing_peak",
+        "mosquito_season",
+        "hurricane_season",
+        "holiday_weekend",
+        "fourth_of_july",
+        "thanksgiving",
+        "christmas",
+        "new_year",
+        "none"
+      ],
+      "default": "none",
+      "description": "Type of island season"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "pending",
+        "rejected"
+      ],
+      "default": "pending",
+      "description": "Admin approval status"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured by admin"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "restaurant",
+        "conservancy",
+        "ferry",
+        "weather",
+        "community",
+        "business",
+        "official",
+        "organization"
+      ],
+      "default": "community",
+      "description": "Who submitted the event"
+    },
+    "source_name": {
+      "type": "string",
+      "description": "Business or organization name"
+    },
+    "is_all_day": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_recurring": {
+      "type": "boolean",
+      "default": false
+    },
+    "recurrence_note": {
+      "type": "string",
+      "description": "e.g. Every Tuesday"
+    },
+    "restaurant_update_type": {
+      "type": "string",
+      "enum": [
+        "daily_special",
+        "happy_hour",
+        "live_music",
+        "new_menu",
+        "closure",
+        "sold_out",
+        "reservations_available",
+        "seasonal_menu",
+        "none"
+      ],
+      "default": "none"
+    },
+    "price_note": {
+      "type": "string",
+      "description": "e.g. Free, $25/person"
+    },
+    "contact_info": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "saved_count": {
+      "type": "number",
+      "default": 0,
+      "description": "How many users saved this"
+    }
+  },
+  "required": [
+    "title",
+    "category",
+    "start_time"
+  ]
+}

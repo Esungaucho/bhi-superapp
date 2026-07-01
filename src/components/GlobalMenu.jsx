@@ -4,6 +4,7 @@ import { Menu, X } from 'lucide-react';
 
 const SECTIONS = [
   { label: '🏠 Home', path: '/dashboard' },
+  { label: '📅 Island Calendar', path: '/calendar' },
   { label: '⛴️ Ferry Schedule', path: '/ferry' },
   { label: '🗺️ Island Map', path: '/map' },
   { label: '🌤️ Weather', path: '/weather' },

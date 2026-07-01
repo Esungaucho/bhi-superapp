@@ -1,0 +1,32 @@
+{
+  "name": "SavedEvent",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User email"
+    },
+    "event_id": {
+      "type": "string",
+      "description": "ID of the saved IslandEvent"
+    },
+    "rsvp_status": {
+      "type": "string",
+      "enum": [
+        "going",
+        "interested",
+        "maybe"
+      ],
+      "default": "going"
+    },
+    "reminder_set": {
+      "type": "boolean",
+      "default": true,
+      "description": "Send reminder before event"
+    }
+  },
+  "required": [
+    "user_email",
+    "event_id"
+  ]
+}

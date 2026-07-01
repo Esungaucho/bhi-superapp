@@ -52,6 +52,12 @@ import CommunityShell from '@/components/community/CommunityShell';
 import CommunityFeed from '@/pages/CommunityFeed';
 import SubmitContent from '@/pages/SubmitContent';
 import SubmissionDetail from '@/pages/SubmissionDetail';
+import CalendarShell from '@/components/calendar/CalendarShell';
+import IslandCalendar from '@/pages/IslandCalendar';
+import EventDetail from '@/pages/EventDetail';
+import SavedEvents from '@/pages/calendar/SavedEvents';
+import CalendarPreferences from '@/pages/calendar/CalendarPreferences';
+import EventManagement from '@/pages/admin/EventManagement';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -129,11 +135,18 @@ const AuthenticatedApp = () => {
         <Route path="/admin/partners" element={<PartnerManagement />} />
         <Route path="/admin/submissions" element={<SubmissionReview />} />
         <Route path="/admin/community" element={<CommunityModeration />} />
+        <Route path="/admin/events" element={<EventManagement />} />
       </Route>
       <Route element={<CommunityShell />}>
         <Route path="/community" element={<CommunityFeed />} />
         <Route path="/community/submit" element={<SubmitContent />} />
         <Route path="/community/:id" element={<SubmissionDetail />} />
+      </Route>
+      <Route element={<CalendarShell />}>
+        <Route path="/calendar" element={<IslandCalendar />} />
+        <Route path="/calendar/event/:id" element={<EventDetail />} />
+        <Route path="/calendar/saved" element={<SavedEvents />} />
+        <Route path="/calendar/preferences" element={<CalendarPreferences />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
