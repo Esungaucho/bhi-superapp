@@ -8,8 +8,9 @@ Deno.serve(async (req) => {
 
     const email = user.email;
 
-    const [preferences, ferryBookings, lodgingBookings, rentalBookings, foodOrders, savedEvents, savedCaptains, communityPosts, submissions] = await Promise.all([
+    const [preferences, newsletterSub, ferryBookings, lodgingBookings, rentalBookings, foodOrders, savedEvents, savedCaptains, communityPosts, submissions] = await Promise.all([
       base44.asServiceRole.entities.UserPreference.filter({ user_email: email }).then(r => r[0] || null),
+      base44.asServiceRole.entities.NewsletterSubscription.filter({ user_email: email }).then(r => r[0] || null),
       base44.asServiceRole.entities.FerryBooking.filter({ user_email: email }),
       base44.asServiceRole.entities.LodgingBooking.filter({ user_email: email }),
       base44.asServiceRole.entities.RentalBooking.filter({ user_email: email }),
@@ -31,6 +32,7 @@ Deno.serve(async (req) => {
         role: user.role,
       },
       preferences,
+      newsletter_subscription: newsletterSub,
       ferry_bookings: ferryBookings,
       lodging_bookings: lodgingBookings,
       rental_bookings: rentalBookings,

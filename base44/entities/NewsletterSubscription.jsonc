@@ -1,0 +1,69 @@
+{
+  "name": "NewsletterSubscription",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "User ID"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "User email"
+    },
+    "name": {
+      "type": "string",
+      "description": "User display name"
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "Optional phone number"
+    },
+    "is_subscribed_to_newsletter": {
+      "type": "boolean",
+      "default": true,
+      "description": "Subscribed to weekly newsletter"
+    },
+    "notif_email": {
+      "type": "boolean",
+      "default": true,
+      "description": "Receive updates by email"
+    },
+    "notif_sms": {
+      "type": "boolean",
+      "default": false,
+      "description": "Receive updates by SMS"
+    },
+    "notif_push": {
+      "type": "boolean",
+      "default": true,
+      "description": "Receive updates by push notification"
+    },
+    "interests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Topics the user wants updates about"
+    },
+    "frequency": {
+      "type": "string",
+      "enum": [
+        "immediate",
+        "daily_digest",
+        "weekly_newsletter"
+      ],
+      "default": "immediate",
+      "description": "Delivery frequency"
+    },
+    "unsubscribed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When user unsubscribed (null if active)"
+    }
+  },
+  "required": [
+    "user_email",
+    "name",
+    "interests"
+  ]
+}

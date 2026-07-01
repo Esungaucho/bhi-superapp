@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Loader2, Check, Mail, Bell, MessageSquare, Newspaper, Moon } from 'lucide-react';
 import { useUserPreference } from '@/hooks/useUserPreference';
+import { syncNewsletterSubscription } from '@/lib/newsletterSync';
 import { INTEREST_OPTIONS, NOTIFICATION_FREQUENCY_OPTIONS } from '@/lib/userConstants';
 
 const CHANNELS = [
@@ -65,7 +66,9 @@ export default function CommunicationSettings() {
       } else {
         await base44.entities.UserPreference.create(prefData);
       }
+      await syncNewsletterSubscription(user, prefData);
       queryClient.invalidateQueries(['userPreference']);
+      queryClient.invalidateQueries(['newsletterSubscriptions']);
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
     } catch (err) {

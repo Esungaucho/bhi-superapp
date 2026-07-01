@@ -66,6 +66,7 @@ import EventDetail from '@/pages/EventDetail';
 import SavedEvents from '@/pages/calendar/SavedEvents';
 import CalendarPreferences from '@/pages/calendar/CalendarPreferences';
 import EventManagement from '@/pages/admin/EventManagement';
+import NewsletterAdmin from '@/pages/admin/NewsletterAdmin';
 import CaptainShell from '@/components/captain/CaptainShell';
 import CaptainDashboard from '@/pages/CaptainDashboard';
 import SavedCaptains from '@/pages/SavedCaptains';
@@ -155,6 +156,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/submissions" element={<SubmissionReview />} />
         <Route path="/admin/community" element={<CommunityModeration />} />
         <Route path="/admin/events" element={<EventManagement />} />
+        <Route path="/admin/newsletter" element={<NewsletterAdmin />} />
       </Route>
       <Route element={<CommunityShell />}>
         <Route path="/community" element={<CommunityFeed />} />

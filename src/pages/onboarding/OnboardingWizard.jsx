@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { syncNewsletterSubscription } from '@/lib/newsletterSync';
 import { Loader2, ChevronRight, ChevronLeft } from 'lucide-react';
 import StepVisitPurpose from './StepVisitPurpose';
 import StepProfile from './StepProfile';
@@ -98,6 +99,8 @@ export default function OnboardingWizard() {
       } else {
         await base44.entities.UserPreference.create(prefData);
       }
+
+      await syncNewsletterSubscription(user, prefData);
 
       navigate('/dashboard');
     } catch (error) {

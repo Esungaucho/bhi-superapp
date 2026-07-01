@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck, CalendarDays } from 'lucide-react';
+import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck, CalendarDays, Mail } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
 
 const NAV = [
@@ -9,6 +9,7 @@ const NAV = [
   { path: '/admin/partners', label: 'Partners', icon: Users },
   { path: '/admin/submissions', label: 'Review', icon: FileCheck },
   { path: '/admin/events', label: 'Events', icon: CalendarDays },
+  { path: '/admin/newsletter', label: 'Newsletter', icon: Mail },
 ];
 
 export default function AdminShell() {

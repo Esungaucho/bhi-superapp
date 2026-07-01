@@ -36,7 +36,11 @@ export default function Privacy() {
     try {
       const prefs = await base44.entities.UserPreference.filter({ user_email: user.email });
       for (const p of prefs) {
-        await base44.entities.UserPreference.delete(p.id);
+        await base44.entities.UserPreference.update(p.id, { newsletter_subscribed: false });
+      }
+      const subs = await base44.entities.NewsletterSubscription.filter({ user_email: user.email });
+      for (const s of subs) {
+        await base44.entities.NewsletterSubscription.update(s.id, { is_subscribed_to_newsletter: false, unsubscribed_at: new Date().toISOString() });
       }
       await base44.auth.updateMe({
         first_name: 'Deleted',
