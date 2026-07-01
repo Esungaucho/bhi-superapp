@@ -3,11 +3,11 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
-import { Loader2, Map as MapIcon, Fish } from 'lucide-react';
+import { Loader2, Map as MapIcon, Compass } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { getTriggeredAds } from '@/components/weather/ContextualAd';
-import FishingExplorer from '@/components/charter/FishingExplorer';
+import ExperiencesHub from '@/components/charter/ExperiencesHub';
 
 const BHI_CENTER = [33.8626, -77.9858];
 
@@ -58,11 +58,11 @@ export default function IslandMap() {
     [pins, activeCategory]
   );
 
-  if (view === 'fishing') {
+  if (view === 'experiences') {
     return (
       <div className="flex flex-col h-screen">
         <ViewToggle view={view} setView={setView} />
-        <FishingExplorer />
+        <ExperiencesHub />
       </div>
     );
   }
@@ -168,10 +168,10 @@ function ViewToggle({ view, setView }) {
         <MapIcon className="w-3.5 h-3.5" /> Island Map
       </button>
       <button
-        onClick={() => setView('fishing')}
-        className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${view === 'fishing' ? 'bg-white text-primary' : 'bg-white/10 text-white/70'}`}
+        onClick={() => setView('experiences')}
+        className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${view === 'experiences' ? 'bg-white text-primary' : 'bg-white/10 text-white/70'}`}
       >
-        <Fish className="w-3.5 h-3.5" /> Fishing & Boating
+        <Compass className="w-3.5 h-3.5" /> Book Experiences
       </button>
     </div>
   );

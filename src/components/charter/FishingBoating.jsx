@@ -5,16 +5,19 @@ import { Loader2, Star, MapPin, Clock, Users } from 'lucide-react';
 import { CHARTER_CATEGORIES, DIFFICULTY_META, getCharterCategory } from '@/lib/charterConstants';
 import CharterDetail from './CharterDetail';
 
-export default function FishingBoating() {
+export default function FishingBoating({ presetCategories, title, subtitle }) {
   const [activeCat, setActiveCat] = useState('all');
   const [selectedCharter, setSelectedCharter] = useState(null);
 
   const { data: charters = [], isLoading } = useQuery({
-    queryKey: ['fishingCharters'],
+    queryKey: ['fishingCharters', presetCategories?.join(',') || 'all'],
     queryFn: () => base44.entities.FishingCharter.filter({ is_available: true }, '-is_featured', 50),
   });
 
-  const filtered = activeCat === 'all' ? charters : charters.filter(c => c.category === activeCat);
+  const baseList = presetCategories
+    ? charters.filter(c => presetCategories.includes(c.category))
+    : charters;
+  const filtered = activeCat === 'all' ? baseList : baseList.filter(c => c.category === activeCat);
 
   if (selectedCharter) {
     return (
@@ -30,11 +33,12 @@ export default function FishingBoating() {
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="bg-gradient-to-br from-sea-glass/20 to-navy/10 px-4 py-4 border-b border-border">
-        <h2 className="font-heading text-xl text-foreground">🎣 Fishing & Boating</h2>
-        <p className="text-xs text-muted-foreground mt-0.5">Charters, cruises & rentals on Bald Head Island</p>
+        <h2 className="font-heading text-xl text-foreground">{title || '🎣 Fishing & Boating'}</h2>
+        <p className="text-xs text-muted-foreground mt-0.5">{subtitle || 'Charters, cruises & rentals on Bald Head Island'}</p>
       </div>
 
-      {/* Category filters */}
+      {/* Category filters — hidden when pre-filtered */}
+      {!presetCategories && (
       <div className="bg-card px-4 py-2.5 border-b border-border">
         <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
           <button
@@ -54,6 +58,7 @@ export default function FishingBoating() {
           ))}
         </div>
       </div>
+      )}
 
       {/* Listings */}
       <div className="flex-1 overflow-y-auto px-4 py-4 pb-8 space-y-3">
