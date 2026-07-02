@@ -4,14 +4,14 @@ import { Search, Bookmark, ChevronLeft } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
 
 const navItems = [
-  { path: '/rentals', label: 'Browse', icon: Search },
-  { path: '/rentals/my-rentals', label: 'My Rentals', icon: Bookmark },
+  { path: '/equipment', label: 'Browse', icon: Search },
+  { path: '/equipment/my-rentals', label: 'My Rentals', icon: Bookmark },
 ];
 
 export default function RentalsShell() {
   const location = useLocation();
   const navigate = useNavigate();
-  const isDetail = /^\/rentals\/[^/]+$/.test(location.pathname) && location.pathname !== '/rentals/my-rentals';
+  const isDetail = /^\/equipment\/[^/]+$/.test(location.pathname) && location.pathname !== '/equipment/my-rentals';
 
   return (
     <div className="min-h-screen bg-background flex justify-center">
@@ -33,8 +33,8 @@ export default function RentalsShell() {
         <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border px-2 py-1 z-50">
           <div className="flex justify-around">
             {navItems.map(item => {
-              const isActive = item.path === '/rentals'
-                ? location.pathname === '/rentals'
+              const isActive = item.path === '/equipment'
+                ? location.pathname === '/equipment'
                 : location.pathname.startsWith(item.path);
               const Icon = item.icon;
               return (

@@ -110,7 +110,7 @@ export default function RentalDetail() {
     <div className="px-4 py-12 text-center text-muted-foreground">
       <p className="text-4xl mb-2">🛺</p>
       <p className="font-medium">Item not found</p>
-      <Link to="/rentals" className="text-accent text-sm font-semibold mt-3 inline-block hover:underline">← Back to Rentals</Link>
+      <Link to="/equipment" className="text-accent text-sm font-semibold mt-3 inline-block hover:underline">← Back to Rentals</Link>
     </div>
   );
 
@@ -130,7 +130,7 @@ export default function RentalDetail() {
             <p className="font-bold text-foreground text-lg">${confirmed.total_price}</p>
             <p className="text-[11px] font-mono">{confirmed.booking_ref}</p>
           </div>
-          <Link to="/rentals/my-rentals" className="block text-accent font-semibold text-sm hover:underline">View My Rentals →</Link>
+          <Link to="/equipment/my-rentals" className="block text-accent font-semibold text-sm hover:underline">View My Rentals →</Link>
         </div>
       </div>
     );

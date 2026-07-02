@@ -71,7 +71,7 @@ export const CROSS_LINK_MAP = {
   vacation_rental: [
     { label: 'Restaurants', Icon: UtensilsCrossed, link: '/food' },
     { label: 'Private Chefs', Icon: ChefHat, link: '/concierge/partners' },
-    { label: 'Golf Cart Rentals', Icon: Car, link: '/rentals' },
+    { label: 'Golf Cart Rentals', Icon: Car, link: '/equipment' },
     { label: 'Grocery Delivery', Icon: ShoppingCart, link: '/concierge/services' },
     { label: 'Photographers', Icon: Camera, link: '/concierge/partners' },
     { label: 'Activities', Icon: Waves, link: '/experiences' },

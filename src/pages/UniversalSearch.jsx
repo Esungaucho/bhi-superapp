@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const CATEGORY_META = {
   restaurant: { emoji: '🍽️', label: 'Restaurant', base: '/food' },
   lodging: { emoji: '🏡', label: 'Lodging', base: '/lodging' },
-  rental: { emoji: '🛺', label: 'Rental', base: '/rentals' },
+  rental: { emoji: '🛺', label: 'Rental', base: '/equipment' },
   shop: { emoji: '🛍️', label: 'Shop', base: '/shops' },
 };
 

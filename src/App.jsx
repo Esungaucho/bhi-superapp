@@ -206,9 +206,9 @@ const AuthenticatedApp = () => {
         <Route path="/lodging/my-stays" element={<MyStays />} />
       </Route>
       <Route element={<RentalsShell />}>
-        <Route path="/rentals" element={<RentalsSearch />} />
-        <Route path="/rentals/:id" element={<RentalDetail />} />
-        <Route path="/rentals/my-rentals" element={<MyRentals />} />
+        <Route path="/equipment" element={<RentalsSearch />} />
+        <Route path="/equipment/:id" element={<RentalDetail />} />
+        <Route path="/equipment/my-rentals" element={<MyRentals />} />
       </Route>
       <Route element={<FoodShell />}>
         <Route path="/food" element={<FoodSearch />} />

@@ -6,7 +6,7 @@ const ITEMS = [
   { label: 'Island Map', Icon: Map, path: '/map', desc: 'Navigate every corner', img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=600&auto=format' },
   { label: 'Weather', Icon: Sun, path: '/weather', desc: 'Conditions & forecast', img: 'https://images.unsplash.com/photo-1561484930-998b6a7b22e8?q=80&w=600&auto=format' },
   { label: 'Lodging', Icon: Home, path: '/lodging', desc: 'Stays & vacation rentals', img: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=600&auto=format' },
-  { label: 'Rentals', Icon: Bike, path: '/rentals', desc: 'Bikes, carts & gear', img: 'https://images.unsplash.com/photo-1526287765458-4b8d3a3a5c3f?q=80&w=600&auto=format' },
+  { label: 'Rentals', Icon: Bike, path: '/equipment', desc: 'Bikes, carts & gear', img: 'https://images.unsplash.com/photo-1526287765458-4b8d3a3a5c3f?q=80&w=600&auto=format' },
   { label: 'Food & Dining', Icon: UtensilsCrossed, path: '/food', desc: 'Restaurants & orders', img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=600&auto=format' },
   { label: 'Shops', Icon: ShoppingBag, path: '/shops', desc: 'Boutiques & essentials', img: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?q=80&w=600&auto=format' },
 ];

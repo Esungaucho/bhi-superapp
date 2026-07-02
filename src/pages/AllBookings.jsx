@@ -124,7 +124,7 @@ export default function AllBookings() {
           )}
           {tab === 'rentals' && (
             rentalBookings.length === 0
-              ? <Empty emoji="🛺" label="No rental bookings" link="/rentals" cta="Browse Rentals" />
+              ? <Empty emoji="🛺" label="No rental bookings" link="/equipment" cta="Browse Rentals" />
               : rentalBookings
                   .sort((a, b) => new Date(b.start_date) - new Date(a.start_date))
                   .map(b => (

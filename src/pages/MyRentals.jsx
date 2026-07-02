@@ -65,7 +65,7 @@ export default function MyRentals() {
           <div className="text-center py-14 text-muted-foreground">
             <p className="text-4xl mb-2">🛺</p>
             <p className="font-medium">No rentals yet</p>
-            <Link to="/rentals" className="text-accent font-semibold text-sm mt-3 inline-block hover:underline">Browse Rentals →</Link>
+            <Link to="/equipment" className="text-accent font-semibold text-sm mt-3 inline-block hover:underline">Browse Rentals →</Link>
           </div>
         )}
 

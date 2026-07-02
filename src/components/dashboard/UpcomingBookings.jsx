@@ -61,7 +61,7 @@ export default function UpcomingBookings({ ferryBookings, lodgingBookings, renta
         label: `${b.item_name || 'Island Rental'} · ${b.days} day${b.days !== 1 ? 's' : ''}`,
         date: `Starts ${format(new Date(b.start_date), 'MMM d')}`,
         status: b.status,
-        linkTo: '/rentals/my-rentals',
+        linkTo: '/equipment/my-rentals',
         sortDate: new Date(b.start_date),
       })),
   ]
