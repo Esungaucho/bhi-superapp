@@ -110,6 +110,10 @@ import CommunityPartners from '@/pages/CommunityPartners';
 import SponsorshipDashboard from '@/pages/admin/SponsorshipDashboard';
 import RelationshipCRMDashboard from '@/pages/admin/RelationshipCRMDashboard';
 import ReferralTracking from '@/pages/admin/ReferralTracking';
+import RentalsHub from '@/pages/RentalsHub';
+import RentalPropertyDetail from '@/pages/RentalPropertyDetail';
+import EventRentals from '@/pages/EventRentals';
+import RentalPropertiesAdmin from '@/pages/admin/RentalPropertiesAdmin';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -171,6 +175,9 @@ const AuthenticatedApp = () => {
         <Route path="/real-estate" element={<LuxuryRealEstate />} />
         <Route path="/builders" element={<BuildersHome />} />
         <Route path="/community-partners" element={<CommunityPartners />} />
+        <Route path="/rentals" element={<RentalsHub />} />
+        <Route path="/rental-properties/:id" element={<RentalPropertyDetail />} />
+        <Route path="/events/rentals" element={<EventRentals />} />
         <Route path="/experiences" element={<BookExperiences />} />
         <Route path="/my-island" element={<MyIsland />} />
         <Route path="/settings" element={<Settings />} />
@@ -238,6 +245,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/sponsorships" element={<SponsorshipDashboard />} />
         <Route path="/admin/crm" element={<RelationshipCRMDashboard />} />
         <Route path="/admin/referrals" element={<ReferralTracking />} />
+        <Route path="/admin/rental-properties" element={<RentalPropertiesAdmin />} />
       </Route>
       <Route element={<CommunityShell />}>
         <Route path="/community" element={<CommunityFeed />} />

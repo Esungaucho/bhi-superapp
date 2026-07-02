@@ -2,13 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { ChevronLeft, Plus, LayoutDashboard, Compass, Users, ListChecks, FileText, ConciergeBell, CalendarHeart, Sparkles } from 'lucide-react';
+import { ChevronLeft, Plus, LayoutDashboard, Compass, Users, ListChecks, FileText, ConciergeBell, CalendarHeart, Sparkles, Home } from 'lucide-react';
 import { EVENT_TYPE_LABELS, EVENT_STATUS_META, BUDGET_LABELS } from '@/lib/eventConstants';
 import GlobalMenu from '@/components/GlobalMenu';
 
 const NAV_CARDS = [
   { label: 'Start an Event', path: '/events/start', Icon: Plus, desc: 'Begin planning a new celebration' },
   { label: 'My Event Dashboard', path: '/events', Icon: LayoutDashboard, desc: 'Manage your active event plans', scroll: true },
+  { label: 'Event Venues', path: '/events/rentals', Icon: Home, desc: 'Event & wedding-friendly rental homes' },
   { label: 'Vendors & Services', path: '/events/vendors', Icon: Compass, desc: 'Browse curated local partners' },
   { label: 'Concierge Help', path: '/events/concierge', Icon: ConciergeBell, desc: 'Ask our team for personalized help' },
 ];

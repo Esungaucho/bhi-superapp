@@ -13,6 +13,7 @@ const SECTIONS = [
   { label: 'Island Shop', path: '/island-shop', Icon: ShoppingBag },
   { label: 'Birdie Concierge', path: '/birdie', Icon: Bird },
   { label: 'BHI Concierge', path: '/concierge', Icon: ConciergeBell },
+  { label: 'Rentals', path: '/rentals', Icon: Home },
   { label: 'Luxury Real Estate', path: '/real-estate', Icon: Home },
   { label: 'Builders & Home', path: '/builders', Icon: Hammer },
   { label: 'Community Partners', path: '/community-partners', Icon: Users },

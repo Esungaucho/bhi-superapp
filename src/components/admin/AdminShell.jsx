@@ -1,12 +1,13 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck, CalendarDays, Mail, ShoppingBag, Bird, ConciergeBell, Baby, CalendarHeart, Handshake } from 'lucide-react';
+import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck, CalendarDays, Mail, ShoppingBag, Bird, ConciergeBell, Baby, CalendarHeart, Handshake, Home } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
 
 const NAV = [
   { path: '/admin/revenue', label: 'Revenue', icon: BarChart2 },
   { path: '/admin/sponsorships', label: 'Sponsors', icon: Handshake },
   { path: '/admin/crm', label: 'CRM', icon: Users },
+  { path: '/admin/rental-properties', label: 'Properties', icon: Home },
   { path: '/admin/referrals', label: 'Referrals', icon: FileCheck },
   { path: '/admin/ads', label: 'Campaigns', icon: Megaphone },
   { path: '/admin/partners', label: 'Partners', icon: Handshake },
