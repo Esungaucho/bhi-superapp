@@ -1,0 +1,86 @@
+{
+  "name": "CommunityPartner",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Organization name"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "chamber_of_commerce",
+        "tourism_organization",
+        "community_association",
+        "local_nonprofit",
+        "event_organization"
+      ],
+      "description": "Partner type"
+    },
+    "description": {
+      "type": "string"
+    },
+    "logo_url": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "contact_person": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string",
+      "description": "Contact person's position/title"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "meeting_notes": {
+      "type": "string"
+    },
+    "membership_status": {
+      "type": "string",
+      "enum": [
+        "member",
+        "non_member",
+        "board_member",
+        "sponsor",
+        "pending"
+      ],
+      "default": "member"
+    },
+    "partnership_opportunities": {
+      "type": "string",
+      "description": "Potential partnership opportunities"
+    },
+    "follow_up_reminder": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "hidden",
+        "suspended"
+      ],
+      "default": "pending"
+    },
+    "admin_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ]
+}

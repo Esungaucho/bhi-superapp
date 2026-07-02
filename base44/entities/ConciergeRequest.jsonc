@@ -152,6 +152,14 @@
       "type": "string",
       "format": "date-time"
     },
+    "referral_source": {
+      "type": "string",
+      "description": "Where the inquiry originated e.g. app, partner_code, direct"
+    },
+    "partner_code": {
+      "type": "string",
+      "description": "Unique partner referral code used"
+    },
     "admin_notes": {
       "type": "string"
     }

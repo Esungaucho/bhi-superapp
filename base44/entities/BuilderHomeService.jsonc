@@ -1,0 +1,143 @@
+{
+  "name": "BuilderHomeService",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Business name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "custom_builders",
+        "general_contractors",
+        "architects",
+        "interior_designers",
+        "landscape_designers",
+        "dock_builders",
+        "marine_contractors",
+        "pool_builders",
+        "home_watch",
+        "property_managers",
+        "hvac",
+        "plumbing",
+        "electrical",
+        "roofing",
+        "painting",
+        "flooring",
+        "cabinetry",
+        "smart_home",
+        "cleaning_services",
+        "hurricane_preparation",
+        "pressure_washing",
+        "golf_cart_service"
+      ],
+      "description": "Service category"
+    },
+    "logo_url": {
+      "type": "string",
+      "description": "Business logo"
+    },
+    "owner": {
+      "type": "string",
+      "description": "Owner name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Business description"
+    },
+    "website": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "gallery": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Photo gallery URLs"
+    },
+    "service_area": {
+      "type": "string",
+      "description": "Geographic service area"
+    },
+    "luxury_rating": {
+      "type": "string",
+      "enum": [
+        "standard",
+        "premium",
+        "luxury",
+        "ultra_luxury"
+      ],
+      "default": "premium"
+    },
+    "specialties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "concierge_recommendation": {
+      "type": "boolean",
+      "default": false,
+      "description": "Concierge Recommendation badge"
+    },
+    "is_featured_partner": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured Partner badge"
+    },
+    "listing_type": {
+      "type": "string",
+      "enum": [
+        "free",
+        "paid",
+        "featured",
+        "sponsored"
+      ],
+      "default": "free"
+    },
+    "referral_code": {
+      "type": "string",
+      "description": "Unique referral code"
+    },
+    "profile_views": {
+      "type": "number",
+      "default": 0
+    },
+    "button_clicks": {
+      "type": "number",
+      "default": 0
+    },
+    "inquiry_count": {
+      "type": "number",
+      "default": 0
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "hidden",
+        "suspended"
+      ],
+      "default": "pending"
+    },
+    "admin_notes": {
+      "type": "string"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Business account email for self-management"
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ]
+}

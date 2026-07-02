@@ -1,0 +1,194 @@
+{
+  "name": "RealEstateAgent",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Agent full name"
+    },
+    "brokerage": {
+      "type": "string",
+      "description": "Brokerage or firm name"
+    },
+    "headshot_url": {
+      "type": "string",
+      "description": "Professional headshot"
+    },
+    "large_photo_url": {
+      "type": "string",
+      "description": "Large professional photo for featured display"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Agent biography"
+    },
+    "why_work_with_me": {
+      "type": "string",
+      "description": "Why work with me statement"
+    },
+    "years_experience": {
+      "type": "number",
+      "default": 0,
+      "description": "Years of experience"
+    },
+    "areas_served": {
+      "type": "string",
+      "description": "Geographic areas served"
+    },
+    "current_listings": {
+      "type": "string",
+      "description": "Description or link to current listings"
+    },
+    "recently_sold": {
+      "type": "string",
+      "description": "Recently sold properties"
+    },
+    "testimonials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "author": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Client testimonials"
+    },
+    "website": {
+      "type": "string"
+    },
+    "instagram": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "specialties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Agent specialties e.g. luxury_waterfront, vacation_rentals"
+    },
+    "luxury_level": {
+      "type": "string",
+      "enum": [
+        "standard",
+        "premium",
+        "luxury",
+        "ultra_luxury"
+      ],
+      "default": "premium"
+    },
+    "social_media": {
+      "type": "string",
+      "description": "Additional social media links"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Admin notes"
+    },
+    "listing_type": {
+      "type": "string",
+      "enum": [
+        "free",
+        "paid",
+        "featured",
+        "sponsored",
+        "referral_commission"
+      ],
+      "default": "free"
+    },
+    "sponsor_type": {
+      "type": "string",
+      "enum": [
+        "none",
+        "featured_realtor",
+        "preferred_partner",
+        "sponsored_listing"
+      ],
+      "default": "none"
+    },
+    "sponsor_start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "sponsor_end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "monthly_fee": {
+      "type": "number",
+      "default": 0
+    },
+    "annual_fee": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "priority_ranking": {
+      "type": "number",
+      "default": 0,
+      "description": "Display order priority \u2014 higher appears first"
+    },
+    "profile_views": {
+      "type": "number",
+      "default": 0
+    },
+    "button_clicks": {
+      "type": "number",
+      "default": 0
+    },
+    "inquiry_count": {
+      "type": "number",
+      "default": 0
+    },
+    "referral_code": {
+      "type": "string",
+      "description": "Unique referral code"
+    },
+    "concierge_recommendation": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_featured_partner": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_preferred_partner": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_sponsored": {
+      "type": "boolean",
+      "default": false
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "hidden",
+        "suspended"
+      ],
+      "default": "pending"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Agent account email for self-management"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

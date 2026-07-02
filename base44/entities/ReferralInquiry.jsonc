@@ -1,0 +1,69 @@
+{
+  "name": "ReferralInquiry",
+  "type": "object",
+  "properties": {
+    "inquiry_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "business_contacted": {
+      "type": "string",
+      "description": "Name of business contacted"
+    },
+    "business_type": {
+      "type": "string",
+      "enum": [
+        "real_estate_agent",
+        "builder",
+        "restaurant",
+        "concierge_partner",
+        "community_partner",
+        "preferred_partner"
+      ],
+      "description": "Type of business"
+    },
+    "business_id": {
+      "type": "string",
+      "description": "ID of the business entity"
+    },
+    "referral_source": {
+      "type": "string",
+      "description": "Where the inquiry originated e.g. app, partner_code, direct"
+    },
+    "partner_code": {
+      "type": "string",
+      "description": "Unique partner referral code used"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "inquiry_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "responded",
+        "scheduled",
+        "closed",
+        "expired"
+      ],
+      "default": "pending"
+    },
+    "is_closed": {
+      "type": "boolean",
+      "default": false
+    },
+    "notes": {
+      "type": "string"
+    },
+    "admin_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "business_contacted",
+    "referral_source"
+  ]
+}

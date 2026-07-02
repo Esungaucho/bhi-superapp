@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Menu, X, Home, Compass, Waves, CalendarDays, Users, User, Anchor, Shield, ShoppingBag, Bird, ConciergeBell, Baby, CalendarHeart } from 'lucide-react';
+import { Menu, X, Home, Compass, Waves, CalendarDays, Users, User, Anchor, Shield, ShoppingBag, Bird, ConciergeBell, Baby, CalendarHeart, Hammer } from 'lucide-react';
 import { useUserAccess } from '@/hooks/useUserAccess';
 
 const SECTIONS = [
@@ -13,6 +13,9 @@ const SECTIONS = [
   { label: 'Island Shop', path: '/island-shop', Icon: ShoppingBag },
   { label: 'Birdie Concierge', path: '/birdie', Icon: Bird },
   { label: 'BHI Concierge', path: '/concierge', Icon: ConciergeBell },
+  { label: 'Luxury Real Estate', path: '/real-estate', Icon: Home },
+  { label: 'Builders & Home', path: '/builders', Icon: Hammer },
+  { label: 'Community Partners', path: '/community-partners', Icon: Users },
   { label: 'Babysitting', path: '/babysitting', Icon: Baby },
   { label: 'Events & Weddings', path: '/events', Icon: CalendarHeart },
   { label: 'My Island', path: '/my-island', Icon: User },

@@ -104,6 +104,12 @@ import PreferredPartners from '@/pages/PreferredPartners';
 import PartnerProfile from '@/pages/PartnerProfile';
 import WeddingInquiryPage from '@/pages/WeddingInquiryPage';
 import PartnersAdmin from '@/pages/admin/PartnersAdmin';
+import LuxuryRealEstate from '@/pages/LuxuryRealEstate';
+import BuildersHome from '@/pages/BuildersHome';
+import CommunityPartners from '@/pages/CommunityPartners';
+import SponsorshipDashboard from '@/pages/admin/SponsorshipDashboard';
+import RelationshipCRMDashboard from '@/pages/admin/RelationshipCRMDashboard';
+import ReferralTracking from '@/pages/admin/ReferralTracking';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -162,6 +168,9 @@ const AuthenticatedApp = () => {
         <Route path="/concierge/partners" element={<PreferredPartners />} />
         <Route path="/concierge/partners/:partnerId" element={<PartnerProfile />} />
         <Route path="/concierge/wedding-inquiry" element={<WeddingInquiryPage />} />
+        <Route path="/real-estate" element={<LuxuryRealEstate />} />
+        <Route path="/builders" element={<BuildersHome />} />
+        <Route path="/community-partners" element={<CommunityPartners />} />
         <Route path="/experiences" element={<BookExperiences />} />
         <Route path="/my-island" element={<MyIsland />} />
         <Route path="/settings" element={<Settings />} />
@@ -226,6 +235,9 @@ const AuthenticatedApp = () => {
         <Route path="/admin/babysitting" element={<BabysittingAdmin />} />
         <Route path="/admin/events" element={<EventsAdmin />} />
         <Route path="/admin/partners" element={<PartnersAdmin />} />
+        <Route path="/admin/sponsorships" element={<SponsorshipDashboard />} />
+        <Route path="/admin/crm" element={<RelationshipCRMDashboard />} />
+        <Route path="/admin/referrals" element={<ReferralTracking />} />
       </Route>
       <Route element={<CommunityShell />}>
         <Route path="/community" element={<CommunityFeed />} />

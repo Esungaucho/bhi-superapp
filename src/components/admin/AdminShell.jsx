@@ -5,8 +5,11 @@ import GlobalMenu from '@/components/GlobalMenu';
 
 const NAV = [
   { path: '/admin/revenue', label: 'Revenue', icon: BarChart2 },
+  { path: '/admin/sponsorships', label: 'Sponsors', icon: Handshake },
+  { path: '/admin/crm', label: 'CRM', icon: Users },
+  { path: '/admin/referrals', label: 'Referrals', icon: FileCheck },
   { path: '/admin/ads', label: 'Campaigns', icon: Megaphone },
-  { path: '/admin/partners', label: 'Partners', icon: Users },
+  { path: '/admin/partners', label: 'Partners', icon: Handshake },
   { path: '/admin/submissions', label: 'Review', icon: FileCheck },
   { path: '/admin/events', label: 'Events', icon: CalendarDays },
   { path: '/admin/newsletter', label: 'Newsletter', icon: Mail },
@@ -14,8 +17,6 @@ const NAV = [
   { path: '/admin/birdie', label: 'Birdie', icon: Bird },
   { path: '/admin/concierge', label: 'Concierge', icon: ConciergeBell },
   { path: '/admin/babysitting', label: 'Childcare', icon: Baby },
-  { path: '/admin/events', label: 'Events', icon: CalendarHeart },
-  { path: '/admin/partners', label: 'Partners', icon: Handshake },
 ];
 
 export default function AdminShell() {

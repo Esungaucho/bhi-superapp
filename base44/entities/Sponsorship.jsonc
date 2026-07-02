@@ -1,0 +1,81 @@
+{
+  "name": "Sponsorship",
+  "type": "object",
+  "properties": {
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "real_estate_agent",
+        "builder",
+        "restaurant",
+        "wedding_vendor",
+        "concierge_partner"
+      ],
+      "description": "Type of sponsored business"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "ID of the sponsored entity record"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Snapshot of business or agent name"
+    },
+    "sponsor_category": {
+      "type": "string",
+      "enum": [
+        "featured_realtor",
+        "featured_builder",
+        "featured_restaurant",
+        "featured_wedding_vendor",
+        "featured_concierge_partner"
+      ],
+      "description": "Sponsorship placement category"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "monthly_fee": {
+      "type": "number",
+      "default": 0
+    },
+    "annual_fee": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "priority_ranking": {
+      "type": "number",
+      "default": 0,
+      "description": "Display order \u2014 higher appears first"
+    },
+    "profile_views": {
+      "type": "number",
+      "default": 0
+    },
+    "clicks": {
+      "type": "number",
+      "default": 0
+    },
+    "inquiries": {
+      "type": "number",
+      "default": 0
+    },
+    "admin_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "entity_type",
+    "entity_name",
+    "sponsor_category"
+  ]
+}

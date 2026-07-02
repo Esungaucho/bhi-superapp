@@ -1,11 +1,49 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ConciergeBell, Compass, ChevronRight } from 'lucide-react';
+import { ConciergeBell, Compass, ChevronRight, Home, Hammer, Users, CalendarHeart } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
 
-export default function BHIConcierge() {
-  const [tab, setTab] = useState('services');
+const SECTIONS = [
+  {
+    label: 'Concierge Services',
+    desc: 'Family & Care, Home, Personal, Food & Hospitality',
+    link: '/concierge/services',
+    Icon: ConciergeBell,
+    featured: true,
+  },
+  {
+    label: 'Preferred Partners',
+    desc: 'Photography, Weddings, Wellness, Food & Hosting',
+    link: '/concierge/partners',
+    Icon: Compass,
+  },
+  {
+    label: 'Luxury Real Estate',
+    desc: 'Featured realtors & coastal property experts',
+    link: '/real-estate',
+    Icon: Home,
+  },
+  {
+    label: 'Builders & Home',
+    desc: 'Contractors, architects, designers, marine & more',
+    link: '/builders',
+    Icon: Hammer,
+  },
+  {
+    label: 'Community Partners',
+    desc: 'Chamber, tourism, nonprofits & associations',
+    link: '/community-partners',
+    Icon: Users,
+  },
+  {
+    label: 'Weddings & Events',
+    desc: 'Request a complete wedding or event package',
+    link: '/concierge/wedding-inquiry',
+    Icon: CalendarHeart,
+  },
+];
 
+export default function BHIConcierge() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero header */}
@@ -25,106 +63,49 @@ export default function BHIConcierge() {
         </div>
       </div>
 
-      {/* Tab switcher */}
-      <div className="px-4 -mt-4 relative z-10">
-        <div className="bg-card border border-border/50 rounded-2xl p-1 flex shadow-luxe-sm">
-          <button
-            onClick={() => setTab('services')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-              tab === 'services' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
-            }`}
-          >
-            <ConciergeBell className="w-4 h-4" strokeWidth={1.5} />
-            Concierge Services
-          </button>
-          <button
-            onClick={() => setTab('partners')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-              tab === 'partners' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
-            }`}
-          >
-            <Compass className="w-4 h-4" strokeWidth={1.5} />
-            Preferred Partners
-          </button>
-        </div>
-      </div>
-
-      {/* Tab content */}
       <div className="px-4 py-4 pb-8">
-        {tab === 'services' ? <ServicesTab /> : <PartnersTab />}
-      </div>
-    </div>
-  );
-}
-
-function ServicesTab() {
-  return (
-    <div className="space-y-4">
-      <div className="text-center py-2">
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          Request, book, and manage services through our Island Concierge team. From childcare to private chefs — we handle the details.
+        <p className="text-sm text-muted-foreground leading-relaxed text-center py-2 mb-4">
+          Your connected luxury marketplace — concierge services, real estate, builders, restaurants, and local partners, all in one place.
         </p>
-      </div>
-      <Link
-        to="/concierge/services"
-        className="flex items-center gap-3 bg-primary text-primary-foreground rounded-2xl p-4 hover:bg-primary/90 transition-colors"
-      >
-        <ConciergeBell className="w-5 h-5" strokeWidth={1.5} />
-        <div className="flex-1">
-          <p className="text-sm font-medium">Browse Concierge Services</p>
-          <p className="text-[11px] text-primary-foreground/70">Family & Care, Home, Personal, Food & Hospitality</p>
-        </div>
-        <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
-      </Link>
-      <Link
-        to="/concierge/request"
-        className="flex items-center gap-3 bg-card border border-border/50 rounded-2xl p-4 hover:border-accent/40 transition-colors"
-      >
-        <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
-          <Compass className="w-5 h-5 text-accent" strokeWidth={1.5} />
-        </div>
-        <div className="flex-1">
-          <p className="text-sm font-medium">Special Request</p>
-          <p className="text-[11px] text-muted-foreground">Tell us what you need — we'll make it happen</p>
-        </div>
-        <ChevronRight className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
-      </Link>
-    </div>
-  );
-}
 
-function PartnersTab() {
-  return (
-    <div className="space-y-4">
-      <div className="text-center py-2">
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          A curated network of trusted local businesses and referral partners on and around Bald Head Island.
-        </p>
+        {/* Featured (first) section */}
+        {SECTIONS.filter(s => s.featured).map(section => (
+          <Link
+            key={section.label}
+            to={section.link}
+            className="flex items-center gap-3 bg-primary text-primary-foreground rounded-2xl p-4 hover:bg-primary/90 transition-colors mb-4"
+          >
+            <section.Icon className="w-5 h-5" strokeWidth={1.5} />
+            <div className="flex-1">
+              <p className="text-sm font-medium">{section.label}</p>
+              <p className="text-[11px] text-primary-foreground/70">{section.desc}</p>
+            </div>
+            <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+          </Link>
+        ))}
+
+        {/* Grid of sections */}
+        <div className="grid grid-cols-2 gap-3">
+          {SECTIONS.filter(s => !s.featured).map(section => {
+            const Icon = section.Icon;
+            return (
+              <Link
+                key={section.label}
+                to={section.link}
+                className="flex flex-col items-start gap-2 bg-card border border-border/50 rounded-2xl p-4 hover:border-accent/40 hover:shadow-luxe-sm transition-all"
+              >
+                <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent/10 text-accent">
+                  <Icon className="w-5 h-5" strokeWidth={1.5} />
+                </span>
+                <div>
+                  <p className="text-sm font-medium text-foreground">{section.label}</p>
+                  <p className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{section.desc}</p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </div>
-      <Link
-        to="/concierge/partners"
-        className="flex items-center gap-3 bg-primary text-primary-foreground rounded-2xl p-4 hover:bg-primary/90 transition-colors"
-      >
-        <Compass className="w-5 h-5" strokeWidth={1.5} />
-        <div className="flex-1">
-          <p className="text-sm font-medium">Browse Preferred Partners</p>
-          <p className="text-[11px] text-primary-foreground/70">Photography, Weddings, Real Estate, Wellness, Food</p>
-        </div>
-        <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
-      </Link>
-      <Link
-        to="/concierge/wedding-inquiry"
-        className="flex items-center gap-3 bg-card border border-border/50 rounded-2xl p-4 hover:border-accent/40 transition-colors"
-      >
-        <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
-          <ConciergeBell className="w-5 h-5 text-accent" strokeWidth={1.5} />
-        </div>
-        <div className="flex-1">
-          <p className="text-sm font-medium">Weddings & Events Inquiry</p>
-          <p className="text-[11px] text-muted-foreground">Request a complete wedding package through the app</p>
-        </div>
-        <ChevronRight className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
-      </Link>
     </div>
   );
 }

@@ -1,0 +1,89 @@
+{
+  "name": "RelationshipCRM",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Contact full name"
+    },
+    "company": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string",
+      "description": "Job title or position"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "birthday": {
+      "type": "string",
+      "format": "date"
+    },
+    "anniversary": {
+      "type": "string",
+      "format": "date"
+    },
+    "spouse_partner": {
+      "type": "string"
+    },
+    "children_names": {
+      "type": "string"
+    },
+    "pet_names": {
+      "type": "string"
+    },
+    "favorite_restaurant": {
+      "type": "string"
+    },
+    "interests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "meeting_notes": {
+      "type": "string"
+    },
+    "last_contacted": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "next_follow_up": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "holiday_card_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "gift_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "referral_history": {
+      "type": "string",
+      "description": "Summary of referral history"
+    },
+    "relationship_strength": {
+      "type": "string",
+      "enum": [
+        "new",
+        "acquaintance",
+        "warm",
+        "trusted",
+        "key_partner"
+      ],
+      "default": "new"
+    },
+    "admin_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
