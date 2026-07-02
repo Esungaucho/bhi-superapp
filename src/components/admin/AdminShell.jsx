@@ -36,16 +36,16 @@ export default function AdminShell() {
         </header>
 
         {/* Tab bar */}
-        <div className="bg-card border-b flex">
+        <div className="bg-card border-b grid grid-cols-5 gap-1 p-2">
           {NAV.map(item => {
             const isActive = location.pathname === item.path;
             const Icon = item.icon;
             return (
               <Link key={item.path} to={item.path}
-                className={`flex-1 flex flex-col items-center py-2.5 gap-1 text-[11px] font-semibold border-b-2 transition-colors ${
-                  isActive ? 'border-accent text-accent' : 'border-transparent text-muted-foreground hover:text-foreground'
+                className={`flex flex-col items-center gap-1.5 py-2.5 px-1 rounded-lg text-[10px] font-semibold border-b-2 transition-colors ${
+                  isActive ? 'border-accent text-accent bg-accent/5' : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-sand/40'
                 }`}>
-                <Icon className="w-4 h-4" />
+                <Icon className="w-5 h-5" strokeWidth={isActive ? 2 : 1.5} />
                 {item.label}
               </Link>
             );
