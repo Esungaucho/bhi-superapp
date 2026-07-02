@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import HeroWidget from '@/components/dashboard/HeroWidget';
+import DashboardHero from '@/components/dashboard/DashboardHero';
 import SearchBar from '@/components/dashboard/SearchBar';
 import QuickActions from '@/components/dashboard/QuickActions';
 import UpcomingBookings from '@/components/dashboard/UpcomingBookings';
@@ -46,8 +46,8 @@ export default function Dashboard() {
 
   return (
     <div className="pb-12">
-      <HeroWidget upcomingBooking={soonestFerry} user={user} />
-      <SearchBar />
+      <DashboardHero user={user} />
+      <div className="mt-6"><SearchBar /></div>
       <QuickActions />
       <UpcomingBookings
         ferryBookings={ferryBookings}
