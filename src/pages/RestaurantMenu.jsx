@@ -180,7 +180,7 @@ export default function RestaurantMenu() {
             <span className="text-xs">{restaurant.is_open ? 'Open' : 'Closed'} · {restaurant.hours}</span>
           </div>
           <h2 className="text-xl font-bold">{restaurant.name}</h2>
-          <p className="text-xs text-white/70">{restaurant.cuisine}</p>
+          <p className="text-xs text-white/70">{restaurant.cuisine}{restaurant.location ? ` · ${restaurant.location}` : ''}</p>
         </div>
         {restaurant.rating && (
           <div className="absolute bottom-3 right-4 flex items-center gap-1 bg-black/50 backdrop-blur-sm rounded-full px-2 py-1">
@@ -189,6 +189,41 @@ export default function RestaurantMenu() {
           </div>
         )}
       </div>
+
+      {/* Action buttons */}
+      <div className="px-4 py-3 grid grid-cols-3 gap-2 border-b border-border">
+        {restaurant.website_url && (
+          <ActionBtn icon={Globe} label="Website" href={restaurant.website_url} />
+        )}
+        {restaurant.menu_url && (
+          <ActionBtn icon={UtensilsCrossed} label="Menu" href={restaurant.menu_url} />
+        )}
+        {restaurant.phone && (
+          <ActionBtn icon={Phone} label="Call" href={`tel:${restaurant.phone}`} />
+        )}
+        {restaurant.address && (
+          <ActionBtn icon={MapPin} label="Directions" href={`https://maps.google.com/?q=${encodeURIComponent(restaurant.address)}`} />
+        )}
+        {restaurant.reservation_url && (
+          <ActionBtn icon={CalendarClock} label="Reserve" href={restaurant.reservation_url} />
+        )}
+        <Link to="/birdie/new" className="flex flex-col items-center gap-1 py-2.5 rounded-xl bg-accent/10 text-accent hover:bg-accent/15 transition-colors">
+          <Bird className="w-4 h-4" />
+          <span className="text-[10px] font-semibold leading-tight text-center">Book Birdie</span>
+        </Link>
+      </div>
+
+      {/* Attributes */}
+      {(restaurant.is_waterfront || restaurant.is_kid_friendly || restaurant.has_vegan_gluten_free || restaurant.offers_catering || restaurant.supports_private_events || restaurant.is_featured_partner) && (
+        <div className="px-4 py-2 flex flex-wrap gap-1.5 border-b border-border">
+          {restaurant.is_waterfront && <AttrBadge label="Waterfront" />}
+          {restaurant.is_kid_friendly && <AttrBadge label="Kid-Friendly" />}
+          {restaurant.has_vegan_gluten_free && <AttrBadge label="Vegan / GF" />}
+          {restaurant.offers_catering && <AttrBadge label="Catering" />}
+          {restaurant.supports_private_events && <AttrBadge label="Private Events" />}
+          {restaurant.is_featured_partner && <AttrBadge label="Featured Partner" featured />}
+        </div>
+      )}
 
       {/* Fulfillment picker */}
       {restaurant.fulfillment_types?.length > 0 && (
@@ -322,5 +357,23 @@ export default function RestaurantMenu() {
         </div>
       )}
     </div>
+  );
+}
+
+function ActionBtn({ icon: Icon, label, href }) {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer"
+      className="flex flex-col items-center gap-1 py-2.5 rounded-xl bg-card border border-border hover:border-accent/40 hover:bg-sand/30 transition-colors">
+      <Icon className="w-4 h-4 text-foreground/70" />
+      <span className="text-[10px] font-semibold leading-tight text-center text-foreground">{label}</span>
+    </a>
+  );
+}
+
+function AttrBadge({ label, featured }) {
+  return (
+    <span className={`text-[10px] font-semibold px-2 py-1 rounded-full ${featured ? 'bg-accent/15 text-accent' : 'bg-sand text-muted-foreground'}`}>
+      {label}
+    </span>
   );
 }
