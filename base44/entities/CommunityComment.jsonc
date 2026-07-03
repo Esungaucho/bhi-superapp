@@ -17,6 +17,28 @@
     "body": {
       "type": "string",
       "description": "Comment text"
+    },
+    "parent_comment_id": {
+      "type": "string",
+      "description": "ID of parent comment if this is a reply"
+    },
+    "is_hidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hidden by admin or moderation"
+    },
+    "report_count": {
+      "type": "number",
+      "default": 0
+    },
+    "moderation_status": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "flagged",
+        "pending"
+      ],
+      "default": "approved"
     }
   },
   "required": [

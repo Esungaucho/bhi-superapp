@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Menu, X, ChevronDown, User, Bird, CalendarDays, ShoppingBag, Waves,
-  UtensilsCrossed, Baby, Home, Hammer, CalendarHeart, Handshake, Shield
+  UtensilsCrossed, Baby, Home, Hammer, CalendarHeart, Handshake, Shield, MessageCircle
 } from 'lucide-react';
 import { useUserAccess } from '@/hooks/useUserAccess';
 
@@ -32,6 +32,20 @@ const SECTIONS = [
       { label: 'Transportation', path: '/concierge' },
       { label: 'Grocery Delivery', path: '/birdie/new' },
       { label: 'Private Chef Booking', path: '/concierge' },
+    ],
+  },
+  {
+    label: 'Island Chat', path: '/community', Icon: MessageCircle,
+    children: [
+      { label: 'Community Feed', path: '/community' },
+      { label: 'Share a Post', path: '/community/submit' },
+      { label: 'Lost & Found', path: '/community' },
+      { label: 'Weather Alerts', path: '/community' },
+      { label: 'Ferry Updates', path: '/community' },
+      { label: 'Beach Conditions', path: '/community' },
+      { label: 'Wildlife Sightings', path: '/community' },
+      { label: 'Recommendations', path: '/community' },
+      { label: 'Help Needed', path: '/community' },
     ],
   },
   {

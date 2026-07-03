@@ -16,7 +16,7 @@ export default function CommunityShell() {
               <ArrowLeft className="w-5 h-5" /> Back
             </Link>
           ) : (
-            <h1 className="font-heading text-lg">Island Community</h1>
+            <h1 className="font-heading text-lg">Island Chat</h1>
           )}
           <GlobalMenu />
         </header>

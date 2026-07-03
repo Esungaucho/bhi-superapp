@@ -10,10 +10,20 @@ export default function CommunityFeed() {
   const [activeCat, setActiveCat] = useState('all');
   const [search, setSearch] = useState('');
 
+  const { data: user } = useQuery({ queryKey: ['currentUser'], queryFn: () => base44.auth.me() });
+
   const { data: posts = [], isLoading } = useQuery({
     queryKey: ['communityPosts'],
     queryFn: () => base44.entities.CommunityPost.filter({}, '-created_date', 50),
   });
+
+  const { data: blocks = [] } = useQuery({
+    queryKey: ['userBlocks', user?.email],
+    queryFn: () => base44.entities.UserBlock.filter({ blocker_email: user.email }),
+    enabled: !!user?.email,
+  });
+
+  const blockedEmails = blocks.map(b => b.blocked_email);
 
   const { pinnedPosts, regularPosts } = useMemo(() => {
     let visible = posts.filter(p => !p.is_hidden);
@@ -79,8 +89,8 @@ export default function CommunityFeed() {
         </div>
       ) : (
         <div className="space-y-4">
-          {pinnedPosts.map(post => <PostCard key={post.id} post={post} />)}
-          {regularPosts.map(post => <PostCard key={post.id} post={post} />)}
+          {pinnedPosts.map(post => <PostCard key={post.id} post={post} blockedEmails={blockedEmails} />)}
+          {regularPosts.map(post => <PostCard key={post.id} post={post} blockedEmails={blockedEmails} />)}
         </div>
       )}
     </div>

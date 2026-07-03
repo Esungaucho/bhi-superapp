@@ -1,0 +1,97 @@
+{
+  "name": "CommunityReport",
+  "type": "object",
+  "properties": {
+    "reported_user_name": {
+      "type": "string",
+      "description": "Display name of the reported user"
+    },
+    "reported_user_email": {
+      "type": "string",
+      "description": "Email of the reported user"
+    },
+    "reporting_user_name": {
+      "type": "string",
+      "description": "Display name of the reporting user"
+    },
+    "reporting_user_email": {
+      "type": "string",
+      "description": "Email of the reporting user"
+    },
+    "content_type": {
+      "type": "string",
+      "enum": [
+        "post",
+        "comment",
+        "profile"
+      ],
+      "description": "Type of reported content"
+    },
+    "content_id": {
+      "type": "string",
+      "description": "ID of the reported post, comment, or profile"
+    },
+    "content_snapshot": {
+      "type": "string",
+      "description": "Snapshot of the reported content text"
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "harassment_bullying",
+        "hate_speech",
+        "inappropriate_photo",
+        "spam_scam",
+        "misinformation",
+        "unsafe_behavior",
+        "offensive_language",
+        "other"
+      ],
+      "description": "Reason for reporting"
+    },
+    "reason_details": {
+      "type": "string",
+      "description": "Optional additional context from reporter"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "reviewed",
+        "resolved",
+        "dismissed"
+      ],
+      "default": "pending"
+    },
+    "admin_notes": {
+      "type": "string",
+      "description": "Admin review notes"
+    },
+    "admin_action_taken": {
+      "type": "string",
+      "enum": [
+        "none",
+        "content_removed",
+        "user_warned",
+        "user_restricted",
+        "user_banned",
+        "user_reinstated"
+      ],
+      "default": "none"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "description": "Admin email who reviewed"
+    },
+    "reviewed_date": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "reported_user_email",
+    "reporting_user_email",
+    "content_type",
+    "reason"
+  ]
+}

@@ -54,7 +54,7 @@ export default function PostComposer() {
     try {
       const tags = tagsInput.split(',').map(t => t.trim().replace(/^#/, '')).filter(Boolean);
 
-      const response = await base44.functions.invoke('moderateCommunityPost', { body: body.trim(), tags });
+      const response = await base44.functions.invoke('moderateCommunityPost', { body: body.trim(), tags, content_type: 'post' });
       const result = response.data;
 
       if (!result.approved) {
