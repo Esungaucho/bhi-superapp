@@ -213,14 +213,52 @@ export default function RestaurantMenu() {
         </Link>
       </div>
 
+      {/* Price + description */}
+      {(restaurant.price_range || restaurant.description) && (
+        <div className="px-4 py-3 border-b border-border">
+          {restaurant.price_range && (
+            <span className="inline-block text-xs font-bold text-foreground bg-sand px-2 py-0.5 rounded-full mb-2">{restaurant.price_range}</span>
+          )}
+          {restaurant.description && <p className="text-sm text-muted-foreground leading-relaxed">{restaurant.description}</p>}
+        </div>
+      )}
+
+      {/* Photo gallery */}
+      {restaurant.gallery?.length > 0 && (
+        <div className="px-4 py-3 border-b border-border">
+          <div className="flex gap-2 overflow-x-auto no-scrollbar">
+            {restaurant.gallery.map((url, idx) => (
+              <img key={idx} src={url} alt={`${restaurant.name} ${idx + 1}`} className="w-20 h-20 rounded-xl object-cover flex-shrink-0" />
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Attributes */}
-      {(restaurant.is_waterfront || restaurant.is_kid_friendly || restaurant.has_vegan_gluten_free || restaurant.offers_catering || restaurant.supports_private_events || restaurant.is_featured_partner) && (
-        <div className="px-4 py-2 flex flex-wrap gap-1.5 border-b border-border">
+      {(
+        restaurant.is_waterfront || restaurant.has_outdoor_seating || restaurant.has_indoor_seating ||
+        restaurant.is_kid_friendly || restaurant.is_dog_friendly ||
+        restaurant.has_vegan_options || restaurant.has_gluten_free_options || restaurant.has_vegetarian_options ||
+        restaurant.offers_takeout || restaurant.offers_delivery || restaurant.offers_catering || restaurant.supports_private_events ||
+        restaurant.dress_code ||
+        restaurant.is_featured_partner || restaurant.is_birdie_trusted_partner || restaurant.is_concierge_recommended
+      ) && (
+        <div className="px-4 py-2.5 flex flex-wrap gap-1.5 border-b border-border">
           {restaurant.is_waterfront && <AttrBadge label="Waterfront" />}
+          {restaurant.has_outdoor_seating && <AttrBadge label="Outdoor Seating" />}
+          {restaurant.has_indoor_seating && <AttrBadge label="Indoor Seating" />}
           {restaurant.is_kid_friendly && <AttrBadge label="Kid-Friendly" />}
-          {restaurant.has_vegan_gluten_free && <AttrBadge label="Vegan / GF" />}
+          {restaurant.is_dog_friendly && <AttrBadge label="Dog-Friendly" />}
+          {restaurant.has_vegan_options && <AttrBadge label="Vegan Options" />}
+          {restaurant.has_gluten_free_options && <AttrBadge label="Gluten-Free" />}
+          {restaurant.has_vegetarian_options && <AttrBadge label="Vegetarian" />}
+          {restaurant.offers_takeout && <AttrBadge label="Takeout" />}
+          {restaurant.offers_delivery && <AttrBadge label="Delivery" />}
           {restaurant.offers_catering && <AttrBadge label="Catering" />}
           {restaurant.supports_private_events && <AttrBadge label="Private Events" />}
+          {restaurant.dress_code && <AttrBadge label={`Dress: ${restaurant.dress_code}`} />}
+          {restaurant.is_birdie_trusted_partner && <AttrBadge label="Birdie Trusted" icon={Bird} featured />}
+          {restaurant.is_concierge_recommended && <AttrBadge label="Concierge Recommended" featured />}
           {restaurant.is_featured_partner && <AttrBadge label="Featured Partner" featured />}
         </div>
       )}
@@ -370,9 +408,10 @@ function ActionBtn({ icon: Icon, label, href }) {
   );
 }
 
-function AttrBadge({ label, featured }) {
+function AttrBadge({ label, featured, icon: Icon }) {
   return (
-    <span className={`text-[10px] font-semibold px-2 py-1 rounded-full ${featured ? 'bg-accent/15 text-accent' : 'bg-sand text-muted-foreground'}`}>
+    <span className={`inline-flex items-center gap-0.5 text-[10px] font-semibold px-2 py-1 rounded-full ${featured ? 'bg-accent/15 text-accent' : 'bg-sand text-muted-foreground'}`}>
+      {Icon && <Icon className="w-2.5 h-2.5" />}
       {label}
     </span>
   );

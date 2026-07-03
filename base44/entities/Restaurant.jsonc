@@ -12,11 +12,18 @@
     },
     "cuisine": {
       "type": "string",
-      "description": "e.g. Seafood, American, Pizza"
+      "description": "e.g. Seafood, American, Pizza, Italian, Bakery"
     },
     "image_url": {
       "type": "string",
       "description": "Cover or hero image URL"
+    },
+    "gallery": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Photo gallery URLs"
     },
     "address": {
       "type": "string",
@@ -25,6 +32,10 @@
     "phone": {
       "type": "string",
       "description": "Phone number"
+    },
+    "email": {
+      "type": "string",
+      "description": "Contact email"
     },
     "hours": {
       "type": "string",
@@ -46,20 +57,89 @@
       "type": "string",
       "description": "General area or neighborhood e.g. Marina, South Beach"
     },
+    "lat": {
+      "type": "number",
+      "description": "GPS latitude"
+    },
+    "lng": {
+      "type": "number",
+      "description": "GPS longitude"
+    },
+    "price_range": {
+      "type": "string",
+      "enum": [
+        "$",
+        "$$",
+        "$$$",
+        "$$$$"
+      ],
+      "default": "$$",
+      "description": "Price tier"
+    },
+    "dining_categories": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "breakfast",
+          "lunch",
+          "dinner",
+          "coffee",
+          "drinks",
+          "date_night"
+        ]
+      },
+      "description": "Meal-type and occasion categories for filtering"
+    },
     "is_waterfront": {
       "type": "boolean",
       "default": false,
       "description": "Waterfront dining"
+    },
+    "has_indoor_seating": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indoor seating available"
+    },
+    "has_outdoor_seating": {
+      "type": "boolean",
+      "default": false,
+      "description": "Outdoor seating available"
     },
     "is_kid_friendly": {
       "type": "boolean",
       "default": false,
       "description": "Kid-friendly restaurant"
     },
-    "has_vegan_gluten_free": {
+    "is_dog_friendly": {
       "type": "boolean",
       "default": false,
-      "description": "Offers vegan and/or gluten-free options"
+      "description": "Dog-friendly restaurant"
+    },
+    "has_vegan_options": {
+      "type": "boolean",
+      "default": false,
+      "description": "Vegan options available"
+    },
+    "has_gluten_free_options": {
+      "type": "boolean",
+      "default": false,
+      "description": "Gluten-free options available"
+    },
+    "has_vegetarian_options": {
+      "type": "boolean",
+      "default": false,
+      "description": "Vegetarian options available"
+    },
+    "offers_takeout": {
+      "type": "boolean",
+      "default": false,
+      "description": "Takeout available"
+    },
+    "offers_delivery": {
+      "type": "boolean",
+      "default": false,
+      "description": "Delivery available"
     },
     "offers_catering": {
       "type": "boolean",
@@ -71,10 +151,29 @@
       "default": false,
       "description": "Can host private events"
     },
+    "dress_code": {
+      "type": "string",
+      "description": "Dress code e.g. Casual, Smart Casual, Formal"
+    },
     "is_featured_partner": {
       "type": "boolean",
       "default": false,
       "description": "Featured Partner badge"
+    },
+    "is_birdie_trusted_partner": {
+      "type": "boolean",
+      "default": false,
+      "description": "Birdie Trusted Partner badge"
+    },
+    "is_concierge_recommended": {
+      "type": "boolean",
+      "default": false,
+      "description": "Concierge Recommended badge"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0,
+      "description": "Display order for featured partners \u2014 lower appears first"
     },
     "notes": {
       "type": "string",
