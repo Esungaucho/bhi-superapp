@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Map, Sun, Home, Bike, UtensilsCrossed, ShoppingBag } from 'lucide-react';
+import { trackActionAsync } from '@/lib/behaviorTracking';
 
 const ITEMS = [
   { label: 'Island Map', Icon: Map, path: '/map', desc: 'Navigate every corner', img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=600&auto=format' },
@@ -27,6 +28,7 @@ export default function Discovery() {
           <Link
             key={path}
             to={path}
+            onClick={() => trackActionAsync({ action_type: 'category_browse', action_label: label, target_path: path, session_context: 'discovery' })}
             className="group relative bg-card rounded-2xl overflow-hidden border border-border/20 shadow-luxe-sm hover:shadow-luxe transition-all duration-300 active:scale-[0.98]"
           >
             <div className="h-32 overflow-hidden">

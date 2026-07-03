@@ -1,9 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Search, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Link } from 'react-router-dom';
+import { trackActionAsync } from '@/lib/behaviorTracking';
 
 const CATEGORY_META = {
   restaurant: { emoji: '🍽️', label: 'Restaurant', base: '/food' },
@@ -14,6 +15,18 @@ const CATEGORY_META = {
 
 export default function UniversalSearch() {
   const [query, setQuery] = useState('');
+  const [trackedQuery, setTrackedQuery] = useState('');
+
+  useEffect(() => {
+    if (query.trim().length >= 3 && query !== trackedQuery) {
+      setTrackedQuery(query);
+      trackActionAsync({
+        action_type: 'search',
+        search_query: query.trim(),
+        session_context: 'universal_search',
+      });
+    }
+  }, [query, trackedQuery]);
 
   const { data: restaurants = [], isLoading: lr } = useQuery({
     queryKey: ['searchRestaurants'],
@@ -84,7 +97,7 @@ export default function UniversalSearch() {
         <div className="mt-6 space-y-2">
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Browse Categories</p>
           {Object.entries(CATEGORY_META).map(([key, meta]) => (
-            <Link key={key} to={meta.base} className="flex items-center gap-3 bg-card border rounded-xl px-4 py-3 hover:border-accent/50 transition-colors">
+            <Link key={key} to={meta.base} onClick={() => trackActionAsync({ action_type: 'category_browse', action_category: key, action_label: meta.label, target_path: meta.base, session_context: 'universal_search' })} className="flex items-center gap-3 bg-card border rounded-xl px-4 py-3 hover:border-accent/50 transition-colors">
               <span className="text-2xl">{meta.emoji}</span>
               <span className="text-sm font-semibold">{meta.label}</span>
             </Link>
@@ -100,7 +113,7 @@ export default function UniversalSearch() {
             const name = item.name || item.title;
             const sub = item.cuisine || item.category || item.neighborhood || '';
             return (
-              <Link key={item.id} to={item._link} className="flex items-center gap-3 bg-card border rounded-xl px-4 py-3 hover:border-accent/50 transition-colors">
+              <Link key={item.id} to={item._link} onClick={() => trackActionAsync({ action_type: 'product_view', action_category: item._type, action_label: item.name || item.title, entity_id: item.id, target_path: item._link, session_context: 'universal_search' })} className="flex items-center gap-3 bg-card border rounded-xl px-4 py-3 hover:border-accent/50 transition-colors">
                 <span className="text-xl">{meta.emoji}</span>
                 <div>
                   <p className="text-sm font-semibold">{name}</p>

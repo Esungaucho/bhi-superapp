@@ -1,0 +1,67 @@
+{
+  "name": "UserActionLog",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email of the user who performed the action"
+    },
+    "user_role": {
+      "type": "string",
+      "description": "User's island role at time of action (snapshot)"
+    },
+    "action_type": {
+      "type": "string",
+      "enum": [
+        "page_view",
+        "recommendation_tap",
+        "search",
+        "save",
+        "booking",
+        "category_browse",
+        "profile_update",
+        "onboarding_complete",
+        "concierge_request",
+        "product_view"
+      ],
+      "description": "Type of tracked action"
+    },
+    "action_category": {
+      "type": "string",
+      "description": "Broad category e.g. dining, rentals, events, turtles"
+    },
+    "action_label": {
+      "type": "string",
+      "description": "Human-readable label of what was clicked or done"
+    },
+    "target_path": {
+      "type": "string",
+      "description": "Destination path or URL"
+    },
+    "entity_type": {
+      "type": "string",
+      "description": "Entity type if action relates to a record e.g. RentalProperty, IslandEvent"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "Entity record ID if applicable"
+    },
+    "search_query": {
+      "type": "string",
+      "description": "Search term if action_type is search"
+    },
+    "session_context": {
+      "type": "string",
+      "description": "Where in the app the action originated e.g. my_island, dashboard, discovery"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional key-value pairs for context",
+      "properties": {}
+    }
+  },
+  "required": [
+    "user_email",
+    "action_type"
+  ]
+}

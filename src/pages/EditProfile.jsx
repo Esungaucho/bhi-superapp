@@ -4,6 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Camera, Loader2, Check } from 'lucide-react';
 import { USER_TIERS, INTEREST_OPTIONS, USER_ROLES, ACTIVITY_INTERESTS, ROLE_TO_TIER } from '@/lib/userConstants';
 import { useUserPreference } from '@/hooks/useUserPreference';
+import { trackActionAsync } from '@/lib/behaviorTracking';
 
 export default function EditProfile() {
   const queryClient = useQueryClient();
@@ -80,6 +81,12 @@ export default function EditProfile() {
       } else {
         await base44.entities.UserPreference.create(prefData);
       }
+
+      trackActionAsync({
+        action_type: 'profile_update',
+        session_context: 'edit_profile',
+        metadata: { user_role: userRole, activity_interests: activityInterests },
+      });
 
       queryClient.invalidateQueries(['currentUser']);
       queryClient.invalidateQueries(['userPreference']);

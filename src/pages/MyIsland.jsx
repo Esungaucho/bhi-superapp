@@ -6,6 +6,7 @@ import { useUserAccess } from '@/hooks/useUserAccess';
 import { useUserPreference } from '@/hooks/useUserPreference';
 import { getPersonalizedRecommendations, getRoleGreeting } from '@/lib/personalization';
 import { getRoleLabel } from '@/lib/userConstants';
+import { trackActionAsync } from '@/lib/behaviorTracking';
 import {
   Calendar, Bell, Settings, Bookmark, Anchor, Shield, ChevronRight,
   LogOut, User, ConciergeBell, Sparkles, CalendarDays,
@@ -40,9 +41,19 @@ function MenuItem({ to, Icon, label, desc }) {
 
 function RecommendationCard({ card }) {
   const { Icon, title, desc, path } = card;
+  const handleClick = () => {
+    trackActionAsync({
+      action_type: 'recommendation_tap',
+      action_label: title,
+      target_path: path,
+      session_context: 'my_island',
+      metadata: { card_id: card.id, matched_roles: card.roles, matched_interests: card.interests },
+    });
+  };
   return (
     <Link
       to={path}
+      onClick={handleClick}
       className="group flex flex-col gap-2.5 bg-card border border-border/40 rounded-2xl p-4 hover:border-accent/30 hover:shadow-luxe-sm transition-all duration-300"
     >
       <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent/10 text-accent group-hover:bg-accent/15 transition-colors">

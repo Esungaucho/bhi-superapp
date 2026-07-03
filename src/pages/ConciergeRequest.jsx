@@ -5,6 +5,7 @@ import { base44 } from '@/api/base44Client';
 import { ChevronLeft, Loader2, Upload, Image as ImageIcon, Camera, Check, Sparkles, X } from 'lucide-react';
 import { CONCIERGE_CATEGORIES, TIMING_OPTIONS, DELIVERY_OPTIONS, BUDGET_OPTIONS, calculatePricing, getCategory } from '@/lib/conciergeConstants';
 import ConciergePricing from '@/components/concierge/ConciergePricing';
+import { trackActionAsync } from '@/lib/behaviorTracking';
 
 export default function ConciergeRequest() {
   const navigate = useNavigate();
@@ -89,6 +90,15 @@ export default function ConciergeRequest() {
         app_fee: pricing.appFee,
         tip,
         total_cost: pricing.total,
+      });
+
+      trackActionAsync({
+        action_type: 'concierge_request',
+        action_category: category,
+        action_label: itemRequested,
+        entity_id: req.id,
+        session_context: 'concierge_request',
+        metadata: { subcategory, timing, delivery_preference: deliveryPreference, total_cost: pricing.total },
       });
 
       queryClient.invalidateQueries(['conciergeRequests']);

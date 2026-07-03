@@ -4,6 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { syncNewsletterSubscription } from '@/lib/newsletterSync';
 import { ROLE_TO_TIER } from '@/lib/userConstants';
 import { ROLE_DEFAULT_INTERESTS } from '@/lib/personalization';
+import { trackActionAsync } from '@/lib/behaviorTracking';
 import { Loader2, ChevronRight, ChevronLeft } from 'lucide-react';
 import StepProfile from './StepProfile';
 import StepRole from './StepRole';
@@ -112,6 +113,13 @@ export default function OnboardingWizard() {
       }
 
       await syncNewsletterSubscription(user, prefData);
+
+      trackActionAsync({
+        action_type: 'onboarding_complete',
+        action_label: role,
+        session_context: 'onboarding',
+        metadata: { role, interests, tier },
+      });
 
       navigate('/dashboard');
     } catch (error) {
