@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Menu, X, ChevronDown, User, Bird, CalendarDays, ShoppingBag, Waves,
-  UtensilsCrossed, Baby, Home, Hammer, CalendarHeart, Handshake, Shield, MessageCircle
+  UtensilsCrossed, Baby, Home, Hammer, CalendarHeart, Handshake, Shield, MessageCircle, Turtle
 } from 'lucide-react';
 import { useUserAccess } from '@/hooks/useUserAccess';
 
@@ -32,6 +32,15 @@ const SECTIONS = [
       { label: 'Transportation', path: '/concierge' },
       { label: 'Grocery Delivery', path: '/birdie/new' },
       { label: 'Private Chef Booking', path: '/concierge' },
+    ],
+  },
+  {
+    label: 'Sea Turtles', path: '/turtles', Icon: Turtle,
+    children: [
+      { label: 'Turtle Education & Guidelines', path: '/turtles' },
+      { label: 'Nest Tracker Map', path: '/turtles/map' },
+      { label: 'Report a Sighting', path: '/community' },
+      { label: 'Turtle Community Posts', path: '/community' },
     ],
   },
   {

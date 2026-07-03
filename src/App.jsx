@@ -114,6 +114,9 @@ import RentalsHub from '@/pages/RentalsHub';
 import RentalPropertyDetail from '@/pages/RentalPropertyDetail';
 import EventRentals from '@/pages/EventRentals';
 import RentalPropertiesAdmin from '@/pages/admin/RentalPropertiesAdmin';
+import TurtleEducation from '@/pages/TurtleEducation';
+import TurtleNestMap from '@/pages/TurtleNestMap';
+import TurtleNestAdmin from '@/pages/admin/TurtleNestAdmin';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -246,6 +249,9 @@ const AuthenticatedApp = () => {
         <Route path="/admin/crm" element={<RelationshipCRMDashboard />} />
         <Route path="/admin/referrals" element={<ReferralTracking />} />
         <Route path="/admin/rental-properties" element={<RentalPropertiesAdmin />} />
+        <Route path="/admin/turtles" element={<TurtleNestAdmin />} />
+        <Route path="/turtles" element={<TurtleEducation />} />
+        <Route path="/turtles/map" element={<TurtleNestMap />} />
       </Route>
       <Route element={<CommunityShell />}>
         <Route path="/community" element={<CommunityFeed />} />

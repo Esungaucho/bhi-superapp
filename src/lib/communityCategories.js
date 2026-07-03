@@ -1,6 +1,6 @@
 import {
   AlertTriangle, Search, CloudSun, Ship, Bug,
-  Waves, Feather, Star, CalendarDays, HandHeart, MessageCircle, FileText,
+  Waves, Feather, Star, CalendarDays, HandHeart, MessageCircle, FileText, Turtle,
 } from 'lucide-react';
 
 export const CATEGORIES = [
@@ -8,6 +8,7 @@ export const CATEGORIES = [
   { id: 'lost_found', label: 'Lost & Found', Icon: Search, desc: 'Lost or found items' },
   { id: 'weather_alert', label: 'Weather', Icon: CloudSun, desc: 'Weather updates & alerts' },
   { id: 'ferry_update', label: 'Ferry', Icon: Ship, desc: 'Ferry schedule & updates' },
+  { id: 'turtle_sighting', label: 'Turtle', Icon: Turtle, desc: 'Sea turtle nests & hatchings' },
   { id: 'bug_report', label: 'Bugs & Mosquitoes', Icon: Bug, desc: 'Bug/fly/mosquito activity' },
   { id: 'beach_conditions', label: 'Beach', Icon: Waves, desc: 'Current beach conditions' },
   { id: 'wildlife_sighting', label: 'Wildlife', Icon: Feather, desc: 'Animal & nature sightings' },

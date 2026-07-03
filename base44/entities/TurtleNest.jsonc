@@ -1,0 +1,120 @@
+{
+  "name": "TurtleNest",
+  "type": "object",
+  "properties": {
+    "nest_id": {
+      "type": "string",
+      "description": "Unique nest identifier assigned by conservancy"
+    },
+    "species": {
+      "type": "string",
+      "enum": [
+        "loggerhead",
+        "green",
+        "leatherback",
+        "kemps_ridley",
+        "unknown"
+      ],
+      "default": "loggerhead",
+      "description": "Sea turtle species"
+    },
+    "approximate_location": {
+      "type": "string",
+      "description": "General beach area description (not exact GPS for safety)"
+    },
+    "lat": {
+      "type": "number",
+      "description": "Latitude for map marker"
+    },
+    "lng": {
+      "type": "number",
+      "description": "Longitude for map marker"
+    },
+    "beach_zone": {
+      "type": "string",
+      "description": "Named beach zone e.g. South Beach, East Beach, West Beach"
+    },
+    "date_marked": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the nest was discovered and marked"
+    },
+    "estimated_hatch_window_start": {
+      "type": "string",
+      "format": "date",
+      "description": "Estimated start of hatch window"
+    },
+    "estimated_hatch_window_end": {
+      "type": "string",
+      "format": "date",
+      "description": "Estimated end of hatch window"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "protected",
+        "hatching_soon",
+        "hatched",
+        "inactive"
+      ],
+      "default": "active",
+      "description": "Current nest status"
+    },
+    "safety_notes": {
+      "type": "string",
+      "description": "Public safety notes and guidelines for this nest"
+    },
+    "volunteer_notes": {
+      "type": "string",
+      "description": "Internal notes for conservancy volunteers and admins"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Photo URLs of the nest (if allowed to share)"
+    },
+    "is_public": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this nest is visible to the public"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured nest for highlight display"
+    },
+    "created_by_name": {
+      "type": "string",
+      "description": "Name of the volunteer or admin who created the record"
+    },
+    "created_by_email": {
+      "type": "string",
+      "description": "Email of the creator"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "hidden"
+      ],
+      "default": "approved"
+    },
+    "hatch_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of hatchlings observed (if hatched)"
+    },
+    "admin_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "nest_id",
+    "approximate_location",
+    "status"
+  ]
+}
