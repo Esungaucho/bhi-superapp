@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Loader2, Star, ShoppingBag, ChevronLeft, Plus, CheckCircle2 } from 'lucide-react';
+import { Loader2, Star, ShoppingBag, ChevronLeft, Plus, CheckCircle2, Globe, UtensilsCrossed, Phone, MapPin, CalendarClock, Bird } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CartDrawer from '@/components/food/CartDrawer';
 import { addMinutes, format } from 'date-fns';

@@ -117,6 +117,7 @@ import RentalPropertiesAdmin from '@/pages/admin/RentalPropertiesAdmin';
 import TurtleEducation from '@/pages/TurtleEducation';
 import TurtleNestMap from '@/pages/TurtleNestMap';
 import TurtleNestAdmin from '@/pages/admin/TurtleNestAdmin';
+import RestaurantsAdmin from '@/pages/admin/RestaurantsAdmin';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -250,6 +251,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/referrals" element={<ReferralTracking />} />
         <Route path="/admin/rental-properties" element={<RentalPropertiesAdmin />} />
         <Route path="/admin/turtles" element={<TurtleNestAdmin />} />
+        <Route path="/admin/restaurants" element={<RestaurantsAdmin />} />
         <Route path="/turtles" element={<TurtleEducation />} />
         <Route path="/turtles/map" element={<TurtleNestMap />} />
       </Route>
