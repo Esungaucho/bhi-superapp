@@ -3,27 +3,82 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "description": "Restaurant name"
     },
     "description": {
-      "type": "string"
+      "type": "string",
+      "description": "Short description"
     },
     "cuisine": {
       "type": "string",
       "description": "e.g. Seafood, American, Pizza"
     },
     "image_url": {
-      "type": "string"
+      "type": "string",
+      "description": "Cover or hero image URL"
     },
     "address": {
-      "type": "string"
+      "type": "string",
+      "description": "Street address"
     },
     "phone": {
-      "type": "string"
+      "type": "string",
+      "description": "Phone number"
     },
     "hours": {
       "type": "string",
-      "description": "e.g. 11am\u20139pm"
+      "description": "e.g. 11am-9pm"
+    },
+    "website_url": {
+      "type": "string",
+      "description": "Official website URL"
+    },
+    "menu_url": {
+      "type": "string",
+      "description": "Direct link to menu page or PDF"
+    },
+    "reservation_url": {
+      "type": "string",
+      "description": "Online reservation / booking link"
+    },
+    "location": {
+      "type": "string",
+      "description": "General area or neighborhood e.g. Marina, South Beach"
+    },
+    "is_waterfront": {
+      "type": "boolean",
+      "default": false,
+      "description": "Waterfront dining"
+    },
+    "is_kid_friendly": {
+      "type": "boolean",
+      "default": false,
+      "description": "Kid-friendly restaurant"
+    },
+    "has_vegan_gluten_free": {
+      "type": "boolean",
+      "default": false,
+      "description": "Offers vegan and/or gluten-free options"
+    },
+    "offers_catering": {
+      "type": "boolean",
+      "default": false,
+      "description": "Catering available"
+    },
+    "supports_private_events": {
+      "type": "boolean",
+      "default": false,
+      "description": "Can host private events"
+    },
+    "is_featured_partner": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured Partner badge"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal admin notes"
     },
     "delivery_fee": {
       "type": "number",
@@ -69,6 +124,10 @@
       "items": {
         "type": "string"
       }
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Restaurant account email for self-management"
     }
   },
   "required": [
@@ -93,9 +152,16 @@
       ]
     },
     "delete": {
-      "user_condition": {
-        "role": "admin"
-      }
+      "$or": [
+        {
+          "data.owner_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
     }
   }
 }
