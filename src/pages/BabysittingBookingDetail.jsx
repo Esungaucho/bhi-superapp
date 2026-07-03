@@ -61,19 +61,12 @@ export default function BookingDetail() {
     setPaying(true);
     try {
       const response = await base44.functions.invoke('create-checkout', {
-        items: [
-          { name: `Babysitting — ${booking.date} ${booking.start_time}–${booking.end_time}`, quantity: 1, price: booking.estimated_total?.toFixed(2) },
-          { name: 'Booking Fee', quantity: 1, price: booking.booking_fee?.toFixed(2) },
-          ...(booking.tip > 0 ? [{ name: 'Tip', quantity: 1, price: booking.tip?.toFixed(2) }] : []),
-        ],
-        customer_info: { email: user.email },
         reference_type: 'babysitter_booking',
         reference_id: booking.id,
       });
 
       const data = response.data || response;
       if (data.redirect_url) {
-        await base44.entities.BabysitterBooking.update(booking.id, { payment_id: data.checkout_session_id });
         window.location.href = data.redirect_url;
       } else {
         toast({ title: 'Payment error', description: data.error || 'Could not start checkout', variant: 'destructive' });
