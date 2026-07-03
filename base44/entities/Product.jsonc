@@ -58,5 +58,49 @@
     "shop_id",
     "name",
     "price"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "data.shop_id": {
+        "$in": [
+          "{{Shop.id}}"
+        ]
+      }
+    },
+    "read": {
+      "data.is_available": true
+    },
+    "update": {
+      "$or": [
+        {
+          "data.shop_id": {
+            "$in": [
+              "{{Shop.id}}"
+            ]
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.shop_id": {
+            "$in": [
+              "{{Shop.id}}"
+            ]
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
 }

@@ -93,5 +93,25 @@
     "reporting_user_email",
     "content_type",
     "reason"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "data.reporting_user_email": "{{user.email}}"
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
 }

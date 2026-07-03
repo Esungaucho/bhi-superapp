@@ -34,5 +34,31 @@
     "price",
     "quantity",
     "line_total"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "data.order_id": {
+        "$in": [
+          "{{FoodOrder.id}}"
+        ]
+      }
+    },
+    "read": {
+      "data.order_id": {
+        "$in": [
+          "{{FoodOrder.id}}"
+        ]
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
 }

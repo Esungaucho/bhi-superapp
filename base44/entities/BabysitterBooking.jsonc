@@ -176,5 +176,52 @@
     "end_time",
     "num_children",
     "island_address"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "data.parent_email": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.parent_email": "{{user.email}}"
+        },
+        {
+          "data.sitter_owner_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.parent_email": "{{user.email}}"
+        },
+        {
+          "data.sitter_owner_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.parent_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
 }

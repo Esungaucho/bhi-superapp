@@ -75,5 +75,62 @@
   "required": [
     "event_plan_id",
     "guest_name"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "data.event_plan_id": {
+        "$in": [
+          "{{EventPlan.id}}"
+        ]
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.event_plan_id": {
+            "$in": [
+              "{{EventPlan.id}}"
+            ]
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.event_plan_id": {
+            "$in": [
+              "{{EventPlan.id}}"
+            ]
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.event_plan_id": {
+            "$in": [
+              "{{EventPlan.id}}"
+            ]
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
 }

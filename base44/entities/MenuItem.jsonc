@@ -43,5 +43,49 @@
     "restaurant_id",
     "name",
     "price"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "data.restaurant_id": {
+        "$in": [
+          "{{Restaurant.id}}"
+        ]
+      }
+    },
+    "read": {
+      "data.is_available": true
+    },
+    "update": {
+      "$or": [
+        {
+          "data.restaurant_id": {
+            "$in": [
+              "{{Restaurant.id}}"
+            ]
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.restaurant_id": {
+            "$in": [
+              "{{Restaurant.id}}"
+            ]
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
 }
