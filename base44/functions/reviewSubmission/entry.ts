@@ -4,14 +4,21 @@ Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
 
-    // Works for both automation calls (no user) and manual admin calls
+    // Allow automation calls (from entity automations) OR admin manual calls.
+    // Automations pass no user context; manual calls require an authenticated admin.
     let user = null;
-    try { user = await base44.auth.me(); } catch (e) { /* automation trigger */ }
+    try { user = await base44.auth.me(); } catch (_e) { /* automation trigger */ }
 
     const body = await req.json().catch(() => ({}));
 
+    // If called manually (not from automation), require admin
+    const isManualCall = body.submission_id && !body.event;
+    if (isManualCall && (!user || user.role !== 'admin')) {
+      return Response.json({ error: 'Forbidden — admin access required for manual review' }, { status: 403 });
+    }
+
     // Automation payload: { event: { entity_id }, data: {...} }
-    // Manual call: { submission_id: "..." }
+    // Manual admin call: { submission_id: "..." }
     const submissionId = body.submission_id || body.event?.entity_id;
     let submission = body.data;
 
@@ -25,12 +32,10 @@ Deno.serve(async (req) => {
 
     const id = submission.id || submissionId;
 
-    // Skip if already reviewed
     if (submission.status === 'approved' || submission.status === 'rejected') {
       return Response.json({ message: 'Already reviewed', status: submission.status, id });
     }
 
-    // AI review via InvokeLLM
     const review = await base44.asServiceRole.integrations.Core.InvokeLLM({
       prompt: `You are a content moderator for the Bald Head Island community app. Evaluate this user-submitted content for helpfulness, positivity, and appropriateness.
 
@@ -75,6 +80,7 @@ Recommend "approve" if score >= 70, "reject" if < 40, "manual_review" if 40-69.`
       status: newStatus
     });
   } catch (error) {
+    console.error('reviewSubmission error:', error.message);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });

@@ -1,0 +1,87 @@
+{
+  "name": "BabysitterPrivateInfo",
+  "type": "object",
+  "properties": {
+    "babysitter_id": {
+      "type": "string",
+      "description": "Linked Babysitter record ID"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Sitter's user account email (for RLS)"
+    },
+    "full_legal_name": {
+      "type": "string",
+      "description": "PRIVATE \u2014 not shown publicly"
+    },
+    "government_id_url": {
+      "type": "string",
+      "description": "PRIVATE \u2014 government ID upload"
+    },
+    "drivers_license_url": {
+      "type": "string",
+      "description": "PRIVATE \u2014 driver license upload"
+    },
+    "license_plate": {
+      "type": "string",
+      "description": "PRIVATE \u2014 vehicle plate"
+    },
+    "background_check_url": {
+      "type": "string",
+      "description": "PRIVATE \u2014 background check document"
+    },
+    "emergency_contact_name": {
+      "type": "string",
+      "description": "PRIVATE"
+    },
+    "emergency_contact_phone": {
+      "type": "string",
+      "description": "PRIVATE"
+    },
+    "certification_documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "PRIVATE \u2014 certification document URLs"
+    }
+  },
+  "required": [
+    "babysitter_id",
+    "owner_email"
+  ],
+  "rls": {
+    "create": {
+      "data.owner_email": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.owner_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.owner_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "name": "BirdieShopperPrivateInfo",
+  "type": "object",
+  "properties": {
+    "shopper_id": {
+      "type": "string",
+      "description": "Linked BirdieShopper record ID"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Shopper's user account email (for RLS)"
+    },
+    "phone": {
+      "type": "string",
+      "description": "PRIVATE \u2014 contact phone"
+    },
+    "email": {
+      "type": "string",
+      "description": "PRIVATE \u2014 contact email"
+    },
+    "background_check_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "passed",
+        "failed",
+        "not_required"
+      ],
+      "default": "pending",
+      "description": "PRIVATE \u2014 background check status"
+    }
+  },
+  "required": [
+    "shopper_id",
+    "owner_email"
+  ],
+  "rls": {
+    "create": {
+      "data.owner_email": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.owner_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.owner_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

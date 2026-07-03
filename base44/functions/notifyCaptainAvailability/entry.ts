@@ -5,13 +5,13 @@ Deno.serve(async (req) => {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (user.role !== 'admin') return Response.json({ error: 'Forbidden — admin access required' }, { status: 403 });
 
     const body = await req.json();
     const { charter_id, captain_name } = body;
 
     if (!charter_id) return Response.json({ error: 'charter_id required' }, { status: 400 });
 
-    // Find users who saved this captain with notifications on
     const saved = await base44.asServiceRole.entities.SavedCaptain.filter({
       charter_id,
       notify_new_dates: true
@@ -31,12 +31,13 @@ Deno.serve(async (req) => {
         });
         notified++;
       } catch (e) {
-        // continue to next subscriber
+        console.error('Email to subscriber failed:', e.message);
       }
     }
 
     return Response.json({ notified, total: saved.length });
   } catch (error) {
+    console.error('notifyCaptainAvailability error:', error.message);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });
