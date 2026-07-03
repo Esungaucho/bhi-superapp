@@ -12,14 +12,64 @@
     },
     "visit_purpose": {
       "type": "string",
-      "description": "Why the user is visiting BHI (resident, homeowner, vacation_guest, visiting_family, wedding_guest, fishing_trip, business, family_vacation)"
+      "description": "Legacy visit purpose field"
+    },
+    "user_role": {
+      "type": "string",
+      "enum": [
+        "homeowner",
+        "renter",
+        "visitor",
+        "future_homeowner",
+        "young_family",
+        "grandparent",
+        "couple",
+        "friend_group",
+        "wedding_guest",
+        "event_host",
+        "babysitter_nanny",
+        "restaurant_worker",
+        "housekeeper",
+        "vendor",
+        "turtle_volunteer",
+        "real_estate_agent",
+        "property_manager",
+        "island_staff",
+        "local_business_owner"
+      ],
+      "description": "Detailed user role for personalization"
+    },
+    "activity_interests": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "dining",
+          "beach_days",
+          "kids_activities",
+          "babysitting",
+          "events",
+          "weddings",
+          "real_estate_rentals",
+          "shopping",
+          "turtle_conservation",
+          "nightlife_social",
+          "wellness",
+          "boating",
+          "fishing",
+          "golf_carts",
+          "luxury_experiences",
+          "family_friendly"
+        ]
+      },
+      "description": "Activity-based interests for content personalization"
     },
     "interests": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "List of interest IDs the user wants notifications for"
+      "description": "Notification topic interests (legacy)"
     },
     "comm_push": {
       "type": "boolean",
@@ -76,7 +126,6 @@
     }
   },
   "required": [
-    "user_email",
-    "interests"
+    "user_email"
   ]
 }

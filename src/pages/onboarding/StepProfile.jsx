@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Camera } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { USER_TIERS } from '@/lib/userConstants';
 
 export default function StepProfile({ profile, setProfile }) {
   const fileRef = useRef();
@@ -69,27 +68,6 @@ export default function StepProfile({ profile, setProfile }) {
           placeholder="(910) 555-0100"
           className="w-full h-12 px-4 rounded-xl border border-border bg-card text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-ocean transition-colors"
         />
-      </div>
-
-      {/* Tier */}
-      <div>
-        <label className="text-[11px] font-medium tracking-luxe-xs uppercase text-muted-foreground mb-2.5 block">I am a…</label>
-        <div className="grid grid-cols-2 gap-2.5">
-          {USER_TIERS.map(({ value, Icon, label }) => (
-            <button
-              key={value}
-              onClick={() => setProfile({ ...profile, tier: value })}
-              className={`flex items-center gap-2.5 rounded-xl border p-3 text-left transition-all ${
-                profile.tier === value
-                  ? 'border-ocean bg-ocean/5 ring-1 ring-ocean/20'
-                  : 'border-border bg-card hover:border-border/60'
-              }`}
-            >
-              <Icon className="w-5 h-5 text-foreground/60 flex-shrink-0" strokeWidth={1.5} />
-              <span className="text-xs font-medium text-foreground leading-tight">{label}</span>
-            </button>
-          ))}
-        </div>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { INTEREST_OPTIONS } from '@/lib/userConstants';
+import { ACTIVITY_INTERESTS } from '@/lib/userConstants';
 
 export default function StepInterests({ interests, setInterests }) {
   const toggle = (id) => {
@@ -13,10 +13,10 @@ export default function StepInterests({ interests, setInterests }) {
   return (
     <div className="space-y-4">
       <p className="text-xs text-muted-foreground leading-relaxed">
-        Select topics you'd like updates about. We'll only send notifications related to your interests.
+        Select what you love — we'll use these to personalize your homepage, recommendations, and content across the app.
       </p>
       <div className="grid grid-cols-2 gap-2.5">
-        {INTEREST_OPTIONS.map(({ id, label, Icon }) => {
+        {ACTIVITY_INTERESTS.map(({ id, label, Icon }) => {
           const selected = interests.includes(id);
           return (
             <button

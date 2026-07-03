@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Camera, Loader2, Check } from 'lucide-react';
-import { USER_TIERS, INTEREST_OPTIONS } from '@/lib/userConstants';
+import { USER_TIERS, INTEREST_OPTIONS, USER_ROLES, ACTIVITY_INTERESTS, ROLE_TO_TIER } from '@/lib/userConstants';
 import { useUserPreference } from '@/hooks/useUserPreference';
 
 export default function EditProfile() {
@@ -18,7 +18,8 @@ export default function EditProfile() {
   const [phone, setPhone] = useState(user?.phone || '');
   const [avatar, setAvatar] = useState(user?.avatar || '');
   const [tier, setTier] = useState(user?.tier || '');
-  const [interests, setInterests] = useState(pref?.interests || []);
+  const [userRole, setUserRole] = useState(pref?.user_role || '');
+  const [activityInterests, setActivityInterests] = useState(pref?.activity_interests || []);
 
   React.useEffect(() => {
     if (user) {
@@ -31,7 +32,8 @@ export default function EditProfile() {
   }, [user]);
 
   React.useEffect(() => {
-    if (pref?.interests) setInterests(pref.interests);
+    if (pref?.user_role) setUserRole(pref.user_role);
+    if (pref?.activity_interests) setActivityInterests(pref.activity_interests);
   }, [pref]);
 
   const handlePhoto = async (e) => {
@@ -45,8 +47,13 @@ export default function EditProfile() {
     }
   };
 
-  const toggleInterest = (id) => {
-    setInterests(interests.includes(id) ? interests.filter(i => i !== id) : [...interests, id]);
+  const toggleActivityInterest = (id) => {
+    setActivityInterests(activityInterests.includes(id) ? activityInterests.filter(i => i !== id) : [...activityInterests, id]);
+  };
+
+  const handleRoleSelect = (value) => {
+    setUserRole(value);
+    setTier(ROLE_TO_TIER[value] || 'visitor');
   };
 
   const handleSave = async () => {
@@ -65,7 +72,8 @@ export default function EditProfile() {
       const prefData = {
         user_email: user.email,
         user_name: `${firstName} ${lastName}`.trim(),
-        interests,
+        user_role: userRole,
+        activity_interests: activityInterests,
       };
       if (existing.length > 0) {
         await base44.entities.UserPreference.update(existing[0].id, prefData);
@@ -151,35 +159,36 @@ export default function EditProfile() {
         />
       </div>
 
-      {/* Tier */}
+      {/* Island Role */}
       <div className="mb-6">
-        <label className="text-[11px] font-medium tracking-luxe-sm uppercase text-muted-foreground mb-2 block">I am a…</label>
+        <label className="text-[11px] font-medium tracking-luxe-sm uppercase text-muted-foreground mb-2 block">My Island Role</label>
         <div className="grid grid-cols-2 gap-2.5">
-          {USER_TIERS.map(({ value, Icon, label }) => (
+          {USER_ROLES.map(({ value, Icon, label, desc }) => (
             <button
               key={value}
-              onClick={() => setTier(value)}
-              className={`flex items-center gap-2.5 rounded-xl border p-3 text-left transition-all ${
-                tier === value ? 'border-ocean bg-ocean/5 ring-1 ring-ocean/20' : 'border-border bg-card'
+              onClick={() => handleRoleSelect(value)}
+              className={`flex flex-col items-start gap-1.5 rounded-xl border p-3 text-left transition-all ${
+                userRole === value ? 'border-ocean bg-ocean/5 ring-1 ring-ocean/20' : 'border-border bg-card'
               }`}
             >
-              <Icon className="w-5 h-5 text-foreground/60" strokeWidth={1.5} />
-              <span className="text-xs font-medium text-foreground">{label}</span>
+              <Icon className="w-[18px] h-[18px] text-foreground/60" strokeWidth={1.5} />
+              <span className="text-[11px] font-medium text-foreground leading-tight">{label}</span>
+              <span className="text-[9px] text-muted-foreground leading-tight">{desc}</span>
             </button>
           ))}
         </div>
       </div>
 
-      {/* Interests */}
+      {/* Activity Interests */}
       <div className="mb-8">
-        <label className="text-[11px] font-medium tracking-luxe-sm uppercase text-muted-foreground mb-2 block">Favorite Activities & Interests</label>
+        <label className="text-[11px] font-medium tracking-luxe-sm uppercase text-muted-foreground mb-2 block">Activities & Interests</label>
         <div className="grid grid-cols-2 gap-2">
-          {INTEREST_OPTIONS.map(({ id, label, Icon }) => (
+          {ACTIVITY_INTERESTS.map(({ id, label, Icon }) => (
             <button
               key={id}
-              onClick={() => toggleInterest(id)}
+              onClick={() => toggleActivityInterest(id)}
               className={`flex items-center gap-2 rounded-lg border p-2.5 text-left transition-all ${
-                interests.includes(id) ? 'border-ocean bg-ocean/5' : 'border-border bg-card'
+                activityInterests.includes(id) ? 'border-ocean bg-ocean/5' : 'border-border bg-card'
               }`}
             >
               <Icon className="w-[18px] h-[18px] text-foreground/60" strokeWidth={1.5} />
