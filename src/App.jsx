@@ -118,6 +118,7 @@ import TurtleEducation from '@/pages/TurtleEducation';
 import TurtleNestMap from '@/pages/TurtleNestMap';
 import TurtleNestAdmin from '@/pages/admin/TurtleNestAdmin';
 import RestaurantsAdmin from '@/pages/admin/RestaurantsAdmin';
+import VillageInfo from '@/pages/VillageInfo';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -191,6 +192,7 @@ const AuthenticatedApp = () => {
         <Route path="/saved" element={<Saved />} />
         <Route path="/search" element={<UniversalSearch />} />
         <Route path="/notifications" element={<Notifications />} />
+        <Route path="/village-info" element={<VillageInfo />} />
         <Route path="/bookings" element={<AllBookings />} />
       </Route>
       <Route path="/thank-you" element={<ThankYou />} />
