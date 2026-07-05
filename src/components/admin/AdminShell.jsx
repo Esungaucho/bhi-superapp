@@ -1,6 +1,8 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck, CalendarDays, Mail, ShoppingBag, Bird, ConciergeBell, Baby, CalendarHeart, Handshake, Home, Turtle, UtensilsCrossed } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 import GlobalMenu from '@/components/GlobalMenu';
 
 const NAV = [
@@ -25,6 +27,20 @@ const NAV = [
 export default function AdminShell() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { data: user, isLoading } = useQuery({ queryKey: ['currentUser'], queryFn: () => base44.auth.me() });
+
+  if (isLoading) {
+    return <div className="min-h-screen flex items-center justify-center text-sm text-muted-foreground">Loading...</div>;
+  }
+  if (!user || user.role !== 'admin') {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
+        <p className="text-sm font-semibold text-foreground">Admin Access Required</p>
+        <p className="text-xs text-muted-foreground mt-1">You need admin permissions to view this area.</p>
+        <Link to="/dashboard" className="text-sm text-primary mt-4">Back to Dashboard</Link>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background flex justify-center">
