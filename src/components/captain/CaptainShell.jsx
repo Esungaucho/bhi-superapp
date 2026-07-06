@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { ArrowLeft, Anchor } from 'lucide-react';
+import { ArrowLeft, Anchor, Home } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
 
 const NAV = [
@@ -25,7 +25,12 @@ export default function CaptainShell() {
               <Anchor className="w-5 h-5" /> Captain's Hub
             </h1>
           )}
-          <GlobalMenu />
+          <div className="flex items-center gap-1">
+            <Link to="/dashboard" className="p-1.5 rounded-lg hover:bg-white/10 transition-colors" aria-label="Home">
+              <Home className="w-5 h-5" strokeWidth={1.5} />
+            </Link>
+            <GlobalMenu />
+          </div>
         </header>
 
         <main className="flex-1 overflow-y-auto pb-20">

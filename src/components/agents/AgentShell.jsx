@@ -19,7 +19,12 @@ export default function AgentShell() {
             </button>
           )}
           <h1 className="text-lg font-heading tracking-luxe-sm">Island Concierge</h1>
-          <div className="ml-auto"><GlobalMenu /></div>
+          <div className="ml-auto flex items-center gap-1">
+            <Link to="/dashboard" className="p-1.5 rounded-lg hover:bg-white/10 transition-colors" aria-label="Home">
+              <Home className="w-5 h-5" strokeWidth={1.5} />
+            </Link>
+            <GlobalMenu />
+          </div>
         </header>
 
         <main className="flex-1 overflow-y-auto pb-20">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Home } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
 
 export default function CommunityShell() {
@@ -18,7 +18,12 @@ export default function CommunityShell() {
           ) : (
             <h1 className="font-heading text-lg">Island Chat</h1>
           )}
-          <GlobalMenu />
+          <div className="flex items-center gap-1">
+            <Link to="/dashboard" className="p-1.5 rounded-lg hover:bg-white/10 transition-colors" aria-label="Home">
+              <Home className="w-5 h-5" strokeWidth={1.5} />
+            </Link>
+            <GlobalMenu />
+          </div>
         </header>
 
         <main className="flex-1 overflow-y-auto pb-8">

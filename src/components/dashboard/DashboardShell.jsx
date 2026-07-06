@@ -31,6 +31,13 @@ export default function DashboardShell() {
           )}
           <div className="flex items-center gap-1">
             <Link
+              to="/dashboard"
+              className="p-2 rounded-full hover:bg-foreground/5 transition-colors"
+              aria-label="Home"
+            >
+              <Home className="w-[18px] h-[18px]" strokeWidth={1.5} />
+            </Link>
+            <Link
               to="/my-island"
               className="p-2 rounded-full hover:bg-foreground/5 transition-colors"
               aria-label="My Island"
