@@ -27,6 +27,7 @@ export default function RentalDetail() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [confirmed, setConfirmed] = useState(null);
+  const [bookingError, setBookingError] = useState(null);
   const [imgIdx, setImgIdx] = useState(0);
 
   const { data: items = [], isLoading } = useQuery({
@@ -62,46 +63,20 @@ export default function RentalDetail() {
 
   const bookMutation = useMutation({
     mutationFn: async () => {
-      const user = await base44.auth.me();
-      const booking = await base44.entities.RentalBooking.create({
+      const response = await base44.functions.invoke('book-rental', {
         rental_item_id: id,
-        user_email: user.email,
-        user_name: user.full_name || user.email,
         start_date: startDate,
         end_date: endDate,
-        days,
-        pricing_tier: pricingTier,
-        rate_applied: rateApplied,
-        subtotal: rateApplied,
-        commission_amount: commission,
-        total_price: rateApplied,
-        status: 'confirmed',
-        booking_ref: generateRef(),
-        item_category: item.category,
-        item_name: item.name,
       });
-
-      // Update available units
-      await base44.entities.RentalItem.update(id, {
-        available_units: Math.max(0, (item.available_units || 1) - 1),
-      });
-
-      // Log revenue entry
-      await base44.entities.RevenueEntry.create({
-        source: 'rental_commission',
-        reference_id: booking.id,
-        reference_type: 'RentalBooking',
-        amount: commission,
-        description: `${item.name} rental - ${days} day(s)`,
-        user_email: user.email,
-      });
-
-      return booking;
+      return response.data;
     },
     onSuccess: (data) => {
       setConfirmed(data);
       queryClient.invalidateQueries({ queryKey: ['rentalItems'] });
       queryClient.invalidateQueries({ queryKey: ['myRentalBookings'] });
+    },
+    onError: (error) => {
+      setBookingError(error?.response?.data?.error || error?.message || 'Booking failed');
     },
   });
 
@@ -224,6 +199,10 @@ export default function RentalDetail() {
               <Input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="mt-1 h-10 rounded-xl text-sm" />
             </div>
           </div>
+
+          {bookingError && (
+            <p className="text-xs text-destructive text-center bg-destructive/5 rounded-xl p-2.5">{bookingError}</p>
+          )}
 
           {days > 0 && (
             <div className="text-sm space-y-1 border-t pt-3">

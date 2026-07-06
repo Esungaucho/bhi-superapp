@@ -12,7 +12,9 @@ Deno.serve(async (req) => {
     if (action === 'like_post' && post_id) {
       const post = await base44.asServiceRole.entities.CommunityPost.get(post_id);
       if (!post) return Response.json({ error: 'Post not found' }, { status: 404 });
-      const newCount = Math.max(0, (post.likes_count || 0) + (increment || 1));
+      // Clamp increment to ±1 to prevent arbitrary count manipulation
+      const delta = Math.sign(Number(increment) || 1);
+      const newCount = Math.max(0, (post.likes_count || 0) + delta);
       await base44.asServiceRole.entities.CommunityPost.update(post_id, { likes_count: newCount });
       return Response.json({ likes_count: newCount });
     }
@@ -20,7 +22,9 @@ Deno.serve(async (req) => {
     if (action === 'comment_count' && post_id) {
       const post = await base44.asServiceRole.entities.CommunityPost.get(post_id);
       if (!post) return Response.json({ error: 'Post not found' }, { status: 404 });
-      const newCount = Math.max(0, (post.comments_count || 0) + (increment || 1));
+      // Clamp increment to ±1
+      const delta = Math.sign(Number(increment) || 1);
+      const newCount = Math.max(0, (post.comments_count || 0) + delta);
       await base44.asServiceRole.entities.CommunityPost.update(post_id, { comments_count: newCount });
       return Response.json({ comments_count: newCount });
     }

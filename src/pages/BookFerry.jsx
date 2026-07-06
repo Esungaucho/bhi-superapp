@@ -20,6 +20,7 @@ export default function BookFerry() {
   const scheduleId = urlParams.get('id');
   const [passengers, setPassengers] = useState(1);
   const [booking, setBooking] = useState(null);
+  const [bookingError, setBookingError] = useState(null);
   const queryClient = useQueryClient();
 
   const { data: schedule, isLoading } = useQuery({
@@ -33,34 +34,19 @@ export default function BookFerry() {
 
   const bookMutation = useMutation({
     mutationFn: async () => {
-      const user = await base44.auth.me();
-      const ref = generateRef();
-      const total = passengers * PRICE_PER_PERSON;
-
-      const newBooking = await base44.entities.FerryBooking.create({
-        user_email: user.email,
-        user_name: user.full_name || user.email,
+      const response = await base44.functions.invoke('book-ferry', {
         schedule_id: scheduleId,
         passengers,
-        total_price: total,
-        commission_amount: 2,
-        status: 'confirmed',
-        booking_ref: ref,
-        departure_time: schedule.departure_time,
-        direction: schedule.direction,
       });
-
-      // Update passenger count
-      await base44.entities.FerrySchedule.update(scheduleId, {
-        current_passengers: (schedule.current_passengers || 0) + passengers,
-      });
-
-      return { ...newBooking, booking_ref: ref };
+      return response.data;
     },
     onSuccess: (data) => {
       setBooking(data);
       queryClient.invalidateQueries({ queryKey: ['ferrySchedules'] });
       queryClient.invalidateQueries({ queryKey: ['myBookings'] });
+    },
+    onError: (error) => {
+      setBookingError(error?.response?.data?.error || error?.message || 'Booking failed');
     },
   });
 
@@ -156,6 +142,10 @@ export default function BookFerry() {
           <span className="font-bold text-lg">${total}</span>
         </div>
       </div>
+
+      {bookingError && (
+        <p className="text-xs text-destructive text-center bg-destructive/5 rounded-xl p-2.5">{bookingError}</p>
+      )}
 
       <p className="text-xs text-muted-foreground text-center">
         You will complete your purchase on the ferry operator's secure site.

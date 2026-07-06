@@ -25,6 +25,7 @@ export default function RestaurantMenu() {
   const [specialInstructions, setSpecialInstructions] = useState('');
   const [showCart, setShowCart] = useState(false);
   const [confirmed, setConfirmed] = useState(null);
+  const [orderError, setOrderError] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
 
   const { data: restaurants = [], isLoading: loadingRestaurant } = useQuery({
@@ -73,58 +74,23 @@ export default function RestaurantMenu() {
 
   const orderMutation = useMutation({
     mutationFn: async () => {
-      const user = await base44.auth.me();
-      const ref = generateRef();
-      const estimatedReady = addMinutes(new Date(), restaurant?.estimated_delivery_minutes || 30);
-
-      const order = await base44.entities.FoodOrder.create({
+      const response = await base44.functions.invoke('place-food-order', {
         restaurant_id: restaurantId,
-        restaurant_name: restaurant.name,
-        user_email: user.email,
-        user_name: user.full_name || user.email,
+        cart: cart.map(c => ({ menu_item_id: c.menu_item_id, quantity: c.quantity })),
         fulfillment_type: fulfillmentType,
-        items_count: cartCount,
-        subtotal,
-        delivery_fee: deliveryFee,
-        commission_rate: commissionRate,
-        commission_amount: commission,
-        total_price: total,
-        status: 'placed',
-        order_ref: ref,
         delivery_address: deliveryAddress,
         special_instructions: specialInstructions,
-        estimated_ready_time: estimatedReady.toISOString(),
       });
-
-      // Create OrderItems
-      await Promise.all(cart.map(item =>
-        base44.entities.OrderItem.create({
-          order_id: order.id,
-          menu_item_id: item.menu_item_id,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          line_total: item.price * item.quantity,
-        })
-      ));
-
-      // Log revenue
-      await base44.entities.RevenueEntry.create({
-        source: 'food_commission',
-        reference_id: order.id,
-        reference_type: 'FoodOrder',
-        amount: commission,
-        description: `${restaurant.name} — ${fulfillmentType} order (${(commissionRate * 100).toFixed(0)}%)`,
-        user_email: user.email,
-      });
-
-      return { ...order, order_ref: ref, estimated_ready_time: estimatedReady };
+      return response.data;
     },
     onSuccess: (data) => {
       setConfirmed(data);
       setCart([]);
       setShowCart(false);
       queryClient.invalidateQueries({ queryKey: ['myFoodOrders'] });
+    },
+    onError: (error) => {
+      setOrderError(error?.response?.data?.error || error?.message || 'Order failed');
     },
   });
 
