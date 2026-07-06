@@ -6,7 +6,8 @@ export default function CategoryGrid({ selected, onSelect }) {
     'grocery', 'pharmacy', 'baby_supplies', 'beach_toys', 'beach_chairs', 'sunscreen',
     'clothing', 'shoes', 'swimsuits', 'holiday_items', 'easter_baskets', 'birthday_gifts',
     'decorations', 'pet_supplies', 'fishing_supplies', 'hardware', 'electronics', 'chargers',
-    'flowers', 'wine_specialty', 'last_minute',
+    'flowers', 'wine_specialty', 'wellness', 'experiences', 'events', 'nature',
+    'fitness', 'books', 'last_minute',
   ];
 
   return (
