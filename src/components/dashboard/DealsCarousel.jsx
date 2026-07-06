@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function DealsCarousel({ deals }) {
   const [current, setCurrent] = useState(0);
@@ -29,6 +29,12 @@ export default function DealsCarousel({ deals }) {
     }
   }, [deals]);
 
+  const scrollByDir = (dir) => {
+    if (!scrollRef.current) return;
+    const el = scrollRef.current;
+    el.scrollBy({ left: dir * (el.offsetWidth - 40 + 16), behavior: 'smooth' });
+  };
+
   if (!deals?.length) return null;
 
   const DEAL_TYPE_BADGE = {
@@ -45,7 +51,27 @@ export default function DealsCarousel({ deals }) {
           <h2 className="font-heading text-xl text-foreground">Island offers</h2>
           <p className="text-xs font-body text-muted-foreground mt-0.5">Curated experiences from our partners</p>
         </div>
-        <span className="text-[10px] font-body tracking-luxe-xs uppercase text-muted-foreground/60">{current + 1} / {deals.length}</span>
+        <div className="flex items-center gap-3">
+          <span className="text-[10px] font-body tracking-luxe-xs uppercase text-muted-foreground/60">{current + 1} / {deals.length}</span>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => scrollByDir(-1)}
+              disabled={current === 0}
+              className="w-7 h-7 rounded-full border border-border/50 flex items-center justify-center text-foreground disabled:opacity-30 disabled:cursor-not-allowed hover:bg-sand/50 transition-colors"
+              aria-label="Previous offer"
+            >
+              <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
+            </button>
+            <button
+              onClick={() => scrollByDir(1)}
+              disabled={current >= deals.length - 1}
+              className="w-7 h-7 rounded-full border border-border/50 flex items-center justify-center text-foreground disabled:opacity-30 disabled:cursor-not-allowed hover:bg-sand/50 transition-colors"
+              aria-label="Next offer"
+            >
+              <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+            </button>
+          </div>
+        </div>
       </div>
       <div
         ref={scrollRef}
