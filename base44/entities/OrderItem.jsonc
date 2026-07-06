@@ -37,10 +37,8 @@
   ],
   "rls": {
     "create": {
-      "data.order_id": {
-        "$in": [
-          "{{FoodOrder.id}}"
-        ]
+      "user_condition": {
+        "role": "admin"
       }
     },
     "read": {
