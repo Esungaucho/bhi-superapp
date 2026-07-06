@@ -3,9 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import {
   Loader2, Search, Waves, Baby, Heart, Sunrise, Sun, Moon, Coffee,
-  Wine, Leaf, Wheat, Umbrella, UtensilsCrossed
+  Wine, Leaf, Wheat, Umbrella, UtensilsCrossed, X, Bird
 } from 'lucide-react';
 import RestaurantCard from '@/components/food/RestaurantCard';
+import BirdieRecommendations, { BIRDIE_CATEGORIES } from '@/components/food/BirdieRecommendations';
 
 const CUISINES = ['All', 'Seafood', 'American', 'Pizza', 'Sandwiches', 'Italian', 'Breakfast', 'Drinks', 'Coffee', 'Bakery'];
 
@@ -27,6 +28,7 @@ export default function FoodSearch() {
   const [search, setSearch] = useState('');
   const [cuisine, setCuisine] = useState('All');
   const [activeFilters, setActiveFilters] = useState([]);
+  const [birdieCategory, setBirdieCategory] = useState(null);
 
   const { data: restaurants = [], isLoading } = useQuery({
     queryKey: ['restaurants'],
@@ -37,11 +39,14 @@ export default function FoodSearch() {
     setActiveFilters(prev => prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]);
   };
 
+  const activeBirdieCat = BIRDIE_CATEGORIES.find(c => c.id === birdieCategory);
+
   const filtered = useMemo(() => {
     return restaurants.filter(r => {
       if (search && !r.name?.toLowerCase().includes(search.toLowerCase()) &&
           !r.cuisine?.toLowerCase().includes(search.toLowerCase())) return false;
       if (cuisine !== 'All' && r.cuisine !== cuisine) return false;
+      if (activeBirdieCat && !activeBirdieCat.filter(r)) return false;
       if (activeFilters.length > 0) {
         for (const filterId of activeFilters) {
           const filter = FILTERS.find(f => f.id === filterId);
@@ -50,7 +55,7 @@ export default function FoodSearch() {
       }
       return true;
     });
-  }, [restaurants, search, cuisine, activeFilters]);
+  }, [restaurants, search, cuisine, activeFilters, activeBirdieCat]);
 
   const sorted = useMemo(() => {
     return [...filtered].sort((a, b) => {
@@ -84,6 +89,27 @@ export default function FoodSearch() {
           />
         </div>
       </div>
+
+      {/* Birdie Recommendations */}
+      <BirdieRecommendations selected={birdieCategory} onSelect={setBirdieCategory} />
+
+      {/* Active Birdie category banner */}
+      {activeBirdieCat && (
+        <div className="px-4 py-2.5 flex items-center justify-between bg-accent/5 border-b border-accent/20">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-full bg-accent/15 flex items-center justify-center">
+              <Bird className="w-3.5 h-3.5 text-accent" strokeWidth={1.5} />
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-foreground">{activeBirdieCat.label}</p>
+              <p className="text-[10px] text-muted-foreground">{sorted.length} {sorted.length === 1 ? 'pick' : 'picks'} from Birdie</p>
+            </div>
+          </div>
+          <button onClick={() => setBirdieCategory(null)} className="p-1.5 rounded-full hover:bg-sand/50 transition-colors">
+            <X className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
+          </button>
+        </div>
+      )}
 
       {/* Cuisine pills */}
       <div className="flex gap-2 px-4 py-3 overflow-x-auto no-scrollbar">
@@ -127,7 +153,13 @@ export default function FoodSearch() {
           </div>
         ) : (
           <div className="space-y-5">
-            {featured.length > 0 && (
+            {activeBirdieCat && (
+              <p className="text-xs font-bold text-accent uppercase tracking-luxe-sm flex items-center gap-1.5">
+                <Bird className="w-3.5 h-3.5" strokeWidth={1.5} />
+                Birdie's Picks — {activeBirdieCat.label}
+              </p>
+            )}
+            {featured.length > 0 && !activeBirdieCat && (
               <div>
                 <p className="text-xs font-bold text-muted-foreground uppercase tracking-luxe-sm mb-3">Featured Partners</p>
                 <div className="space-y-3">
@@ -136,7 +168,7 @@ export default function FoodSearch() {
               </div>
             )}
             <div>
-              {featured.length > 0 && regular.length > 0 && (
+              {featured.length > 0 && regular.length > 0 && !activeBirdieCat && (
                 <p className="text-xs font-bold text-muted-foreground uppercase tracking-luxe-sm mb-3">All Restaurants</p>
               )}
               <div className="space-y-3">

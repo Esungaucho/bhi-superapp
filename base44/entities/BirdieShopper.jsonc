@@ -43,17 +43,6 @@
       "default": true,
       "description": "Currently available for requests"
     },
-    "background_check_status": {
-      "type": "string",
-      "enum": [
-        "pending",
-        "passed",
-        "failed",
-        "not_required"
-      ],
-      "default": "pending",
-      "description": "Background check status"
-    },
     "approval_status": {
       "type": "string",
       "enum": [
@@ -63,12 +52,6 @@
       ],
       "default": "pending",
       "description": "Admin approval status"
-    },
-    "phone": {
-      "type": "string"
-    },
-    "email": {
-      "type": "string"
     },
     "specialties": {
       "type": "array",
@@ -88,12 +71,20 @@
         "role": "admin"
       }
     },
-    "read": {},
-    "update": {
+    "read": {
       "$or": [
         {
-          "data.email": "{{user.email}}"
+          "data.approval_status": "approved"
         },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
         {
           "user_condition": {
             "role": "admin"

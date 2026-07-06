@@ -16,6 +16,14 @@ Deno.serve(async (req) => {
     const request = await base44.asServiceRole.entities.ConciergeRequest.get(request_id);
     if (!request) return Response.json({ error: 'Request not found' }, { status: 404 });
 
+    // Allow the request owner or an admin to trigger updates
+    const isOwner = request.user_email === user.email;
+    const isAdmin = user.role === 'admin';
+    const isAssignedProvider = request.provider_id && request.provider_id === user.id;
+    if (!isOwner && !isAdmin && !isAssignedProvider) {
+      return Response.json({ error: 'Forbidden — you can only update your own requests' }, { status: 403 });
+    }
+
     const stageMessages = {
       request_submitted: 'Your concierge request has been submitted.',
       concierge_assigned: `Your Island Concierge has accepted your request.`,
@@ -32,15 +40,13 @@ Deno.serve(async (req) => {
 
     const message = note || stageMessages[stage] || 'Your request has been updated.';
 
-    // Create tracking event
     await base44.asServiceRole.entities.BirdieTrackingEvent.create({
       request_id,
       stage,
       note: message,
-      actor: actor || 'system',
+      actor: actor || (isAdmin ? 'admin' : 'user'),
     });
 
-    // Send email notification
     if (request.user_email) {
       try {
         await base44.asServiceRole.integrations.Core.SendEmail({
@@ -59,6 +65,7 @@ Deno.serve(async (req) => {
 
     return Response.json({ success: true, message, stage });
   } catch (error) {
+    console.error('notifyConciergeUpdate error:', error.message);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });

@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Menu, X, ChevronDown, User, Bird, CalendarDays, ShoppingBag, Waves,
-  UtensilsCrossed, Baby, Home, Hammer, CalendarHeart, Handshake, Shield, MessageCircle, Turtle
+  UtensilsCrossed, Baby, Home, Hammer, CalendarHeart, Handshake, Shield, MessageCircle, Turtle, Landmark
 } from 'lucide-react';
 import { useUserAccess } from '@/hooks/useUserAccess';
 
@@ -182,6 +182,22 @@ const SECTIONS = [
   },
   {
     label: 'Community Partners', path: '/community-partners', Icon: Handshake,
+  },
+  {
+    label: 'Official Village Info', path: '/village-info', Icon: Landmark,
+    children: [
+      { label: 'Announcements', path: '/village-info' },
+      { label: 'Emergency Alerts', path: '/village-info' },
+      { label: 'Village Calendar', path: '/village-info' },
+      { label: 'Ferry Information', path: '/village-info' },
+      { label: 'Beach Safety', path: '/village-info' },
+      { label: 'Public Beach Accesses', path: '/village-info' },
+      { label: 'Golf Cart Registration', path: '/village-info' },
+      { label: 'Trash & Recycling', path: '/village-info' },
+      { label: 'Dogs on BHI', path: '/village-info' },
+      { label: 'Island Directory', path: '/village-info' },
+      { label: 'Contact Village Hall', path: '/village-info' },
+    ],
   },
 ];
 
