@@ -5,7 +5,7 @@ import { base44 } from '@/api/base44Client';
 import { Sun, Ship, CalendarDays, ChevronRight, Waves, CloudRain, Cloud, CloudSun } from 'lucide-react';
 import { format } from 'date-fns';
 
-const HERO_IMAGE = 'https://images.unsplash.com/photo-1720247523641-96d1d3d8f3a7?q=80&w=1200&auto=format';
+const HERO_IMAGE = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format';
 
 const WEATHER_ICONS = {
   sunny: Sun,
