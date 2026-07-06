@@ -1,16 +1,22 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Search, Loader2 } from 'lucide-react';
+import { Search, Loader2, UtensilsCrossed, Home, Bike, ShoppingBag, Leaf, Compass, CalendarDays, Trees, Dumbbell, BookOpen } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Link } from 'react-router-dom';
 import { trackActionAsync } from '@/lib/behaviorTracking';
 
 const CATEGORY_META = {
-  restaurant: { emoji: '🍽️', label: 'Restaurant', base: '/food' },
-  lodging: { emoji: '🏡', label: 'Lodging', base: '/lodging' },
-  rental: { emoji: '🛺', label: 'Rental', base: '/equipment' },
-  shop: { emoji: '🛍️', label: 'Shop', base: '/shops' },
+  restaurant: { Icon: UtensilsCrossed, label: 'Restaurant', base: '/food' },
+  lodging: { Icon: Home, label: 'Lodging', base: '/lodging' },
+  rental: { Icon: Bike, label: 'Rental', base: '/equipment' },
+  shop: { Icon: ShoppingBag, label: 'Shop', base: '/shops' },
+  wellness: { Icon: Leaf, label: 'Wellness', base: '/experiences' },
+  experiences: { Icon: Compass, label: 'Experiences', base: '/experiences' },
+  events: { Icon: CalendarDays, label: 'Events', base: '/calendar' },
+  nature: { Icon: Trees, label: 'Nature & Outdoor', base: '/turtles' },
+  fitness: { Icon: Dumbbell, label: 'Fitness', base: '/experiences' },
+  books: { Icon: BookOpen, label: 'Books & Media', base: '/island-shop' },
 };
 
 export default function UniversalSearch() {
@@ -96,12 +102,15 @@ export default function UniversalSearch() {
       {!query.trim() && !isLoading && (
         <div className="mt-6 space-y-2">
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Browse Categories</p>
-          {Object.entries(CATEGORY_META).map(([key, meta]) => (
-            <Link key={key} to={meta.base} onClick={() => trackActionAsync({ action_type: 'category_browse', action_category: key, action_label: meta.label, target_path: meta.base, session_context: 'universal_search' })} className="flex items-center gap-3 bg-card border rounded-xl px-4 py-3 hover:border-accent/50 transition-colors">
-              <span className="text-2xl">{meta.emoji}</span>
-              <span className="text-sm font-semibold">{meta.label}</span>
-            </Link>
-          ))}
+          {Object.entries(CATEGORY_META).map(([key, meta]) => {
+            const Icon = meta.Icon;
+            return (
+              <Link key={key} to={meta.base} onClick={() => trackActionAsync({ action_type: 'category_browse', action_category: key, action_label: meta.label, target_path: meta.base, session_context: 'universal_search' })} className="flex items-center gap-3 bg-card border rounded-xl px-4 py-3 hover:border-accent/50 transition-colors">
+                <Icon className="w-5 h-5 text-ocean" strokeWidth={1.5} />
+                <span className="text-sm font-semibold">{meta.label}</span>
+              </Link>
+            );
+          })}
         </div>
       )}
 
@@ -114,7 +123,7 @@ export default function UniversalSearch() {
             const sub = item.cuisine || item.category || item.neighborhood || '';
             return (
               <Link key={item.id} to={item._link} onClick={() => trackActionAsync({ action_type: 'product_view', action_category: item._type, action_label: item.name || item.title, entity_id: item.id, target_path: item._link, session_context: 'universal_search' })} className="flex items-center gap-3 bg-card border rounded-xl px-4 py-3 hover:border-accent/50 transition-colors">
-                <span className="text-xl">{meta.emoji}</span>
+                {(() => { const Icon = meta.Icon; return <Icon className="w-5 h-5 text-ocean flex-shrink-0" strokeWidth={1.5} />; })()}
                 <div>
                   <p className="text-sm font-semibold">{name}</p>
                   <p className="text-xs text-muted-foreground capitalize">{meta.label}{sub ? ` · ${sub}` : ''}</p>
