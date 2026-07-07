@@ -2,11 +2,7 @@ import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, Anchor, Home } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
-
-const NAV = [
-  { path: '/captain/dashboard', label: 'Dashboard', exact: true },
-  { path: '/captain/saved', label: 'Saved Captains' },
-];
+import BottomNav from '@/components/shared/BottomNav';
 
 export default function CaptainShell() {
   const location = useLocation();
@@ -37,19 +33,7 @@ export default function CaptainShell() {
           <Outlet />
         </main>
 
-        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border/50 px-2 py-1 z-50">
-          <div className="flex justify-around">
-            {NAV.map(item => {
-              const isActive = item.exact ? location.pathname === item.path : location.pathname.startsWith(item.path);
-              return (
-                <Link key={item.path} to={item.path}
-                  className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${isActive ? 'text-primary' : 'text-muted-foreground'}`}>
-                  <span className="text-xs font-medium">{item.label}</span>
-                </Link>
-              );
-            })}
-          </div>
-        </nav>
+        <BottomNav />
       </div>
     </div>
   );

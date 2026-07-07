@@ -1,12 +1,8 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, Bookmark, ChevronLeft, Home } from 'lucide-react';
+import { ChevronLeft, Home } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
-
-const navItems = [
-  { path: '/lodging', label: 'Search', icon: Search },
-  { path: '/lodging/my-stays', label: 'My Stays', icon: Bookmark },
-];
+import BottomNav from '@/components/shared/BottomNav';
 
 const subPages = ['/lodging/my-stays'];
 
@@ -38,23 +34,7 @@ export default function LodgingShell() {
           <Outlet />
         </main>
 
-        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border/50 px-2 py-1 z-50">
-          <div className="flex justify-around">
-            {navItems.map(item => {
-              const isActive = item.path === '/lodging'
-                ? location.pathname === '/lodging'
-                : location.pathname.startsWith(item.path);
-              const Icon = item.icon;
-              return (
-                <Link key={item.path} to={item.path}
-                  className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${isActive ? 'text-primary' : 'text-muted-foreground'}`}>
-                  <Icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
-                  <span className="text-[10px] font-medium mt-0.5">{item.label}</span>
-                </Link>
-              );
-            })}
-          </div>
-        </nav>
+        <BottomNav />
       </div>
     </div>
   );

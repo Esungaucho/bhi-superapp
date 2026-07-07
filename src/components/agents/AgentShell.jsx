@@ -1,7 +1,8 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Bot, ChevronLeft, Home } from 'lucide-react';
+import { ChevronLeft, Home } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
+import BottomNav from '@/components/shared/BottomNav';
 import { useNavigate } from 'react-router-dom';
 
 export default function AgentShell() {
@@ -31,18 +32,7 @@ export default function AgentShell() {
           <Outlet />
         </main>
 
-        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border/50 px-2 py-1 z-50">
-          <div className="flex justify-around">
-            <Link to="/agents" className="flex flex-col items-center py-2 px-3 rounded-lg transition-colors text-primary">
-              <Bot className="w-5 h-5" strokeWidth={2.5} />
-              <span className="text-[10px] font-medium mt-0.5">Concierge</span>
-            </Link>
-            <Link to="/dashboard" className="flex flex-col items-center py-2 px-3 rounded-lg transition-colors text-muted-foreground">
-              <Home className="w-5 h-5" strokeWidth={2} />
-              <span className="text-[10px] font-medium mt-0.5">Home</span>
-            </Link>
-          </div>
-        </nav>
+        <BottomNav />
       </div>
     </div>
   );

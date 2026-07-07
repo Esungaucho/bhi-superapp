@@ -1,12 +1,8 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { CloudSun, MapPin, Home } from 'lucide-react';
+import { Home } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
-
-const navItems = [
-  { path: '/weather', label: 'Conditions', icon: CloudSun },
-  { path: '/map', label: 'Map', icon: MapPin },
-];
+import BottomNav from '@/components/shared/BottomNav';
 
 export default function WeatherShell() {
   const location = useLocation();
@@ -28,21 +24,7 @@ export default function WeatherShell() {
           <Outlet />
         </main>
 
-        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border/50 px-2 py-1 z-50">
-          <div className="flex justify-around">
-            {navItems.map(item => {
-              const isActive = location.pathname === item.path;
-              const Icon = item.icon;
-              return (
-                <Link key={item.path} to={item.path}
-                  className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${isActive ? 'text-primary' : 'text-muted-foreground'}`}>
-                  <Icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
-                  <span className="text-[10px] font-medium mt-0.5">{item.label}</span>
-                </Link>
-              );
-            })}
-          </div>
-        </nav>
+        <BottomNav />
       </div>
     </div>
   );
