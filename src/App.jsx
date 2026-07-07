@@ -119,6 +119,7 @@ import TurtleEducation from '@/pages/TurtleEducation';
 import TurtleNestMap from '@/pages/TurtleNestMap';
 import TurtleNestAdmin from '@/pages/admin/TurtleNestAdmin';
 import RestaurantsAdmin from '@/pages/admin/RestaurantsAdmin';
+import NotificationAdmin from '@/pages/admin/NotificationAdmin';
 import VillageInfo from '@/pages/VillageInfo';
 import Founders from '@/pages/Founders';
 
@@ -258,6 +259,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/rental-properties" element={<RentalPropertiesAdmin />} />
         <Route path="/admin/turtles" element={<TurtleNestAdmin />} />
         <Route path="/admin/restaurants" element={<RestaurantsAdmin />} />
+        <Route path="/admin/notifications" element={<NotificationAdmin />} />
         <Route path="/turtles" element={<TurtleEducation />} />
         <Route path="/turtles/map" element={<TurtleNestMap />} />
       </Route>

@@ -1,0 +1,105 @@
+{
+  "name": "PushNotification",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Notification title"
+    },
+    "body": {
+      "type": "string",
+      "description": "Notification message body"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "general",
+        "ferry",
+        "weather",
+        "event",
+        "deal",
+        "community",
+        "emergency",
+        "island_tip"
+      ],
+      "default": "general",
+      "description": "Notification category"
+    },
+    "target_audience": {
+      "type": "string",
+      "enum": [
+        "all_users",
+        "homeowners",
+        "visitors",
+        "newsletter_subscribers",
+        "event_subscribers"
+      ],
+      "default": "all_users",
+      "description": "Who should receive this notification"
+    },
+    "action_url": {
+      "type": "string",
+      "description": "Optional deep link or URL to open when tapped"
+    },
+    "action_label": {
+      "type": "string",
+      "description": "Optional button label e.g. View Event"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "scheduled",
+        "sent",
+        "cancelled"
+      ],
+      "default": "draft",
+      "description": "Current status of the notification"
+    },
+    "scheduled_for": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the notification should be sent (if scheduled)"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the notification was actually sent"
+    },
+    "recipient_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of users who received it"
+    },
+    "created_by_name": {
+      "type": "string",
+      "description": "Admin who created it"
+    }
+  },
+  "required": [
+    "title",
+    "body"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
