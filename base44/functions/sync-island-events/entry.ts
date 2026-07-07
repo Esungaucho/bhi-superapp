@@ -47,7 +47,7 @@ const OFFICIAL_SOURCES = [
     key: 'bhi_club',
     label: 'Bald Head Island Club',
     type: 'pdf',
-    urls: ['https://www.bhiclub.net/documents/20124/175031/2025%2BEvents%2BCalendar.pdf/ff83a2be-e7c1-3c17-0281-7671981337a1?t=1748448477124'],
+    urls: ['https://www.bhiclub.net/documents/20124/173104/BHI+Club+Public+Events+Cal+%282%29.pdf/b25a8906-6e91-713d-f524-40b94be3c31b?t=1780772669317'],
     default_category: 'club_events',
   },
 ];
