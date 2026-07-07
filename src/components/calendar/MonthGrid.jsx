@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, format, isSameDay, isSameMonth, addMonths, subMonths, isToday } from 'date-fns';
+import { getCategory } from '@/lib/calendarConstants';
 
 export default function MonthGrid({ events, selectedDate, onSelectDate }) {
   const [viewMonth, setViewMonth] = useState(startOfMonth(selectedDate || new Date()));
@@ -34,7 +35,12 @@ export default function MonthGrid({ events, selectedDate, onSelectDate }) {
             >
               {format(day, 'd')}
               {dayEvents.length > 0 && !isSelected && (
-                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-accent" />
+                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 flex gap-0.5">
+                  {dayEvents.slice(0, 3).map((e, i) => {
+                    const cat = getCategory(e.category);
+                    return <span key={i} className={`w-1 h-1 rounded-full ${cat.dot || 'bg-accent'}`} />;
+                  })}
+                </span>
               )}
             </button>
           );

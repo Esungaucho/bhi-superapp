@@ -6,22 +6,22 @@ import {
 } from 'lucide-react';
 
 export const EVENT_CATEGORIES = [
-  { id: 'family', label: 'Family', Icon: Users },
-  { id: 'kids', label: 'Kids', Icon: Baby },
-  { id: 'nature', label: 'Nature', Icon: Leaf },
-  { id: 'conservancy', label: 'Conservancy', Icon: Feather },
-  { id: 'fitness', label: 'Fitness', Icon: Dumbbell },
-  { id: 'arts_culture', label: 'Arts & Culture', Icon: Palette },
-  { id: 'music', label: 'Music', Icon: Music },
-  { id: 'dining', label: 'Dining', Icon: UtensilsCrossed },
-  { id: 'shopping', label: 'Shopping', Icon: ShoppingBag },
-  { id: 'community', label: 'Community', Icon: Users },
-  { id: 'government', label: 'Government', Icon: Landmark },
-  { id: 'weddings', label: 'Weddings', Icon: Heart },
-  { id: 'holiday', label: 'Holiday', Icon: Gift },
-  { id: 'club_events', label: 'Club Events', Icon: Crown },
-  { id: 'member_only', label: 'Member Only', Icon: Crown },
-  { id: 'seasonal', label: 'Seasonal', Icon: Sparkles },
+  { id: 'family', label: 'Family', Icon: Users, color: 'blue', badge: 'bg-blue-500/10 text-blue-600', dot: 'bg-blue-500' },
+  { id: 'kids', label: 'Kids', Icon: Baby, color: 'pink', badge: 'bg-pink-500/10 text-pink-600', dot: 'bg-pink-500' },
+  { id: 'nature', label: 'Nature', Icon: Leaf, color: 'green', badge: 'bg-green-500/10 text-green-600', dot: 'bg-green-500' },
+  { id: 'conservancy', label: 'Conservancy', Icon: Feather, color: 'emerald', badge: 'bg-emerald-500/10 text-emerald-600', dot: 'bg-emerald-500' },
+  { id: 'fitness', label: 'Fitness', Icon: Dumbbell, color: 'orange', badge: 'bg-orange-500/10 text-orange-600', dot: 'bg-orange-500' },
+  { id: 'arts_culture', label: 'Arts & Culture', Icon: Palette, color: 'purple', badge: 'bg-purple-500/10 text-purple-600', dot: 'bg-purple-500' },
+  { id: 'music', label: 'Music', Icon: Music, color: 'indigo', badge: 'bg-indigo-500/10 text-indigo-600', dot: 'bg-indigo-500' },
+  { id: 'dining', label: 'Dining', Icon: UtensilsCrossed, color: 'red', badge: 'bg-red-500/10 text-red-600', dot: 'bg-red-500' },
+  { id: 'shopping', label: 'Shopping', Icon: ShoppingBag, color: 'amber', badge: 'bg-amber-500/10 text-amber-600', dot: 'bg-amber-500' },
+  { id: 'community', label: 'Community', Icon: Users, color: 'teal', badge: 'bg-teal-500/10 text-teal-600', dot: 'bg-teal-500' },
+  { id: 'government', label: 'Government', Icon: Landmark, color: 'slate', badge: 'bg-slate-500/10 text-slate-600', dot: 'bg-slate-500' },
+  { id: 'weddings', label: 'Weddings', Icon: Heart, color: 'rose', badge: 'bg-rose-500/10 text-rose-600', dot: 'bg-rose-500' },
+  { id: 'holiday', label: 'Holiday', Icon: Gift, color: 'red', badge: 'bg-red-600/10 text-red-700', dot: 'bg-red-600' },
+  { id: 'club_events', label: 'Club Events', Icon: Crown, color: 'violet', badge: 'bg-violet-500/10 text-violet-600', dot: 'bg-violet-500' },
+  { id: 'member_only', label: 'Member Only', Icon: Crown, color: 'fuchsia', badge: 'bg-fuchsia-500/10 text-fuchsia-600', dot: 'bg-fuchsia-500' },
+  { id: 'seasonal', label: 'Seasonal', Icon: Sparkles, color: 'cyan', badge: 'bg-cyan-500/10 text-cyan-600', dot: 'bg-cyan-500' },
 ];
 
 export const EVENT_ORGANIZATIONS = [
@@ -104,7 +104,7 @@ export function getActiveSeasons(date = new Date()) {
 
 export const getCategory = (id) => {
   const c = EVENT_CATEGORIES.find(c => c.id === id);
-  return c || { label: id, Icon: Calendar };
+  return c || { label: id, Icon: Calendar, badge: 'bg-ocean/8 text-ocean', dot: 'bg-ocean' };
 };
 export const getSeason = (id) => SEASONS.find(s => s.id === id) || { label: id, Icon: Leaf, desc: '' };
 export const getInterest = (id) => INTERESTS.find(i => i.id === id) || { label: id, Icon: Star };

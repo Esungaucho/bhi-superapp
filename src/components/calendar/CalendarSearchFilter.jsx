@@ -51,7 +51,7 @@ export default function CalendarSearchFilter({ search, setSearch, filters, setFi
             className={`flex-shrink-0 flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${
               filters.category === c.id
                 ? 'bg-primary text-primary-foreground'
-                : 'bg-card border border-border text-muted-foreground hover:text-foreground'
+                : `bg-card border border-border hover:border-transparent ${c.badge}`
             }`}
           >
             <c.Icon className="w-3 h-3" strokeWidth={1.5} />

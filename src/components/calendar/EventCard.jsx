@@ -46,7 +46,7 @@ export default function EventCard({ event, isSaved, onToggleSave }) {
         )}
         <div className="p-3.5">
           <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
-            <span className="inline-flex items-center gap-1 bg-ocean/8 rounded-full px-2.5 py-0.5 text-[10px] font-medium text-ocean">
+            <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-medium ${cat.badge || 'bg-ocean/8 text-ocean'}`}>
               {cat.Icon && <cat.Icon className="w-3 h-3" strokeWidth={1.5} />}
               {cat.label}
             </span>
