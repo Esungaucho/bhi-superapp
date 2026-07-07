@@ -56,7 +56,7 @@ export default function DashboardHero({ user }) {
   });
 
   const todayEvents = events
-    .filter(e => e.status === 'approved' && format(new Date(e.start_time), 'yyyy-MM-dd') === todayKey)
+    .filter(e => (e.status === 'approved' || e.status === 'synced') && format(new Date(e.start_time), 'yyyy-MM-dd') === todayKey)
     .slice(0, 3);
 
   const firstName = user?.full_name?.split(' ')[0] || 'Explorer';
