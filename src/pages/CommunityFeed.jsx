@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Loader2, Search } from 'lucide-react';
+import { Loader2, Search, ChevronDown, Check } from 'lucide-react';
 import { CATEGORIES } from '@/lib/communityCategories';
 import PostComposer from '@/components/community/PostComposer';
 import PostCard from '@/components/community/PostCard';
@@ -9,6 +9,7 @@ import PostCard from '@/components/community/PostCard';
 export default function CommunityFeed() {
   const [activeCat, setActiveCat] = useState('all');
   const [search, setSearch] = useState('');
+  const [catOpen, setCatOpen] = useState(false);
 
   const { data: user } = useQuery({ queryKey: ['currentUser'], queryFn: () => base44.auth.me() });
 
@@ -57,23 +58,48 @@ export default function CommunityFeed() {
         />
       </div>
 
-      {/* Quick category filters */}
-      <div className="flex gap-2 overflow-x-auto no-scrollbar -mx-4 px-4">
+      {/* Category dropdown */}
+      <div className="relative">
         <button
-          onClick={() => setActiveCat('all')}
-          className={`flex-shrink-0 text-xs font-medium px-3.5 py-2 rounded-full border transition-colors ${activeCat === 'all' ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-muted-foreground border-border'}`}
+          onClick={() => setCatOpen(o => !o)}
+          className="w-full flex items-center justify-between bg-card border border-border rounded-xl px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-sand/30"
         >
-          All Posts
+          <span className="flex items-center gap-2">
+            {(() => {
+              if (activeCat === 'all') return 'All Posts';
+              const c = CATEGORIES.find(c => c.id === activeCat);
+              return c ? c.label : 'All Posts';
+            })()}
+          </span>
+          <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${catOpen ? 'rotate-180' : ''}`} strokeWidth={1.5} />
         </button>
-        {CATEGORIES.map(c => (
-          <button
-            key={c.id}
-            onClick={() => setActiveCat(c.id)}
-            className={`flex-shrink-0 text-xs font-medium px-3.5 py-2 rounded-full border transition-colors flex items-center gap-1.5 ${activeCat === c.id ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-muted-foreground border-border'}`}
-          >
-            <c.Icon className="w-3 h-3" strokeWidth={1.5} /> {c.label}
-          </button>
-        ))}
+
+        {catOpen && (
+          <>
+            <div className="fixed inset-0 z-40" onClick={() => setCatOpen(false)} />
+            <div className="absolute top-full left-0 right-0 mt-1 bg-card border border-border rounded-xl shadow-luxe-lg z-50 max-h-72 overflow-y-auto no-scrollbar">
+              <button
+                onClick={() => { setActiveCat('all'); setCatOpen(false); }}
+                className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors hover:bg-sand/40 ${activeCat === 'all' ? 'text-primary font-medium' : 'text-foreground'}`}
+              >
+                All Posts
+                {activeCat === 'all' && <Check className="w-4 h-4" strokeWidth={1.5} />}
+              </button>
+              {CATEGORIES.map(c => (
+                <button
+                  key={c.id}
+                  onClick={() => { setActiveCat(c.id); setCatOpen(false); }}
+                  className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors hover:bg-sand/40 ${activeCat === c.id ? 'text-primary font-medium' : 'text-foreground'}`}
+                >
+                  <span className="flex items-center gap-2">
+                    <c.Icon className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} /> {c.label}
+                  </span>
+                  {activeCat === c.id && <Check className="w-4 h-4" strokeWidth={1.5} />}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       {/* Composer */}
