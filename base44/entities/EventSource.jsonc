@@ -1,0 +1,137 @@
+{
+  "name": "EventSource",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Display name for this source (auto-detected or admin-set)"
+    },
+    "url": {
+      "type": "string",
+      "description": "The URL to fetch event data from"
+    },
+    "organization": {
+      "type": "string",
+      "description": "Organization name (mapped to IslandEvent.organization)"
+    },
+    "source_enum": {
+      "type": "string",
+      "enum": [
+        "bhi_limited",
+        "village_of_bhi",
+        "bhi_conservancy",
+        "bald_head_association",
+        "old_baldy_foundation",
+        "shoals_club",
+        "bhi_club",
+        "admin_manual",
+        "community_submission",
+        "other"
+      ],
+      "default": "other",
+      "description": "Mapped source enum for IslandEvent.source"
+    },
+    "extraction_strategy": {
+      "type": "string",
+      "enum": [
+        "json_ld",
+        "ical",
+        "rss",
+        "html_llm",
+        "auto"
+      ],
+      "default": "auto",
+      "description": "How events are extracted from the source"
+    },
+    "feed_url": {
+      "type": "string",
+      "description": "Detected RSS/Atom/iCal feed URL (if different from main URL)"
+    },
+    "default_category": {
+      "type": "string",
+      "default": "community",
+      "description": "Fallback category if LLM can't determine one"
+    },
+    "sync_interval_hours": {
+      "type": "number",
+      "default": 4,
+      "description": "How often to auto-sync this source"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this source is being synced"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending_analysis",
+        "analyzed",
+        "active",
+        "error",
+        "disabled"
+      ],
+      "default": "pending_analysis",
+      "description": "Current lifecycle status"
+    },
+    "analysis_notes": {
+      "type": "string",
+      "description": "LLM-generated notes about the source (content type, structure, etc.)"
+    },
+    "detected_event_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Events found during last analysis test run"
+    },
+    "last_synced": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_sync_result": {
+      "type": "string",
+      "description": "JSON summary of last sync (new, updated, duplicates, errors)"
+    },
+    "total_synced": {
+      "type": "number",
+      "default": 0,
+      "description": "Total events ever synced from this source"
+    },
+    "sync_error": {
+      "type": "string",
+      "description": "Last error message if status is 'error'"
+    },
+    "tags_hint": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Default tags to apply to events from this source"
+    }
+  },
+  "required": [
+    "name",
+    "url"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

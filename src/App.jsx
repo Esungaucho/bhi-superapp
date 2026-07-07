@@ -76,6 +76,7 @@ import EventDetail from '@/pages/EventDetail';
 import SavedEvents from '@/pages/calendar/SavedEvents';
 import CalendarPreferences from '@/pages/calendar/CalendarPreferences';
 import EventManagement from '@/pages/admin/EventManagement';
+import EventSourceManager from '@/pages/admin/EventSourceManager';
 import NewsletterAdmin from '@/pages/admin/NewsletterAdmin';
 import IslandShopAdmin from '@/pages/admin/IslandShopAdmin';
 import BirdieAdmin from '@/pages/admin/BirdieAdmin';
@@ -241,6 +242,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/submissions" element={<SubmissionReview />} />
         <Route path="/admin/community" element={<CommunityModeration />} />
         <Route path="/admin/events" element={<EventManagement />} />
+        <Route path="/admin/event-sources" element={<EventSourceManager />} />
         <Route path="/admin/newsletter" element={<NewsletterAdmin />} />
         <Route path="/admin/shop" element={<IslandShopAdmin />} />
         <Route path="/admin/birdie" element={<BirdieAdmin />} />

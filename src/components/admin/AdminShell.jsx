@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck, CalendarDays, Mail, ShoppingBag, Bird, ConciergeBell, Baby, CalendarHeart, Handshake, Home, Turtle, UtensilsCrossed } from 'lucide-react';
+import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck, CalendarDays, Mail, ShoppingBag, Bird, ConciergeBell, Baby, CalendarHeart, Handshake, Home, Turtle, UtensilsCrossed, Globe } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import GlobalMenu from '@/components/GlobalMenu';
 
@@ -15,6 +15,7 @@ const NAV = [
   { path: '/admin/partners', label: 'Partners', icon: Handshake },
   { path: '/admin/submissions', label: 'Review', icon: FileCheck },
   { path: '/admin/events', label: 'Events', icon: CalendarDays },
+  { path: '/admin/event-sources', label: 'Sources', icon: Globe },
   { path: '/admin/newsletter', label: 'Newsletter', icon: Mail },
   { path: '/admin/shop', label: 'Shop', icon: ShoppingBag },
   { path: '/admin/birdie', label: 'Birdie', icon: Bird },
