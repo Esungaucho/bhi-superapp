@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Menu, X, ChevronDown, User, Bird, CalendarDays, ShoppingBag, Waves,
-  UtensilsCrossed, Baby, Home, Hammer, CalendarHeart, Handshake, Shield, MessageCircle, Turtle, Landmark
+  UtensilsCrossed, Baby, Home, Hammer, CalendarHeart, Handshake, Shield, MessageCircle, Turtle, Landmark, Heart
 } from 'lucide-react';
 import { useUserAccess } from '@/hooks/useUserAccess';
 
@@ -182,6 +182,9 @@ const SECTIONS = [
   },
   {
     label: 'Community Partners', path: '/community-partners', Icon: Handshake,
+  },
+  {
+    label: 'About the Founders', path: '/founders', Icon: Heart,
   },
   {
     label: 'Official Village Info', path: '/village-info', Icon: Landmark,
