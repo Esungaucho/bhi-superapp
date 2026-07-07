@@ -22,7 +22,7 @@ export default function DashboardShell() {
         <header className={`top-0 inset-x-0 z-50 flex items-center justify-between px-6 h-16 ${
           isDashboard
             ? 'absolute text-white'
-            : 'sticky bg-background/85 backdrop-blur-xl border-b border-border/40 text-foreground'
+            : 'sticky bg-card border-b border-border/50 text-foreground'
         }`}>
           {isDashboard ? (
             <h1 className="font-heading text-base tracking-luxe-sm">Bald Head Island</h1>
@@ -32,14 +32,14 @@ export default function DashboardShell() {
           <div className="flex items-center gap-1">
             <Link
               to="/dashboard"
-              className="p-2 rounded-full hover:bg-foreground/5 transition-colors"
+              className="p-2 rounded-full hover:bg-sand/50 transition-colors"
               aria-label="Home"
             >
               <Home className="w-[18px] h-[18px]" strokeWidth={1.5} />
             </Link>
             <Link
               to="/my-island"
-              className="p-2 rounded-full hover:bg-foreground/5 transition-colors"
+              className="p-2 rounded-full hover:bg-sand/50 transition-colors"
               aria-label="My Island"
             >
               <User className="w-[18px] h-[18px]" strokeWidth={1.5} />
@@ -54,7 +54,7 @@ export default function DashboardShell() {
         </main>
 
         {/* Bottom Nav */}
-        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-background/85 backdrop-blur-xl border-t border-border/30 px-2 py-2 z-50">
+        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border/50 px-2 py-2 z-50">
           <div className="flex justify-around">
             {NAV.map(item => {
               const isActive = item.exact
@@ -66,7 +66,7 @@ export default function DashboardShell() {
                   key={item.path}
                   to={item.path}
                   className={`flex flex-col items-center gap-1 py-1.5 px-4 rounded-2xl transition-all duration-200 ${
-                    isActive ? 'text-ocean' : 'text-muted-foreground/50'
+                    isActive ? 'text-primary' : 'text-muted-foreground/50'
                   }`}
                 >
                   <Icon className="w-[20px] h-[20px]" strokeWidth={isActive ? 2 : 1.5} />

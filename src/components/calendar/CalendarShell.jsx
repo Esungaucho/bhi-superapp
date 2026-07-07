@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Calendar, Bookmark, Bell, Home } from 'lucide-react';
+import { Calendar, Bookmark, Bell, ChevronLeft, Home } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
 
 const NAV = [
@@ -16,16 +16,16 @@ export default function CalendarShell() {
   return (
     <div className="min-h-screen bg-background flex justify-center">
       <div className="w-full max-w-[430px] flex flex-col min-h-screen">
-        <header className="bg-navy text-white px-4 h-14 flex items-center justify-between sticky top-0 z-50 shadow-md">
+        <header className="bg-card border-b border-border/50 px-4 h-14 flex items-center justify-between sticky top-0 z-50 text-foreground">
           {isDetail ? (
             <Link to="/calendar" className="flex items-center gap-1 text-sm font-medium">
-              ← Back
+              <ChevronLeft className="w-5 h-5" strokeWidth={1.5} /> Back
             </Link>
           ) : (
-            <h1 className="font-heading text-base tracking-luxe-sm">📅 Island Calendar</h1>
+            <h1 className="font-heading text-sm tracking-luxe-sm">Island Calendar</h1>
           )}
           <div className="flex items-center gap-1">
-            <Link to="/dashboard" className="p-1.5 rounded-lg hover:bg-white/10 transition-colors" aria-label="Home">
+            <Link to="/dashboard" className="p-1.5 rounded-lg hover:bg-sand/50 transition-colors" aria-label="Home">
               <Home className="w-5 h-5" strokeWidth={1.5} />
             </Link>
             <GlobalMenu />
@@ -36,14 +36,14 @@ export default function CalendarShell() {
           <Outlet />
         </main>
 
-        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border px-2 py-1 z-50">
+        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border/50 px-2 py-1 z-50">
           <div className="flex justify-around">
             {NAV.map(item => {
               const isActive = item.exact ? location.pathname === item.path : location.pathname.startsWith(item.path);
               const Icon = item.icon;
               return (
                 <Link key={item.path} to={item.path}
-                  className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${isActive ? 'text-accent' : 'text-muted-foreground'}`}>
+                  className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${isActive ? 'text-primary' : 'text-muted-foreground'}`}>
                   <Icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
                   <span className="text-[10px] font-medium mt-0.5">{item.label}</span>
                 </Link>

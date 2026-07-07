@@ -45,23 +45,23 @@ export default function AdminShell() {
   return (
     <div className="min-h-screen bg-background flex justify-center">
       <div className="w-full max-w-[430px] flex flex-col min-h-screen">
-        <header className="bg-primary text-primary-foreground px-4 py-3 sticky top-0 z-50 shadow-md flex items-center gap-3">
-          <button onClick={() => navigate('/dashboard')} className="p-1 -ml-1 rounded-lg hover:bg-white/10 transition-colors">
-            <ChevronLeft className="w-5 h-5" />
+        <header className="bg-card border-b border-border/50 px-4 py-3 sticky top-0 z-50 text-foreground flex items-center gap-3">
+          <button onClick={() => navigate('/dashboard')} className="p-1 -ml-1 rounded-lg hover:bg-sand/50 transition-colors">
+            <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
           </button>
-          <h1 className="text-lg font-bold tracking-tight">Admin</h1>
+          <h1 className="font-heading text-sm tracking-luxe-sm">Admin Console</h1>
           <div className="ml-auto"><GlobalMenu /></div>
         </header>
 
         {/* Tab bar */}
-        <div className="bg-card border-b grid grid-cols-5 gap-1 p-2">
+        <div className="bg-card border-b border-border/50 grid grid-cols-5 gap-1 p-2">
           {NAV.map(item => {
             const isActive = location.pathname === item.path;
             const Icon = item.icon;
             return (
               <Link key={item.path} to={item.path}
                 className={`flex flex-col items-center gap-1.5 py-2.5 px-1 rounded-lg text-[10px] font-semibold border-b-2 transition-colors ${
-                  isActive ? 'border-accent text-accent bg-accent/5' : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-sand/40'
+                  isActive ? 'border-primary text-primary bg-primary/5' : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-sand/40'
                 }`}>
                 <Icon className="w-5 h-5" strokeWidth={isActive ? 2 : 1.5} />
                 {item.label}

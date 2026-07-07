@@ -16,15 +16,15 @@ export default function RentalsShell() {
   return (
     <div className="min-h-screen bg-background flex justify-center">
       <div className="w-full max-w-[430px] flex flex-col min-h-screen relative">
-        <header className="bg-primary text-primary-foreground px-4 py-3 flex items-center gap-3 sticky top-0 z-50 shadow-md">
+        <header className="bg-card border-b border-border/50 px-4 py-3 flex items-center gap-3 sticky top-0 z-50 text-foreground">
           {isDetail && (
-            <button onClick={() => navigate(-1)} className="p-1 -ml-1 rounded-lg hover:bg-white/10 transition-colors">
-              <ChevronLeft className="w-5 h-5" />
+            <button onClick={() => navigate(-1)} className="p-1 -ml-1 rounded-lg hover:bg-sand/50 transition-colors">
+              <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
             </button>
           )}
-          <h1 className="text-lg font-bold tracking-tight">🛺 BHI Rentals</h1>
+          <h1 className="font-heading text-sm tracking-luxe-sm">BHI Rentals</h1>
           <div className="ml-auto flex items-center gap-1">
-            <Link to="/dashboard" className="p-1.5 rounded-lg hover:bg-white/10 transition-colors" aria-label="Home">
+            <Link to="/dashboard" className="p-1.5 rounded-lg hover:bg-sand/50 transition-colors" aria-label="Home">
               <Home className="w-5 h-5" strokeWidth={1.5} />
             </Link>
             <GlobalMenu />
@@ -35,7 +35,7 @@ export default function RentalsShell() {
           <Outlet />
         </main>
 
-        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border px-2 py-1 z-50">
+        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border/50 px-2 py-1 z-50">
           <div className="flex justify-around">
             {navItems.map(item => {
               const isActive = item.path === '/equipment'
@@ -44,7 +44,7 @@ export default function RentalsShell() {
               const Icon = item.icon;
               return (
                 <Link key={item.path} to={item.path}
-                  className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${isActive ? 'text-accent' : 'text-muted-foreground'}`}>
+                  className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${isActive ? 'text-primary' : 'text-muted-foreground'}`}>
                   <Icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
                   <span className="text-[10px] font-medium mt-0.5">{item.label}</span>
                 </Link>

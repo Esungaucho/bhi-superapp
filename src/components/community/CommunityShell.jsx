@@ -10,16 +10,16 @@ export default function CommunityShell() {
   return (
     <div className="min-h-screen bg-background flex justify-center">
       <div className="w-full max-w-[430px] flex flex-col min-h-screen relative">
-        <header className="sticky top-0 z-50 h-16 bg-primary text-primary-foreground shadow-md flex items-center justify-between px-4">
+        <header className="sticky top-0 z-50 h-16 bg-card border-b border-border/50 text-foreground flex items-center justify-between px-4">
           {isDetail ? (
             <Link to="/community" className="flex items-center gap-1 text-sm font-medium">
-              <ArrowLeft className="w-5 h-5" /> Back
+              <ArrowLeft className="w-5 h-5" strokeWidth={1.5} /> Back
             </Link>
           ) : (
-            <h1 className="font-heading text-lg">Island Chat</h1>
+            <h1 className="font-heading text-sm tracking-luxe-sm">Island Chat</h1>
           )}
           <div className="flex items-center gap-1">
-            <Link to="/dashboard" className="p-1.5 rounded-lg hover:bg-white/10 transition-colors" aria-label="Home">
+            <Link to="/dashboard" className="p-1.5 rounded-lg hover:bg-sand/50 transition-colors" aria-label="Home">
               <Home className="w-5 h-5" strokeWidth={1.5} />
             </Link>
             <GlobalMenu />

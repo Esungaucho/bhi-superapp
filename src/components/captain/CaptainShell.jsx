@@ -15,18 +15,18 @@ export default function CaptainShell() {
   return (
     <div className="min-h-screen bg-background flex justify-center">
       <div className="w-full max-w-[430px] flex flex-col min-h-screen relative">
-        <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-16 bg-navy text-white shadow-md">
+        <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-16 bg-card border-b border-border/50 text-foreground">
           {isDetail ? (
             <Link to="/captain/dashboard" className="flex items-center gap-1.5 text-sm font-medium">
-              <ArrowLeft className="w-4 h-4" /> Back
+              <ArrowLeft className="w-4 h-4" strokeWidth={1.5} /> Back
             </Link>
           ) : (
-            <h1 className="font-heading text-lg tracking-luxe-sm flex items-center gap-2">
-              <Anchor className="w-5 h-5" /> Captain's Hub
+            <h1 className="font-heading text-sm tracking-luxe-sm flex items-center gap-2">
+              <Anchor className="w-5 h-5 text-primary" strokeWidth={1.5} /> Captain's Hub
             </h1>
           )}
           <div className="flex items-center gap-1">
-            <Link to="/dashboard" className="p-1.5 rounded-lg hover:bg-white/10 transition-colors" aria-label="Home">
+            <Link to="/dashboard" className="p-1.5 rounded-lg hover:bg-sand/50 transition-colors" aria-label="Home">
               <Home className="w-5 h-5" strokeWidth={1.5} />
             </Link>
             <GlobalMenu />
@@ -37,13 +37,13 @@ export default function CaptainShell() {
           <Outlet />
         </main>
 
-        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border px-2 py-1 z-50">
+        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border/50 px-2 py-1 z-50">
           <div className="flex justify-around">
             {NAV.map(item => {
               const isActive = item.exact ? location.pathname === item.path : location.pathname.startsWith(item.path);
               return (
                 <Link key={item.path} to={item.path}
-                  className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${isActive ? 'text-accent' : 'text-muted-foreground'}`}>
+                  className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${isActive ? 'text-primary' : 'text-muted-foreground'}`}>
                   <span className="text-xs font-medium">{item.label}</span>
                 </Link>
               );
