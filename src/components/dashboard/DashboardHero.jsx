@@ -50,13 +50,14 @@ export default function DashboardHero({ user }) {
     .filter(f => new Date(f.departure_time) >= now)
     .sort((a, b) => new Date(a.departure_time) - new Date(b.departure_time))[0];
 
+  const todayStart = new Date(todayKey + 'T00:00:00').toISOString();
   const { data: events = [] } = useQuery({
-    queryKey: ['islandEventsToday'],
-    queryFn: () => base44.entities.IslandEvent.list('start_time', 50),
+    queryKey: ['islandEventsToday', todayKey],
+    queryFn: () => base44.entities.IslandEvent.filter({ start_time: { $gte: todayStart } }, 'start_time', 50),
   });
 
   const todayEvents = events
-    .filter(e => (e.status === 'approved' || e.status === 'synced') && format(new Date(e.start_time), 'yyyy-MM-dd') === todayKey)
+    .filter(e => format(new Date(e.start_time), 'yyyy-MM-dd') === todayKey)
     .slice(0, 3);
 
   const firstName = user?.full_name?.split(' ')[0] || 'Explorer';
