@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Loader2, ImagePlus, Send, X, Heart } from 'lucide-react';
+import { Loader2, ImagePlus, Send, X, Heart, ChevronDown, Check } from 'lucide-react';
 import { CATEGORIES } from '@/lib/communityCategories';
 import CommunityGuidelines from './CommunityGuidelines';
 
@@ -17,6 +17,7 @@ export default function PostComposer() {
   const [posting, setPosting] = useState(false);
   const [moderationMsg, setModerationMsg] = useState(null);
   const [showGuidelines, setShowGuidelines] = useState(false);
+  const [catOpen, setCatOpen] = useState(false);
 
   const { data: user } = useQuery({ queryKey: ['currentUser'], queryFn: () => base44.auth.me() });
 
@@ -101,17 +102,40 @@ export default function PostComposer() {
               className="w-full bg-secondary/50 rounded-xl px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-accent resize-none"
             />
 
-            {/* Category chips */}
-            <div className="flex gap-1.5 overflow-x-auto no-scrollbar -mx-1 px-1">
-              {CATEGORIES.map(c => (
-                <button
-                  key={c.id}
-                  onClick={() => setCategory(c.id)}
-                  className={`flex-shrink-0 text-[11px] font-medium px-2.5 py-1 rounded-full border transition-colors ${category === c.id ? 'bg-accent text-accent-foreground border-accent' : 'bg-card text-muted-foreground border-border'}`}
-                >
-                  <c.Icon className="w-3 h-3" strokeWidth={1.5} /> {c.label}
-                </button>
-              ))}
+            {/* Category dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setCatOpen(o => !o)}
+                className="w-full flex items-center justify-between bg-secondary/50 rounded-xl px-3.5 py-2 text-xs font-medium text-foreground transition-colors hover:bg-secondary"
+              >
+                <span className="flex items-center gap-1.5">
+                  {(() => {
+                    const c = CATEGORIES.find(c => c.id === category);
+                    return c ? <><c.Icon className="w-3.5 h-3.5 text-muted-foreground" strokeWidth={1.5} /> {c.label}</> : 'Select category';
+                  })()}
+                </span>
+                <ChevronDown className={`w-3.5 h-3.5 text-muted-foreground transition-transform ${catOpen ? 'rotate-180' : ''}`} strokeWidth={1.5} />
+              </button>
+
+              {catOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setCatOpen(false)} />
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-card border border-border rounded-xl shadow-luxe-lg z-50 max-h-60 overflow-y-auto no-scrollbar">
+                    {CATEGORIES.map(c => (
+                      <button
+                        key={c.id}
+                        onClick={() => { setCategory(c.id); setCatOpen(false); }}
+                        className={`w-full flex items-center justify-between px-3.5 py-2 text-xs transition-colors hover:bg-sand/40 ${category === c.id ? 'text-accent font-medium' : 'text-foreground'}`}
+                      >
+                        <span className="flex items-center gap-1.5">
+                          <c.Icon className="w-3.5 h-3.5 text-muted-foreground" strokeWidth={1.5} /> {c.label}
+                        </span>
+                        {category === c.id && <Check className="w-3.5 h-3.5" strokeWidth={1.5} />}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Tags input */}
