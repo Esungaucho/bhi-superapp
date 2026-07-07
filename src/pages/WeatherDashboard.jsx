@@ -40,6 +40,17 @@ export default function WeatherDashboard() {
     queryFn: () => base44.entities.IslandConditions.list('-recorded_at', 1),
   });
 
+  // Same data source as WeatherMarineModule — ensures uniform readings
+  const { data: marineData } = useQuery({
+    queryKey: ['bhiWeatherMarine'],
+    queryFn: async () => {
+      const res = await base44.functions.invoke('getBHIWeatherMarineStatus', {});
+      return res.data;
+    },
+    staleTime: 10 * 60 * 1000,
+    retry: 1,
+  });
+
   const { data: pins = [] } = useQuery({
     queryKey: ['businessPins'],
     queryFn: () => base44.entities.BusinessPin.filter({ is_sponsored: true, is_active: true }),
@@ -47,6 +58,12 @@ export default function WeatherDashboard() {
 
   const conditions = conditionsAll[0];
   const triggeredAds = useMemo(() => getTriggeredAds(pins, conditions).slice(0, 2), [pins, conditions]);
+
+  // Use marine data (Windy API) as the primary source for temp/wind — same as Island Conditions section
+  const marine = marineData?.current;
+  const displayTemp = marine?.temp_f ?? conditions?.temp_f;
+  const displayWind = marine?.wind_mph ?? conditions?.wind_mph;
+  const displayWindDir = marine?.wind_direction || conditions?.wind_direction || '';
 
   const ConditionIcon = CONDITION_ICON[conditions?.condition] || CloudSun;
   const uvMeta = conditions ? UV_META(conditions.uv_index || 0) : null;
@@ -74,9 +91,9 @@ export default function WeatherDashboard() {
         <div className="flex items-start justify-between mb-4">
           <div>
             <p className="text-[10px] font-medium tracking-luxe-sm uppercase text-[#1E3A45]/50 mb-2">Bald Head Island</p>
-            <h1 className="font-heading text-4xl text-[#1E3A45] leading-none">{conditions.temp_f}°</h1>
+            <h1 className="font-heading text-4xl text-[#1E3A45] leading-none">{displayTemp ?? '--'}°</h1>
             <p className="text-sm text-[#1E3A45]/60 mt-1.5 capitalize">{conditions.condition?.replace('_', ' ')}</p>
-            <p className="text-xs text-[#1E3A45]/45 mt-0.5">Feels like {conditions.feels_like_f || conditions.temp_f}°F</p>
+            <p className="text-xs text-[#1E3A45]/45 mt-0.5">Feels like {conditions.feels_like_f || displayTemp || '--'}°F</p>
           </div>
           <div className="flex flex-col items-center gap-2.5">
             <span className="w-16 h-16 rounded-full bg-white/35 backdrop-blur-sm flex items-center justify-center border border-white/30">
@@ -106,7 +123,7 @@ export default function WeatherDashboard() {
       {/* Quick stats grid */}
       <div className="grid grid-cols-2 gap-3">
         <StatCard icon={<Wind className="w-4 h-4 text-[#3F6D80]" strokeWidth={1.5} />} label="Wind"
-          value={`${conditions.wind_mph} mph`} sub={conditions.wind_direction || ''} />
+          value={`${displayWind ?? '--'} mph`} sub={displayWindDir} />
         <StatCard icon={<Droplets className="w-4 h-4 text-[#3F6D80]" strokeWidth={1.5} />} label="Humidity"
           value={`${conditions.humidity_pct || '--'}%`} />
         <StatCard icon={<Waves className="w-4 h-4 text-[#3F6D80]" strokeWidth={1.5} />} label="Waves"
