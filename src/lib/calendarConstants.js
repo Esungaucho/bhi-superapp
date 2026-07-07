@@ -30,6 +30,7 @@ export const EVENT_ORGANIZATIONS = [
   { id: 'bhi_conservancy', label: 'BHI Conservancy', source: 'bhi_conservancy' },
   { id: 'bald_head_association', label: 'Bald Head Association', source: 'bald_head_association' },
   { id: 'old_baldy_foundation', label: 'Old Baldy Foundation', source: 'old_baldy_foundation' },
+  { id: 'village_chapel', label: 'Village Chapel of BHI', source: 'village_chapel' },
   { id: 'shoals_club', label: 'Shoals Club', source: 'shoals_club' },
   { id: 'bhi_club', label: 'Bald Head Island Club', source: 'bhi_club' },
   { id: 'admin_manual', label: 'Admin (Manual)', source: 'admin_manual' },

@@ -4,25 +4,25 @@
   "properties": {
     "source_name": {
       "type": "string",
-      "description": "Name of the event source"
+      "description": "Display name of the event source"
+    },
+    "source_key": {
+      "type": "string",
+      "description": "Source identifier e.g. bhi_conservancy"
     },
     "source_url": {
       "type": "string",
       "description": "URL that was synced"
     },
-    "source_id": {
-      "type": "string",
-      "description": "EventSource ID if linked"
-    },
     "status": {
       "type": "string",
       "enum": [
-        "success",
-        "partial",
+        "connected",
         "failed",
-        "needs_manual_setup"
+        "needs_manual_setup",
+        "requires_admin_review"
       ],
-      "default": "success",
+      "default": "connected",
       "description": "Outcome of the sync attempt"
     },
     "events_found": {
@@ -37,9 +37,26 @@
       "type": "number",
       "default": 0
     },
+    "events_failed": {
+      "type": "number",
+      "default": 0,
+      "description": "Events that failed to import"
+    },
     "duplicates_skipped": {
       "type": "number",
       "default": 0
+    },
+    "extraction_method": {
+      "type": "string",
+      "enum": [
+        "json_ld",
+        "llm_html",
+        "llm_pdf",
+        "manual",
+        "auto"
+      ],
+      "default": "auto",
+      "description": "How events were extracted from this source"
     },
     "error_message": {
       "type": "string",
@@ -47,14 +64,15 @@
     },
     "notes": {
       "type": "string",
-      "description": "Additional context (e.g. why manual setup is needed)"
+      "description": "Additional context"
     },
     "sync_type": {
       "type": "string",
       "enum": [
         "manual",
         "scheduled",
-        "admin_trigger"
+        "admin_trigger",
+        "per_source"
       ],
       "default": "admin_trigger"
     }

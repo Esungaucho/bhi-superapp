@@ -3,55 +3,78 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import {
   Loader2, RefreshCw, Trash2, CheckCircle2, AlertCircle, Globe,
-  Clock, ChevronDown, ChevronUp, Zap, ShieldCheck, FileWarning, ScrollText
+  Clock, ChevronDown, ChevronUp, ShieldCheck, FileWarning, ScrollText,
+  FileText, Plus, X, CalendarPlus, Zap
 } from 'lucide-react';
 import { format } from 'date-fns';
+import ManualEventForm from '@/components/admin/ManualEventForm';
+import SyncLogList from '@/components/admin/SyncLogList';
 
-const OFFICIAL_SOURCES = [
-  { name: 'Bald Head Island Limited', url: 'https://www.baldheadisland.com/events-news', source: 'bhi_limited' },
-  { name: 'Village of Bald Head Island — Calendar', url: 'https://villagebhi.org/residents-owners/view/village-calendar/', source: 'village_of_bhi' },
-  { name: 'Village of Bald Head Island — Announcements', url: 'https://villagebhi.org/announcements/', source: 'village_of_bhi' },
-  { name: 'BHI Conservancy', url: 'https://bhic.org/calendar/', source: 'bhi_conservancy' },
-  { name: 'Bald Head Association', url: 'https://www.baldheadassociation.com/calendar-bha', source: 'bald_head_association' },
-  { name: 'Old Baldy Foundation', url: 'https://www.oldbaldy.org/', source: 'old_baldy_foundation' },
+export const OFFICIAL_SOURCES = [
+  { key: 'bhi_limited', name: 'Bald Head Island Limited', url: 'https://www.baldheadisland.com/events-news', type: 'html' },
+  { key: 'village_of_bhi', name: 'Village of Bald Head Island', url: 'https://villagebhi.org/residents-owners/view/village-calendar/', type: 'html' },
+  { key: 'bhi_conservancy', name: 'BHI Conservancy', url: 'https://bhic.org/calendar/', type: 'html' },
+  { key: 'bald_head_association', name: 'Bald Head Association', url: 'https://www.baldheadassociation.com/calendar-bha', type: 'html' },
+  { key: 'old_baldy_foundation', name: 'Old Baldy Foundation', url: 'https://www.oldbaldy.org/events', type: 'html' },
+  { key: 'village_chapel', name: 'Village Chapel of BHI', url: 'https://www.villagechapelofbaldheadisland.com/calendars.html', type: 'html' },
+  { key: 'bhi_club', name: 'Bald Head Island Club', url: 'https://www.bhiclub.net/documents/20124/175031/2025%2BEvents%2BCalendar.pdf/ff83a2be-e7c1-3c17-0281-7671981337a1?t=1748448477124', type: 'pdf' },
 ];
 
 const STATUS_META = {
-  success: { label: 'Synced', color: 'text-emerald-600 bg-emerald-50', Icon: CheckCircle2 },
-  partial: { label: 'Partial', color: 'text-amber-600 bg-amber-50', Icon: AlertCircle },
+  connected: { label: 'Connected', color: 'text-emerald-600 bg-emerald-50', Icon: CheckCircle2 },
   failed: { label: 'Failed', color: 'text-destructive bg-destructive/5', Icon: AlertCircle },
   needs_manual_setup: { label: 'Needs Manual Setup', color: 'text-amber-700 bg-amber-100', Icon: FileWarning },
+  requires_admin_review: { label: 'Requires Admin Review', color: 'text-orange-600 bg-orange-50', Icon: AlertCircle },
+  pending: { label: 'Not Synced', color: 'text-muted-foreground bg-secondary', Icon: Clock },
 };
 
 export default function EventSourceManager() {
-  const [syncing, setSyncing] = useState(false);
+  const [syncingSource, setSyncingSource] = useState(null);
+  const [syncingAll, setSyncingAll] = useState(false);
   const [syncResult, setSyncResult] = useState(null);
-  const [expandedLog, setExpandedLog] = useState(null);
+  const [manualFormSource, setManualFormSource] = useState(null);
   const queryClient = useQueryClient();
 
-  const { data: user } = useQuery({ queryKey: ['currentUser'], queryFn: () => base44.auth.me() });
   const { data: syncLogs = [], isLoading: logsLoading } = useQuery({
     queryKey: ['syncLogs'],
-    queryFn: () => base44.entities.SyncLog.list('-created_date', 50),
-  });
-  const { data: events = [] } = useQuery({
-    queryKey: ['adminEventCount'],
-    queryFn: () => base44.entities.IslandEvent.list('-created_date', 200),
+    queryFn: () => base44.entities.SyncLog.list('-created_date', 100),
   });
 
+  // Latest log per source
+  const latestLogPerSource = {};
+  for (const log of syncLogs) {
+    if (!latestLogPerSource[log.source_key]) {
+      latestLogPerSource[log.source_key] = log;
+    }
+  }
+
+  const handleSyncSource = async (sourceKey) => {
+    setSyncingSource(sourceKey);
+    setSyncResult(null);
+    try {
+      const res = await base44.functions.invoke('sync-island-events', { source_key: sourceKey });
+      setSyncResult(res.data);
+      queryClient.invalidateQueries({ queryKey: ['syncLogs'] });
+      queryClient.invalidateQueries({ queryKey: ['islandEvents'] });
+    } catch (err) {
+      setSyncResult({ error: err.response?.data?.error || err.message });
+    } finally {
+      setSyncingSource(null);
+    }
+  };
+
   const handleSyncAll = async () => {
-    setSyncing(true);
+    setSyncingAll(true);
     setSyncResult(null);
     try {
       const res = await base44.functions.invoke('sync-island-events', {});
       setSyncResult(res.data);
       queryClient.invalidateQueries({ queryKey: ['syncLogs'] });
-      queryClient.invalidateQueries({ queryKey: ['adminEventCount'] });
       queryClient.invalidateQueries({ queryKey: ['islandEvents'] });
     } catch (err) {
       setSyncResult({ error: err.response?.data?.error || err.message });
     } finally {
-      setSyncing(false);
+      setSyncingAll(false);
     }
   };
 
@@ -63,41 +86,32 @@ export default function EventSourceManager() {
     queryClient.invalidateQueries({ queryKey: ['syncLogs'] });
   };
 
-  // Group latest log per source
-  const latestLogPerSource = {};
-  for (const log of syncLogs) {
-    if (!latestLogPerSource[log.source_url]) {
-      latestLogPerSource[log.source_url] = log;
-    }
-  }
-
   return (
     <div className="px-4 pt-5 pb-8">
       <h2 className="font-heading text-xl text-foreground mb-1">Event Source Manager</h2>
       <p className="text-xs text-muted-foreground mb-5">Real events imported from official Bald Head Island sources. No AI-generated events.</p>
 
-      {/* Sync button */}
+      {/* Global sync */}
       <div className="bg-card rounded-2xl border border-border p-4 mb-4">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between">
           <div>
             <p className="text-xs font-semibold text-foreground flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-emerald-500" /> Verified Events Only
             </p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">{events.length} real events in database</p>
+            <p className="text-[10px] text-muted-foreground mt-0.5">Sync all {OFFICIAL_SOURCES.length} official sources</p>
           </div>
           <button
             onClick={handleSyncAll}
-            disabled={syncing}
+            disabled={syncingAll || syncingSource !== null}
             className="flex items-center gap-1.5 bg-primary text-primary-foreground rounded-full px-4 py-2 text-xs font-semibold disabled:opacity-40"
           >
-            {syncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
-            {syncing ? 'Syncing...' : 'Sync Events Now'}
+            {syncingAll ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
+            {syncingAll ? 'Syncing All...' : 'Sync All Sources'}
           </button>
         </div>
 
-        {/* Sync result summary */}
         {syncResult && (
-          <div className="p-3 rounded-xl bg-secondary/30 border border-border/50 space-y-1.5">
+          <div className="mt-3 p-3 rounded-xl bg-secondary/30 border border-border/50 space-y-1.5">
             {syncResult.error ? (
               <p className="text-xs text-destructive">Error: {syncResult.error}</p>
             ) : (
@@ -106,7 +120,8 @@ export default function EventSourceManager() {
                   New: <span className="font-semibold text-emerald-600">{syncResult.newEvents}</span> ·
                   Updated: <span className="font-semibold text-foreground">{syncResult.updatedEvents}</span> ·
                   Duplicates: <span className="font-semibold">{syncResult.duplicates}</span> ·
-                  Expired removed: <span className="font-semibold">{syncResult.expiredRemoved || 0}</span>
+                  Failed: <span className="font-semibold text-destructive">{syncResult.totalFailed}</span>
+                  {syncResult.expiredRemoved !== undefined && <> · Expired removed: <span className="font-semibold">{syncResult.expiredRemoved}</span></>}
                 </p>
                 {syncResult.sourceResults?.map((sr, i) => {
                   const meta = STATUS_META[sr.status] || STATUS_META.failed;
@@ -115,7 +130,7 @@ export default function EventSourceManager() {
                       <meta.Icon className={`w-3 h-3 ${meta.color.split(' ')[0]}`} />
                       <span className="font-medium text-foreground">{sr.source}</span>
                       <span className="text-muted-foreground">— {meta.label}</span>
-                      {sr.eventsFound > 0 && <span className="text-muted-foreground">({sr.eventsFound} found, {sr.eventsImported} imported)</span>}
+                      {sr.eventsFound > 0 && <span className="text-muted-foreground">({sr.eventsFound} found, {sr.eventsImported} imported{sr.eventsFailed > 0 ? `, ${sr.eventsFailed} failed` : ''})</span>}
                       {sr.notes && <span className="text-amber-600 italic">{sr.notes}</span>}
                       {sr.error && <span className="text-destructive">{sr.error}</span>}
                     </div>
@@ -127,18 +142,27 @@ export default function EventSourceManager() {
         )}
       </div>
 
-      {/* Official sources list */}
+      {/* Source list */}
       <div className="space-y-2.5 mb-6">
-        <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-luxe-sm">Official Sources</p>
+        <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-luxe-sm">Official Sources ({OFFICIAL_SOURCES.length})</p>
         {OFFICIAL_SOURCES.map(src => {
-          const latestLog = latestLogPerSource[src.url];
+          const latestLog = latestLogPerSource[src.key];
           const status = latestLog?.status || 'pending';
-          const meta = STATUS_META[status] || { label: 'Not Synced', color: 'text-muted-foreground bg-secondary', Icon: Clock };
+          const meta = STATUS_META[status] || STATUS_META.pending;
           const Icon = meta.Icon;
+          const isSyncing = syncingSource === src.key;
+          const needsManual = status === 'needs_manual_setup' || status === 'failed';
 
           return (
-            <div key={src.url} className="bg-card rounded-2xl border border-border p-3.5">
+            <div key={src.key} className="bg-card rounded-2xl border border-border p-3.5">
               <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 mt-0.5">
+                  {src.type === 'pdf' ? (
+                    <FileText className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
+                  ) : (
+                    <Globe className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
+                  )}
+                </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="text-sm font-semibold text-foreground">{src.name}</h3>
                   <a href={src.url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-accent break-all hover:underline">{src.url}</a>
@@ -146,22 +170,49 @@ export default function EventSourceManager() {
                     <span className={`inline-flex items-center gap-1 text-[9px] rounded-full px-2 py-0.5 font-semibold ${meta.color}`}>
                       <Icon className="w-2.5 h-2.5" /> {meta.label}
                     </span>
-                    {latestLog && (
-                      <span className="text-[9px] bg-secondary text-muted-foreground rounded-full px-2 py-0.5">
-                        {latestLog.events_imported || 0} imported
-                      </span>
+                    {src.type === 'pdf' && (
+                      <span className="text-[9px] bg-secondary text-muted-foreground rounded-full px-2 py-0.5">PDF</span>
                     )}
-                    {latestLog?.last_synced && (
-                      <span className="text-[9px] bg-secondary text-muted-foreground rounded-full px-2 py-0.5">
-                        {format(new Date(latestLog.created_date), 'MMM d, h:mm a')}
-                      </span>
+                    {latestLog && (
+                      <>
+                        <span className="text-[9px] bg-secondary text-muted-foreground rounded-full px-2 py-0.5">
+                          {latestLog.events_imported || 0} imported
+                        </span>
+                        {latestLog.events_failed > 0 && (
+                          <span className="text-[9px] bg-destructive/5 text-destructive rounded-full px-2 py-0.5">
+                            {latestLog.events_failed} failed
+                          </span>
+                        )}
+                        <span className="text-[9px] bg-secondary text-muted-foreground rounded-full px-2 py-0.5">
+                          {format(new Date(latestLog.created_date), 'MMM d, h:mm a')}
+                        </span>
+                      </>
                     )}
                   </div>
-                  {latestLog?.notes && status === 'needs_manual_setup' && (
+                  {latestLog?.notes && needsManual && (
                     <p className="text-[10px] text-amber-700 mt-1.5 italic">{latestLog.notes}</p>
                   )}
                   {latestLog?.error_message && (
                     <p className="text-[10px] text-destructive mt-1.5">{latestLog.error_message}</p>
+                  )}
+                </div>
+                <div className="flex flex-col gap-1.5 flex-shrink-0">
+                  <button
+                    onClick={() => handleSyncSource(src.key)}
+                    disabled={isSyncing || syncingAll}
+                    className="flex items-center gap-1 text-[10px] font-semibold rounded-full px-3 py-1.5 border border-border hover:bg-secondary/40 disabled:opacity-40 transition-colors"
+                  >
+                    {isSyncing ? <Loader2 className="w-3 h-3 animate-spin" /> : <RefreshCw className="w-3 h-3" />}
+                    {isSyncing ? '...' : 'Sync'}
+                  </button>
+                  {needsManual && (
+                    <button
+                      onClick={() => setManualFormSource(src)}
+                      className="flex items-center gap-1 text-[10px] font-semibold rounded-full px-3 py-1.5 bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+                    >
+                      <Plus className="w-3 h-3" />
+                      Manual
+                    </button>
                   )}
                 </div>
               </div>
@@ -171,53 +222,19 @@ export default function EventSourceManager() {
       </div>
 
       {/* Sync log */}
-      <div className="mb-4">
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-luxe-sm flex items-center gap-1">
-            <ScrollText className="w-3 h-3" /> Sync Log
-          </p>
-          {syncLogs.length > 0 && (
-            <button onClick={handleClearLogs} className="text-[10px] text-destructive hover:underline">Clear logs</button>
-          )}
-        </div>
-        {logsLoading ? (
-          <div className="flex justify-center py-8"><Loader2 className="w-5 h-5 animate-spin text-accent" /></div>
-        ) : syncLogs.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground text-xs">No sync attempts yet. Click "Sync Events Now" to start.</div>
-        ) : (
-          <div className="space-y-1.5">
-            {syncLogs.slice(0, 20).map((log, i) => {
-              const meta = STATUS_META[log.status] || STATUS_META.failed;
-              const Icon = meta.Icon;
-              const isExpanded = expandedLog === i;
-              return (
-                <div key={log.id} className="bg-card rounded-xl border border-border p-3">
-                  <button onClick={() => setExpandedLog(isExpanded ? null : i)} className="w-full flex items-center gap-2 text-left">
-                    <Icon className={`w-3.5 h-3.5 flex-shrink-0 ${meta.color.split(' ')[0]}`} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium text-foreground truncate">{log.source_name}</p>
-                      <p className="text-[9px] text-muted-foreground">
-                        {format(new Date(log.created_date), 'MMM d, h:mm a')} ·
-                        Found: {log.events_found} · Imported: {log.events_imported}
-                      </p>
-                    </div>
-                    {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-muted-foreground" /> : <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />}
-                  </button>
-                  {isExpanded && (
-                    <div className="mt-2 pt-2 border-t border-border/50 space-y-1 text-[11px]">
-                      <p className="text-muted-foreground break-all">{log.source_url}</p>
-                      <p className="text-muted-foreground">Status: <span className="font-semibold">{meta.label}</span></p>
-                      <p className="text-muted-foreground">Updated: {log.events_updated} · Duplicates: {log.duplicates_skipped}</p>
-                      {log.error_message && <p className="text-destructive">Error: {log.error_message}</p>}
-                      {log.notes && <p className="text-amber-700 italic">{log.notes}</p>}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
+      <SyncLogList logs={syncLogs} isLoading={logsLoading} onClearLogs={handleClearLogs} />
+
+      {/* Manual event form modal */}
+      {manualFormSource && (
+        <ManualEventForm
+          source={manualFormSource}
+          onClose={() => setManualFormSource(null)}
+          onSaved={() => {
+            setManualFormSource(null);
+            queryClient.invalidateQueries({ queryKey: ['islandEvents'] });
+          }}
+        />
+      )}
     </div>
   );
 }
