@@ -23,6 +23,26 @@
       "type": "boolean",
       "default": true,
       "description": "Send reminder before event"
+    },
+    "notify_24h": {
+      "type": "boolean",
+      "default": true,
+      "description": "Notify 24 hours before event"
+    },
+    "notify_2h": {
+      "type": "boolean",
+      "default": true,
+      "description": "Notify 2 hours before event"
+    },
+    "notify_30m": {
+      "type": "boolean",
+      "default": false,
+      "description": "Notify 30 minutes before event"
+    },
+    "added_to_trip": {
+      "type": "boolean",
+      "default": false,
+      "description": "Added to user's trip itinerary"
     }
   },
   "required": [
