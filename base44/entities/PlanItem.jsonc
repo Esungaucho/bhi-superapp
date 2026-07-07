@@ -1,0 +1,77 @@
+{
+  "name": "PlanItem",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User email"
+    },
+    "title": {
+      "type": "string",
+      "description": "Plan item title"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "ferry",
+        "dining",
+        "event",
+        "babysitting",
+        "shopping",
+        "delivery",
+        "rental",
+        "transportation",
+        "beach",
+        "concierge",
+        "other"
+      ],
+      "default": "other",
+      "description": "Plan category"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Plan date"
+    },
+    "time": {
+      "type": "string",
+      "description": "Time string e.g. 2:30 PM"
+    },
+    "location": {
+      "type": "string",
+      "description": "Location or venue"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes"
+    },
+    "confirmation_link": {
+      "type": "string",
+      "description": "Confirmation number or URL"
+    },
+    "reminder_enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Send reminder"
+    }
+  },
+  "required": [
+    "user_email",
+    "title",
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "data.user_email": "{{user.email}}"
+    },
+    "read": {
+      "data.user_email": "{{user.email}}"
+    },
+    "update": {
+      "data.user_email": "{{user.email}}"
+    },
+    "delete": {
+      "data.user_email": "{{user.email}}"
+    }
+  }
+}

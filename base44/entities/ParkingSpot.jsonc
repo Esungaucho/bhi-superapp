@@ -1,0 +1,55 @@
+{
+  "name": "ParkingSpot",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User email"
+    },
+    "latitude": {
+      "type": "number",
+      "description": "GPS latitude"
+    },
+    "longitude": {
+      "type": "number",
+      "description": "GPS longitude"
+    },
+    "address": {
+      "type": "string",
+      "description": "Reverse-geocoded or manual address"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Parking lot, row, space, terminal, landmark"
+    },
+    "saved_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the spot was saved"
+    },
+    "reminder_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Optional parking timer reminder"
+    }
+  },
+  "required": [
+    "user_email",
+    "latitude",
+    "longitude"
+  ],
+  "rls": {
+    "create": {
+      "data.user_email": "{{user.email}}"
+    },
+    "read": {
+      "data.user_email": "{{user.email}}"
+    },
+    "update": {
+      "data.user_email": "{{user.email}}"
+    },
+    "delete": {
+      "data.user_email": "{{user.email}}"
+    }
+  }
+}

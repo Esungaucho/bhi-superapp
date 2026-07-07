@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Compass, Waves, CalendarDays, Users } from 'lucide-react';
+import { Home, ClipboardList, Map, CalendarDays, Users } from 'lucide-react';
 
 const NAV = [
   { path: '/dashboard', label: 'Home', icon: Home, exact: true },
-  { path: '/discovery', label: 'Discover', icon: Compass },
-  { path: '/experiences', label: 'Book', icon: Waves },
+  { path: '/my-plans', label: 'My Plans', icon: ClipboardList },
+  { path: '/map', label: 'Map', icon: Map },
   { path: '/calendar', label: 'Calendar', icon: CalendarDays },
   { path: '/community', label: 'Community', icon: Users },
 ];

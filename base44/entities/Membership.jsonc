@@ -1,0 +1,85 @@
+{
+  "name": "Membership",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User email"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "free_trial",
+        "active",
+        "expired",
+        "cancelled"
+      ],
+      "default": "free_trial",
+      "description": "Membership status"
+    },
+    "trial_start_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When trial began"
+    },
+    "trial_end_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When trial ends (7 days after start)"
+    },
+    "subscription_type": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "annual"
+      ],
+      "description": "Subscription plan"
+    },
+    "subscription_start_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "subscription_end_date": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "user_email",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "data.user_email": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.user_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

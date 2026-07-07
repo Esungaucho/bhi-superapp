@@ -1,0 +1,66 @@
+{
+  "name": "AffiliateProduct",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Product name"
+    },
+    "image": {
+      "type": "string",
+      "description": "Product image URL"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short description"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "beach_gear",
+        "baby_essentials",
+        "groceries",
+        "sunscreen_wellness",
+        "golf_cart_accessories",
+        "rainy_day_activities",
+        "travel_essentials",
+        "home_essentials",
+        "ferry_day_items"
+      ],
+      "default": "beach_gear",
+      "description": "Product category"
+    },
+    "affiliate_link": {
+      "type": "string",
+      "description": "Amazon affiliate URL"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured product"
+    }
+  },
+  "required": [
+    "name",
+    "category",
+    "affiliate_link"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

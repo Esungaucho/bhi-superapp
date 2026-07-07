@@ -1,0 +1,140 @@
+{
+  "name": "ShoppingRequest",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User email"
+    },
+    "name": {
+      "type": "string",
+      "description": "Requesting user name"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "email": {
+      "type": "string",
+      "description": "Contact email"
+    },
+    "store": {
+      "type": "string",
+      "description": "Preferred store"
+    },
+    "pickup_city": {
+      "type": "string",
+      "enum": [
+        "wilmington",
+        "southport"
+      ],
+      "default": "southport",
+      "description": "Pickup city"
+    },
+    "shopping_list": {
+      "type": "string",
+      "description": "Items to shop for"
+    },
+    "ferry_time": {
+      "type": "string",
+      "description": "Preferred ferry departure time"
+    },
+    "delivery_preference": {
+      "type": "string",
+      "enum": [
+        "ferry_pickup",
+        "tram_delivery",
+        "island_delivery"
+      ],
+      "default": "ferry_pickup",
+      "description": "Delivery method"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Special instructions"
+    },
+    "urgency": {
+      "type": "string",
+      "enum": [
+        "standard",
+        "rush",
+        "emergency"
+      ],
+      "default": "standard",
+      "description": "Urgency level"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "request_received",
+        "shopper_assigned",
+        "shopping_in_progress",
+        "on_the_way_to_ferry",
+        "on_ferry",
+        "ready_for_pickup",
+        "delivered"
+      ],
+      "default": "request_received",
+      "description": "Request status"
+    },
+    "assigned_shopper_id": {
+      "type": "string",
+      "description": "ID of assigned BirdieShopper"
+    },
+    "assigned_shopper_name": {
+      "type": "string",
+      "description": "Shopper name snapshot"
+    }
+  },
+  "required": [
+    "user_email",
+    "name",
+    "phone",
+    "email",
+    "store",
+    "pickup_city",
+    "shopping_list",
+    "delivery_preference"
+  ],
+  "rls": {
+    "create": {
+      "data.user_email": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.user_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.user_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

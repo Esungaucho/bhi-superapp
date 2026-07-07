@@ -122,8 +122,15 @@ import TurtleNestAdmin from '@/pages/admin/TurtleNestAdmin';
 import RestaurantsAdmin from '@/pages/admin/RestaurantsAdmin';
 import NotificationAdmin from '@/pages/admin/NotificationAdmin';
 import FerryAdmin from '@/pages/admin/FerryAdmin';
+import ConciergeToolsAdmin from '@/pages/admin/ConciergeToolsAdmin';
 import VillageInfo from '@/pages/VillageInfo';
 import Founders from '@/pages/Founders';
+import TransportationParking from '@/pages/TransportationParking';
+import CarLocator from '@/pages/CarLocator';
+import MyPlans from '@/pages/MyPlans';
+import Membership from '@/pages/Membership';
+import MainlandShoppers from '@/pages/MainlandShoppers';
+import ShopBeforeArrive from '@/pages/ShopBeforeArrive';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -199,6 +206,12 @@ const AuthenticatedApp = () => {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/village-info" element={<VillageInfo />} />
         <Route path="/founders" element={<Founders />} />
+        <Route path="/transportation" element={<TransportationParking />} />
+        <Route path="/car-locator" element={<CarLocator />} />
+        <Route path="/my-plans" element={<MyPlans />} />
+        <Route path="/membership" element={<Membership />} />
+        <Route path="/mainland-shoppers" element={<MainlandShoppers />} />
+        <Route path="/shop-before-arrive" element={<ShopBeforeArrive />} />
         <Route path="/bookings" element={<AllBookings />} />
       </Route>
       <Route path="/thank-you" element={<ThankYou />} />
@@ -264,6 +277,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/restaurants" element={<RestaurantsAdmin />} />
         <Route path="/admin/notifications" element={<NotificationAdmin />} />
         <Route path="/admin/ferry" element={<FerryAdmin />} />
+        <Route path="/admin/concierge-tools" element={<ConciergeToolsAdmin />} />
         <Route path="/turtles" element={<TurtleEducation />} />
         <Route path="/turtles/map" element={<TurtleNestMap />} />
       </Route>

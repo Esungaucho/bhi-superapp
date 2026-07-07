@@ -11,6 +11,7 @@ import StepRole from './StepRole';
 import StepInterests from './StepInterests';
 import StepCommunications from './StepCommunications';
 import StepNotifications from './StepNotifications';
+import TutorialSlides from '@/components/onboarding/TutorialSlides';
 
 const STEPS = [
   { id: 'profile', title: 'Your Profile', subtitle: 'Let\'s get to know you' },
@@ -23,6 +24,7 @@ const STEPS = [
 export default function OnboardingWizard() {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
+  const [showTutorial, setShowTutorial] = useState(() => !sessionStorage.getItem('tutorial_seen'));
   const [saving, setSaving] = useState(false);
 
   const [profile, setProfile] = useState({
@@ -130,6 +132,17 @@ export default function OnboardingWizard() {
   };
 
   const currentStep = STEPS[step];
+
+  if (showTutorial) {
+    return (
+      <TutorialSlides
+        onComplete={() => {
+          sessionStorage.setItem('tutorial_seen', '1');
+          setShowTutorial(false);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background flex justify-center">
