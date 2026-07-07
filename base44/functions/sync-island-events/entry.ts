@@ -131,7 +131,6 @@ ${truncatedHtml}`,
                   },
                 },
               },
-              add_context_from_internet: true,
             });
 
             extractedEvents = llmRes.events || [];
