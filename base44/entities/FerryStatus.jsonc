@@ -1,0 +1,73 @@
+{
+  "name": "FerryStatus",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "on_time",
+        "delayed",
+        "cancelled",
+        "weather_impacted",
+        "special_announcement"
+      ],
+      "default": "on_time",
+      "description": "Current ferry operational status"
+    },
+    "message": {
+      "type": "string",
+      "description": "Status message from the official source"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "Official source URL"
+    },
+    "last_checked": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When our system last checked the source"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the source itself was last updated"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "warning",
+        "critical"
+      ],
+      "default": "normal",
+      "description": "Severity level of the current status"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this is the current active status"
+    }
+  },
+  "required": [
+    "status",
+    "message"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

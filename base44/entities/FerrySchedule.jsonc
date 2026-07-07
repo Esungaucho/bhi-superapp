@@ -20,6 +20,16 @@
       ],
       "description": "Direction of travel"
     },
+    "departure_location": {
+      "type": "string",
+      "default": "Deep Point Marina - Southport",
+      "description": "Departure location name"
+    },
+    "arrival_location": {
+      "type": "string",
+      "default": "Bald Head Island",
+      "description": "Arrival location name"
+    },
     "vessel_name": {
       "type": "string",
       "default": "Adventure",
@@ -50,6 +60,40 @@
       "type": "number",
       "default": 0,
       "description": "Current passenger count"
+    },
+    "season": {
+      "type": "string",
+      "enum": [
+        "summer",
+        "winter",
+        "off_season"
+      ],
+      "default": "summer",
+      "description": "Which schedule season this belongs to"
+    },
+    "day_type": {
+      "type": "string",
+      "enum": [
+        "weekday",
+        "weekend",
+        "holiday",
+        "daily"
+      ],
+      "default": "daily",
+      "description": "Day type for this schedule entry"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Special notes for this departure"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "Official source URL"
+    },
+    "last_synced": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When our system last synced this entry"
     },
     "gps_lat": {
       "type": "number",

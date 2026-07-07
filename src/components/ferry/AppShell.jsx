@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { ChevronLeft, Home } from 'lucide-react';
+import { ChevronLeft, Home, Anchor } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
 import BottomNav from '@/components/shared/BottomNav';
 
@@ -23,6 +23,10 @@ export default function AppShell() {
           )}
           <h1 className="font-heading text-sm tracking-luxe-sm">BHI Ferry</h1>
           <div className="ml-auto flex items-center gap-1">
+            <Link to="/ferry/status" className="flex items-center gap-1.5 text-xs font-semibold text-ocean rounded-lg px-2 py-1 hover:bg-ocean/8 transition-colors">
+              <Anchor className="w-4 h-4" strokeWidth={1.5} />
+              Status
+            </Link>
             <Link to="/dashboard" className="p-1.5 rounded-lg hover:bg-sand/50 transition-colors" aria-label="Home">
               <Home className="w-5 h-5" strokeWidth={1.5} />
             </Link>

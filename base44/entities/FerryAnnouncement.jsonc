@@ -1,0 +1,64 @@
+{
+  "name": "FerryAnnouncement",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Announcement title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Announcement body/summary"
+    },
+    "date_published": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the announcement was published"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "Official source URL"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this announcement is still active"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "critical"
+      ],
+      "default": "info",
+      "description": "Importance level"
+    },
+    "last_synced": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When our system last synced this"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

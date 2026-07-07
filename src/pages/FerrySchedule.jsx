@@ -6,7 +6,7 @@ import DateScroller from '@/components/ferry/DateScroller';
 import DirectionToggle from '@/components/ferry/DirectionToggle';
 import ScheduleCard from '@/components/ferry/ScheduleCard';
 import ConditionsBanner from '@/components/weather/ConditionsBanner';
-import { Loader2, Map, Brain, Ticket, ArrowRight } from 'lucide-react';
+import { Loader2, Map, Brain, Ticket, ArrowRight, Anchor } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function FerrySchedule() {
@@ -84,6 +84,12 @@ export default function FerrySchedule() {
       <div className="px-4 pb-8">
         <p className="text-[10px] font-medium tracking-luxe-sm uppercase text-muted-foreground mb-3 mt-2">Ferry Tools</p>
         <div className="grid grid-cols-1 gap-3">
+          <QuickLink
+            to="/ferry/status"
+            icon={<Anchor className="w-5 h-5 text-primary" strokeWidth={1.5} />}
+            title="Live Ferry Status"
+            description="Real-time ferry status, delays, cancellations & tracker map"
+          />
           <QuickLink
             to="/ferry/eta"
             icon={<Brain className="w-5 h-5 text-primary" strokeWidth={1.5} />}

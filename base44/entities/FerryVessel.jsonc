@@ -1,0 +1,96 @@
+{
+  "name": "FerryVessel",
+  "type": "object",
+  "properties": {
+    "vessel_name": {
+      "type": "string",
+      "description": "Name of the ferry vessel"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "maintenance",
+        "unknown"
+      ],
+      "default": "unknown",
+      "description": "Vessel operational status"
+    },
+    "latitude": {
+      "type": "number",
+      "description": "Current GPS latitude (only from verified feeds)"
+    },
+    "longitude": {
+      "type": "number",
+      "description": "Current GPS longitude (only from verified feeds)"
+    },
+    "heading": {
+      "type": "number",
+      "description": "Heading in degrees"
+    },
+    "speed": {
+      "type": "number",
+      "description": "Speed in knots"
+    },
+    "last_position_update": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When GPS was last updated"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "official_gps",
+        "ais_marine_traffic",
+        "admin_manual",
+        "none"
+      ],
+      "default": "none",
+      "description": "Source of position data"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "URL of the data source"
+    },
+    "capacity": {
+      "type": "number",
+      "default": 150,
+      "description": "Max passenger capacity"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Vessel image URL"
+    },
+    "description": {
+      "type": "string",
+      "description": "Vessel description"
+    },
+    "gps_feed_enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether live GPS tracking is available for this vessel"
+    }
+  },
+  "required": [
+    "vessel_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

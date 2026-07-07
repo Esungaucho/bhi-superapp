@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Menu, X, ChevronDown, User, Bird, CalendarDays, ShoppingBag, Waves,
-  UtensilsCrossed, Baby, Home, Hammer, CalendarHeart, Handshake, Shield, MessageCircle, Turtle, Landmark, Heart
+  UtensilsCrossed, Baby, Home, Hammer, CalendarHeart, Handshake, Shield, MessageCircle, Turtle, Landmark, Heart, Anchor
 } from 'lucide-react';
 import { useUserAccess } from '@/hooks/useUserAccess';
 
@@ -56,6 +56,9 @@ const SECTIONS = [
       { label: 'Recommendations', path: '/community' },
       { label: 'Help Needed', path: '/community' },
     ],
+  },
+  {
+    label: 'Ferry Status', path: '/ferry/status', Icon: Anchor,
   },
   {
     label: 'Island Calendar', path: '/calendar', Icon: CalendarDays,

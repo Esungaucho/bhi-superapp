@@ -8,6 +8,7 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
 import AppShell from '@/components/ferry/AppShell';
 import FerrySchedule from '@/pages/FerrySchedule';
+import FerryStatus from '@/pages/FerryStatus';
 import FerryMap from '@/pages/FerryMap';
 import FerryETA from '@/pages/FerryETA';
 import BookFerry from '@/pages/BookFerry';
@@ -120,6 +121,7 @@ import TurtleNestMap from '@/pages/TurtleNestMap';
 import TurtleNestAdmin from '@/pages/admin/TurtleNestAdmin';
 import RestaurantsAdmin from '@/pages/admin/RestaurantsAdmin';
 import NotificationAdmin from '@/pages/admin/NotificationAdmin';
+import FerryAdmin from '@/pages/admin/FerryAdmin';
 import VillageInfo from '@/pages/VillageInfo';
 import Founders from '@/pages/Founders';
 
@@ -204,6 +206,7 @@ const AuthenticatedApp = () => {
       <Route path="/ferry/route/:routeId" element={<FerryRouteDetail />} />
       <Route element={<AppShell />}>
         <Route path="/ferry" element={<FerrySchedule />} />
+        <Route path="/ferry/status" element={<FerryStatus />} />
         <Route path="/ferry/map" element={<FerryMap />} />
         <Route path="/ferry/eta" element={<FerryETA />} />
         <Route path="/ferry/book" element={<BookFerry />} />
@@ -260,6 +263,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/turtles" element={<TurtleNestAdmin />} />
         <Route path="/admin/restaurants" element={<RestaurantsAdmin />} />
         <Route path="/admin/notifications" element={<NotificationAdmin />} />
+        <Route path="/admin/ferry" element={<FerryAdmin />} />
         <Route path="/turtles" element={<TurtleEducation />} />
         <Route path="/turtles/map" element={<TurtleNestMap />} />
       </Route>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck, CalendarDays, Mail, ShoppingBag, Bird, ConciergeBell, Baby, CalendarHeart, Handshake, Home, Turtle, UtensilsCrossed, Globe, Bell } from 'lucide-react';
+import { BarChart2, Megaphone, Users, ChevronLeft, FileCheck, CalendarDays, Mail, ShoppingBag, Bird, ConciergeBell, Baby, CalendarHeart, Handshake, Home, Turtle, UtensilsCrossed, Globe, Bell, Anchor } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import GlobalMenu from '@/components/GlobalMenu';
 
@@ -24,6 +24,7 @@ const NAV = [
   { path: '/admin/turtles', label: 'Turtles', icon: Turtle },
   { path: '/admin/restaurants', label: 'Dining', icon: UtensilsCrossed },
   { path: '/admin/notifications', label: 'Push', icon: Bell },
+  { path: '/admin/ferry', label: 'Ferry', icon: Anchor },
 ];
 
 export default function AdminShell() {
