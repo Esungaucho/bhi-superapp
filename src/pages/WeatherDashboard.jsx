@@ -5,6 +5,7 @@ import { Loader2, Wind, Droplets, Thermometer, Eye, Waves, Sun, Users, CloudSun,
 import { Link } from 'react-router-dom';
 import ContextualAd, { getTriggeredAds } from '@/components/weather/ContextualAd';
 import BeachFinder from '@/components/weather/BeachFinder';
+import WeatherMarineModule from '@/components/dashboard/WeatherMarineModule';
 
 const CONDITION_ICON = {
   sunny: Sun, partly_cloudy: CloudSun, cloudy: Cloud,
@@ -97,6 +98,11 @@ export default function WeatherDashboard() {
             <p className="text-[10px] text-white/60 max-w-[120px] text-right leading-tight">{flagInfo.label}</p>
           </div>
         </div>
+      </div>
+
+      {/* Weather & Marine Brief */}
+      <div className="px-4 pt-4">
+        <WeatherMarineModule />
       </div>
 
       {/* Contextual ads */}
