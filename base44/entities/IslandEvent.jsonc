@@ -10,50 +10,178 @@
       "type": "string",
       "description": "Full event description"
     },
+    "short_description": {
+      "type": "string",
+      "description": "Short teaser for cards and previews"
+    },
     "category": {
       "type": "string",
       "enum": [
-        "live_music",
-        "dining_special",
-        "happy_hour",
-        "kids_activities",
-        "family_events",
-        "outdoor_adventures",
-        "conservancy_programs",
-        "ferry_schedule",
-        "weather_alert",
-        "beach_updates",
-        "wildlife",
-        "holiday_celebrations",
+        "family",
+        "kids",
+        "nature",
+        "conservancy",
         "fitness",
-        "wellness",
-        "arts_crafts",
-        "golf",
-        "tennis",
-        "pickleball",
-        "fishing",
-        "community_events"
+        "arts_culture",
+        "music",
+        "dining",
+        "shopping",
+        "community",
+        "government",
+        "weddings",
+        "holiday",
+        "club_events",
+        "member_only",
+        "seasonal"
       ],
-      "default": "community_events",
+      "default": "community",
       "description": "Event category"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Event start date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Event end date"
     },
     "start_time": {
       "type": "string",
       "format": "date-time",
-      "description": "Event start"
+      "description": "Full datetime for start (used for sorting)"
     },
     "end_time": {
       "type": "string",
       "format": "date-time",
-      "description": "Event end"
+      "description": "Full datetime for end"
+    },
+    "all_day": {
+      "type": "boolean",
+      "default": false,
+      "description": "All-day event"
     },
     "location_name": {
       "type": "string",
-      "description": "Where on the island"
+      "description": "Venue or location name"
     },
-    "image_url": {
+    "address": {
       "type": "string",
-      "description": "Optional event image"
+      "description": "Full street address"
+    },
+    "latitude": {
+      "type": "number",
+      "description": "GPS latitude"
+    },
+    "longitude": {
+      "type": "number",
+      "description": "GPS longitude"
+    },
+    "featured_image": {
+      "type": "string",
+      "description": "Hero image URL"
+    },
+    "gallery_images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Photo gallery URLs"
+    },
+    "organization": {
+      "type": "string",
+      "description": "Hosting organization name"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "bhi_limited",
+        "village_of_bhi",
+        "bhi_conservancy",
+        "bald_head_association",
+        "old_baldy_foundation",
+        "shoals_club",
+        "bhi_club",
+        "admin_manual",
+        "community_submission",
+        "other"
+      ],
+      "default": "admin_manual",
+      "description": "Where this event was sourced from"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "Original source URL for the event"
+    },
+    "source_name": {
+      "type": "string",
+      "description": "Display name for the source (legacy compat)"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "restaurant",
+        "conservancy",
+        "ferry",
+        "weather",
+        "community",
+        "business",
+        "official",
+        "organization"
+      ],
+      "default": "community",
+      "description": "Legacy source type"
+    },
+    "member_only": {
+      "type": "boolean",
+      "default": false,
+      "description": "Members-only event"
+    },
+    "registration_required": {
+      "type": "boolean",
+      "default": false,
+      "description": "Requires registration"
+    },
+    "registration_url": {
+      "type": "string",
+      "description": "External registration link"
+    },
+    "recurring": {
+      "type": "boolean",
+      "default": false,
+      "description": "Is this a recurring event"
+    },
+    "recurrence_note": {
+      "type": "string",
+      "description": "e.g. Every Tuesday"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Searchable tags"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured by admin"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Legacy featured flag (compat)"
+    },
+    "is_all_day": {
+      "type": "boolean",
+      "default": false,
+      "description": "Legacy all-day flag (compat)"
+    },
+    "is_recurring": {
+      "type": "boolean",
+      "default": false,
+      "description": "Legacy recurring flag (compat)"
     },
     "is_seasonal": {
       "type": "boolean",
@@ -87,61 +215,15 @@
       "enum": [
         "approved",
         "pending",
-        "rejected"
+        "rejected",
+        "synced"
       ],
       "default": "pending",
-      "description": "Admin approval status"
+      "description": "Admin approval status \u2014 synced events start as 'synced' and may need approval"
     },
-    "is_featured": {
-      "type": "boolean",
-      "default": false,
-      "description": "Featured by admin"
-    },
-    "source_type": {
+    "image_url": {
       "type": "string",
-      "enum": [
-        "restaurant",
-        "conservancy",
-        "ferry",
-        "weather",
-        "community",
-        "business",
-        "official",
-        "organization"
-      ],
-      "default": "community",
-      "description": "Who submitted the event"
-    },
-    "source_name": {
-      "type": "string",
-      "description": "Business or organization name"
-    },
-    "is_all_day": {
-      "type": "boolean",
-      "default": false
-    },
-    "is_recurring": {
-      "type": "boolean",
-      "default": false
-    },
-    "recurrence_note": {
-      "type": "string",
-      "description": "e.g. Every Tuesday"
-    },
-    "restaurant_update_type": {
-      "type": "string",
-      "enum": [
-        "daily_special",
-        "happy_hour",
-        "live_music",
-        "new_menu",
-        "closure",
-        "sold_out",
-        "reservations_available",
-        "seasonal_menu",
-        "none"
-      ],
-      "default": "none"
+      "description": "Legacy image URL (compat with featured_image)"
     },
     "price_note": {
       "type": "string",
@@ -150,16 +232,24 @@
     "contact_info": {
       "type": "string"
     },
-    "tags": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
     "saved_count": {
       "type": "number",
       "default": 0,
       "description": "How many users saved this"
+    },
+    "last_synced": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last time this event was checked/updated by the sync process"
+    },
+    "sync_hash": {
+      "type": "string",
+      "description": "Dedup hash \u2014 title + start_time normalized, used to prevent duplicate events across sources"
+    },
+    "admin_override": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, sync will not overwrite admin edits"
     }
   },
   "required": [
@@ -174,7 +264,14 @@
       }
     },
     "read": {
-      "data.status": "approved"
+      "$or": [
+        {
+          "data.status": "approved"
+        },
+        {
+          "data.status": "synced"
+        }
+      ]
     },
     "update": {
       "user_condition": {
