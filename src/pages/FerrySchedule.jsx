@@ -6,7 +6,8 @@ import DateScroller from '@/components/ferry/DateScroller';
 import DirectionToggle from '@/components/ferry/DirectionToggle';
 import ScheduleCard from '@/components/ferry/ScheduleCard';
 import ConditionsBanner from '@/components/weather/ConditionsBanner';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Map, Brain, Ticket, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function FerrySchedule() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -78,6 +79,49 @@ export default function FerrySchedule() {
           </>
         )}
       </div>
+
+      {/* Quick Access Tools */}
+      <div className="px-4 pb-8">
+        <p className="text-[10px] font-medium tracking-luxe-sm uppercase text-muted-foreground mb-3 mt-2">Ferry Tools</p>
+        <div className="grid grid-cols-1 gap-3">
+          <QuickLink
+            to="/ferry/eta"
+            icon={<Brain className="w-5 h-5 text-primary" strokeWidth={1.5} />}
+            title="AI Time Tracker"
+            description="Get AI-powered arrival estimates and real-time travel predictions"
+          />
+          <QuickLink
+            to="/ferry/map"
+            icon={<Map className="w-5 h-5 text-primary" strokeWidth={1.5} />}
+            title="Live Ferry Map"
+            description="Track ferries in real-time as they cross the Cape Fear River"
+          />
+          <QuickLink
+            to="/ferry/bookings"
+            icon={<Ticket className="w-5 h-5 text-primary" strokeWidth={1.5} />}
+            title="My Ferry Bookings"
+            description="View and manage your upcoming ferry reservations"
+          />
+        </div>
+      </div>
     </div>
+  );
+}
+
+function QuickLink({ to, icon, title, description }) {
+  return (
+    <Link
+      to={to}
+      className="flex items-center gap-4 bg-card border border-border/50 rounded-2xl p-4 shadow-luxe-sm hover:bg-sand/30 transition-colors"
+    >
+      <span className="w-11 h-11 rounded-full bg-sand/40 flex items-center justify-center border border-border/30 flex-shrink-0">
+        {icon}
+      </span>
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-medium text-foreground">{title}</p>
+        <p className="text-[11px] text-muted-foreground leading-relaxed mt-0.5">{description}</p>
+      </div>
+      <ArrowRight className="w-4 h-4 text-muted-foreground flex-shrink-0" strokeWidth={1.5} />
+    </Link>
   );
 }
