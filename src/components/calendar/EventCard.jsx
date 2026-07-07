@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
-import { Bookmark, MapPin, Star, Clock } from 'lucide-react';
+import { Bookmark, MapPin, Star, Clock, CalendarPlus } from 'lucide-react';
 import { getCategory, getOrganization } from '@/lib/calendarConstants';
 
 export default function EventCard({ event, isSaved, onToggleSave }) {
@@ -9,6 +9,21 @@ export default function EventCard({ event, isSaved, onToggleSave }) {
   const startTime = new Date(event.start_time);
   const org = event.organization ? getOrganization(event.organization) : null;
   const heroImage = event.featured_image || event.image_url;
+
+  const gcalUrl = () => {
+    const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const start = fmt(startTime);
+    const endDate = event.end_time ? new Date(event.end_time) : new Date(startTime.getTime() + 60 * 60 * 1000);
+    const end = fmt(endDate);
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: event.title || '',
+      dates: `${start}/${end}`,
+      details: event.description || event.short_description || '',
+      location: [event.location_name, event.address].filter(Boolean).join(', '),
+    });
+    return `https://www.google.com/calendar/render?${params.toString()}`;
+  };
 
   return (
     <div className="relative bg-card rounded-2xl border border-border overflow-hidden hover:shadow-luxe transition-all duration-300 animate-fade-up">
@@ -60,6 +75,16 @@ export default function EventCard({ event, isSaved, onToggleSave }) {
           )}
         </div>
       </Link>
+      <a
+        href={gcalUrl()}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+        className="flex items-center justify-center gap-1.5 py-2 border-t border-border/50 text-[11px] font-medium text-muted-foreground hover:text-primary hover:bg-sand/30 transition-colors"
+      >
+        <CalendarPlus className="w-3.5 h-3.5" strokeWidth={1.5} />
+        Add to Google Calendar
+      </a>
       {onToggleSave && (
         <button
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); onToggleSave(event); }}
