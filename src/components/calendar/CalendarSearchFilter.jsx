@@ -19,9 +19,45 @@ export default function CalendarSearchFilter({ search, setSearch, filters, setFi
         <input
           value={search}
           onChange={e => setSearch(e.target.value)}
-          placeholder="Search events..."
-          className="w-full bg-card border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-accent"
+          placeholder="Search events by keyword..."
+          className="w-full bg-card border border-border rounded-xl pl-10 pr-10 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-accent"
         />
+        {search && (
+          <button
+            onClick={() => setSearch('')}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+          >
+            <X className="w-4 h-4" strokeWidth={1.5} />
+          </button>
+        )}
+      </div>
+
+      {/* Quick category chips */}
+      <div className="flex gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
+        <button
+          onClick={() => updateFilter('category', 'all')}
+          className={`flex-shrink-0 text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${
+            filters.category === 'all'
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-card border border-border text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          All
+        </button>
+        {EVENT_CATEGORIES.map(c => (
+          <button
+            key={c.id}
+            onClick={() => updateFilter('category', filters.category === c.id ? 'all' : c.id)}
+            className={`flex-shrink-0 flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${
+              filters.category === c.id
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-card border border-border text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            <c.Icon className="w-3 h-3" strokeWidth={1.5} />
+            {c.label}
+          </button>
+        ))}
       </div>
 
       {/* Filter button */}
