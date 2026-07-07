@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { User, Bell, Shield, ChevronRight, Info } from 'lucide-react';
+import { User, Bell, Shield, ChevronRight, Info, Heart } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 function Row({ to, Icon, label, desc }) {
@@ -47,6 +47,7 @@ export default function Settings() {
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground/50" strokeWidth={1.5} />
         </Link>
+        <Row to="/founders" Icon={Heart} label="About the Founders" desc="Alexander & Isabele Mitchell" />
         <div className="py-4 px-3 -mx-3 border-t border-border/50">
           <p className="text-sm font-medium text-foreground">BHI SuperApp</p>
           <p className="text-xs text-muted-foreground mt-1">Your seamless travel companion for Bald Head Island.</p>
