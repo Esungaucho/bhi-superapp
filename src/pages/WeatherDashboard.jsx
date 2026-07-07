@@ -127,14 +127,14 @@ export default function WeatherDashboard() {
         <StatCard icon={<Droplets className="w-4 h-4 text-[#3F6D80]" strokeWidth={1.5} />} label="Humidity"
           value={`${conditions.humidity_pct || '--'}%`} />
         <StatCard icon={<Waves className="w-4 h-4 text-[#3F6D80]" strokeWidth={1.5} />} label="Waves"
-          value={`${conditions.wave_height_ft || '--'} ft`}
+          value={`${marine?.wave_height_ft ?? conditions.wave_height_ft ?? '--'} ft`}
           sub={conditions.water_temp_f ? `Water ${conditions.water_temp_f}°F` : null} />
         <StatCard icon={<Thermometer className="w-4 h-4 text-[#3F6D80]" strokeWidth={1.5} />} label="UV Index"
           value={`${conditions.uv_index ?? '--'} · ${uvMeta?.label}`} />
       </div>
 
       {/* Beach Finder */}
-      <BeachFinder conditions={conditions} />
+      <BeachFinder conditions={conditions} waveHeightFt={marine?.wave_height_ft} />
 
       {/* Tide */}
       <div className="bg-white/25 backdrop-blur-xl border border-white/35 rounded-2xl p-5 shadow-luxe-sm">

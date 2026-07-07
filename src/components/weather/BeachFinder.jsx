@@ -1,5 +1,62 @@
 import React from 'react';
-import { Wind, Compass, Waves, Users, Sun, Anchor } from 'lucide-react';
+import { Wind, Compass, Waves, Users, Sun, Anchor, LifeBuoy, ShieldCheck, AlertTriangle } from 'lucide-react';
+
+// Wave height → recommended minimum age for swimming/surfing
+function surfAgeRecommendation(waveFt) {
+  if (waveFt == null) return { label: 'Check conditions before entering the water', tone: 'unknown' };
+  if (waveFt < 1)   return { label: 'All ages — calm surf, safe for little ones', tone: 'great', minAge: 0 };
+  if (waveFt < 2)   return { label: 'Age 4+ — gentle surf for young swimmers', tone: 'great', minAge: 4 };
+  if (waveFt < 3)   return { label: 'Age 8+ — moderate surf, supervise children closely', tone: 'okay', minAge: 8 };
+  if (waveFt < 4)   return { label: 'Age 12+ — heavier surf, experienced young swimmers only', tone: 'caution', minAge: 12 };
+  return { label: 'Age 16+ — rough surf, experienced swimmers only', tone: 'avoid', minAge: 16 };
+}
+
+// Rip current risk based on wave height, wind speed, and beach flag
+function ripCurrentRisk(waveFt, windMph, flag) {
+  let score = 0;
+  let factors = [];
+
+  if (waveFt != null) {
+    if (waveFt >= 4) { score += 3; factors.push('large surf'); }
+    else if (waveFt >= 2.5) { score += 2; factors.push('moderate surf'); }
+    else if (waveFt >= 1.5) { score += 1; }
+  }
+
+  if (windMph != null) {
+    if (windMph >= 25) { score += 3; factors.push('strong onshore winds'); }
+    else if (windMph >= 15) { score += 1; }
+  }
+
+  if (flag === 'red') { score += 3; factors.push('red flag posted'); }
+  else if (flag === 'yellow') { score += 1; factors.push('yellow flag posted'); }
+
+  if (score >= 5) return {
+    label: 'High Risk',
+    tone: 'avoid',
+    advice: 'Rip currents are likely. Stay out of the water. If caught, don\'t fight the current — swim parallel to shore until free, then head in.',
+    factors,
+  };
+  if (score >= 2) return {
+    label: 'Moderate Risk',
+    tone: 'caution',
+    advice: 'Rip currents are possible. Swim near a lifeguard if available, and never swim alone. Know how to escape a rip: swim parallel to shore.',
+    factors,
+  };
+  return {
+    label: 'Low Risk',
+    tone: 'great',
+    advice: 'Rip current risk is low, but always stay aware. If you see a channel of choppy, discolored water heading out to sea, avoid that area.',
+    factors,
+  };
+}
+
+const TONE_STYLES = {
+  great:   { bg: 'bg-emerald-500/20', text: 'text-emerald-800', dot: 'bg-emerald-500' },
+  okay:    { bg: 'bg-sky-500/20',    text: 'text-sky-800',     dot: 'bg-sky-500' },
+  caution: { bg: 'bg-amber-500/20',  text: 'text-amber-800',   dot: 'bg-amber-500' },
+  avoid:   { bg: 'bg-red-500/20',    text: 'text-red-800',     dot: 'bg-red-500' },
+  unknown: { bg: 'bg-white/20',      text: 'text-[#1E3A45]',   dot: 'bg-[#1E3A45]/40' },
+};
 
 const BEACHES = [
   {
@@ -48,11 +105,15 @@ function isExposed(beach, windDir) {
   return beach.exposedTo.some(d => dir.includes(d));
 }
 
-export default function BeachFinder({ conditions }) {
+export default function BeachFinder({ conditions, waveHeightFt }) {
   const windDir = conditions?.wind_direction;
   const windMph = conditions?.wind_mph || 0;
   const flag = conditions?.beach_flag;
   const crowd = conditions?.crowd_level;
+
+  const waveFt = waveHeightFt ?? conditions?.wave_height_ft;
+  const surfAge = surfAgeRecommendation(waveFt);
+  const ripRisk = ripCurrentRisk(waveFt, windMph, flag);
 
   const ranked = BEACHES.map(b => ({
     ...b,
@@ -148,6 +209,55 @@ export default function BeachFinder({ conditions }) {
             </div>
           );
         })}
+      </div>
+
+      {/* Surf & Safety — wave age guidance + rip current risk */}
+      <div className="px-4 pb-3 space-y-2">
+        {/* Wave height + age recommendation */}
+        <div className="rounded-xl bg-white/15 border border-white/20 p-3.5">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <Waves className="w-4 h-4 text-[#3F6D80]" strokeWidth={1.5} />
+              <p className="text-[10px] font-medium tracking-luxe-sm uppercase text-[#1E3A45]/50">Surf Conditions</p>
+            </div>
+            {waveFt != null && (
+              <span className="text-sm font-heading text-[#1E3A45]">{waveFt} ft</span>
+            )}
+          </div>
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${TONE_STYLES[surfAge.tone].bg} ${TONE_STYLES[surfAge.tone].text}`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${TONE_STYLES[surfAge.tone].dot}`} />
+              {surfAge.tone !== 'unknown' && surfAge.minAge > 0 ? `Age ${surfAge.minAge}+` : 'All Ages'}
+            </span>
+            <ShieldCheck className="w-3.5 h-3.5 text-[#3F6D80]/60" strokeWidth={1.5} />
+          </div>
+          <p className="text-xs text-[#1E3A45]/60 leading-relaxed">{surfAge.label}</p>
+        </div>
+
+        {/* Rip current risk */}
+        <div className="rounded-xl bg-white/15 border border-white/20 p-3.5">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <LifeBuoy className="w-4 h-4 text-[#3F6D80]" strokeWidth={1.5} />
+              <p className="text-[10px] font-medium tracking-luxe-sm uppercase text-[#1E3A45]/50">Rip Current Risk</p>
+            </div>
+            <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${TONE_STYLES[ripRisk.tone].bg} ${TONE_STYLES[ripRisk.tone].text}`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${TONE_STYLES[ripRisk.tone].dot}`} />
+              {ripRisk.label}
+            </span>
+          </div>
+          <p className="text-xs text-[#1E3A45]/60 leading-relaxed mb-1.5">{ripRisk.advice}</p>
+          {ripRisk.factors.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {ripRisk.factors.map((f, i) => (
+                <span key={i} className="inline-flex items-center gap-1 text-[10px] text-[#1E3A45]/50 bg-white/20 rounded-full px-2 py-0.5">
+                  <AlertTriangle className="w-2.5 h-2.5" strokeWidth={1.5} />
+                  {f}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Safety notes */}
