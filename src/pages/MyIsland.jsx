@@ -11,6 +11,7 @@ import {
   Calendar, Bell, Settings, Bookmark, Anchor, Shield, ChevronRight,
   LogOut, User, ConciergeBell, Sparkles, CalendarDays,
 } from 'lucide-react';
+import WeatherMarineModule from '@/components/dashboard/WeatherMarineModule';
 
 const TIER_LABELS = {
   resident: 'Resident',
@@ -104,6 +105,11 @@ export default function MyIsland() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Weather & Marine Conditions */}
+      <div className="mb-6">
+        <WeatherMarineModule />
       </div>
 
       {/* Personalized Recommendations */}
