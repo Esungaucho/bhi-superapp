@@ -1,0 +1,88 @@
+{
+  "name": "SyncLog",
+  "type": "object",
+  "properties": {
+    "source_name": {
+      "type": "string",
+      "description": "Name of the event source"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "URL that was synced"
+    },
+    "source_id": {
+      "type": "string",
+      "description": "EventSource ID if linked"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "partial",
+        "failed",
+        "needs_manual_setup"
+      ],
+      "default": "success",
+      "description": "Outcome of the sync attempt"
+    },
+    "events_found": {
+      "type": "number",
+      "default": 0
+    },
+    "events_imported": {
+      "type": "number",
+      "default": 0
+    },
+    "events_updated": {
+      "type": "number",
+      "default": 0
+    },
+    "duplicates_skipped": {
+      "type": "number",
+      "default": 0
+    },
+    "error_message": {
+      "type": "string",
+      "description": "Error details if failed"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional context (e.g. why manual setup is needed)"
+    },
+    "sync_type": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "scheduled",
+        "admin_trigger"
+      ],
+      "default": "admin_trigger"
+    }
+  },
+  "required": [
+    "source_name",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

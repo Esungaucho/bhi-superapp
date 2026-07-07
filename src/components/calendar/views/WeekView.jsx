@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { isThisWeek, format } from 'date-fns';
 import EventCard from '../EventCard';
+import NoEventsFound from '../NoEventsFound';
 
 export default function WeekView({ events, savedIds, onToggleSave }) {
   const grouped = useMemo(() => {
@@ -18,11 +19,7 @@ export default function WeekView({ events, savedIds, onToggleSave }) {
   }, [events]);
 
   if (grouped.length === 0) {
-    return (
-      <div className="text-center py-12 text-muted-foreground">
-        <p className="text-sm font-medium text-foreground">No events this week</p>
-      </div>
-    );
+    return <NoEventsFound message="No verified events found for this week" />;
   }
 
   return (

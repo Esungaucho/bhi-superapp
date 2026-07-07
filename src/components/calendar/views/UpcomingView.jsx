@@ -1,5 +1,6 @@
 import React from 'react';
 import EventCard from '../EventCard';
+import NoEventsFound from '../NoEventsFound';
 
 export default function UpcomingView({ events, savedIds, onToggleSave }) {
   const now = new Date();
@@ -9,12 +10,7 @@ export default function UpcomingView({ events, savedIds, onToggleSave }) {
     .slice(0, 30);
 
   if (upcoming.length === 0) {
-    return (
-      <div className="text-center py-12 text-muted-foreground">
-        <p className="text-sm font-medium text-foreground">No upcoming events</p>
-        <p className="text-xs mt-1">Check back soon for new additions</p>
-      </div>
-    );
+    return <NoEventsFound />;
   }
 
   return (

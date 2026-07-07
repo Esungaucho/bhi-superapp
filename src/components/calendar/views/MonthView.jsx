@@ -2,6 +2,7 @@ import React from 'react';
 import { isSameMonth, format } from 'date-fns';
 import MonthGrid from '../MonthGrid';
 import EventCard from '../EventCard';
+import NoEventsFound from '../NoEventsFound';
 
 export default function MonthView({ events, savedIds, onToggleSave, selectedDate, onSelectDate }) {
   const monthEvents = events.filter(e => isSameMonth(new Date(e.start_time), selectedDate));
@@ -17,7 +18,7 @@ export default function MonthView({ events, savedIds, onToggleSave, selectedDate
           {format(selectedDate, 'EEEE, MMMM d')}
         </p>
         {dayEvents.length === 0 ? (
-          <p className="text-sm text-muted-foreground text-center py-6">No events on this day</p>
+          <NoEventsFound message="No verified events found on this day" />
         ) : (
           dayEvents.map(event => (
             <EventCard key={event.id} event={event} isSaved={savedIds.includes(event.id)} onToggleSave={onToggleSave} />

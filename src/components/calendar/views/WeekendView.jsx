@@ -1,6 +1,7 @@
 import React from 'react';
 import { isThisWeek, isWeekend, format } from 'date-fns';
 import EventCard from '../EventCard';
+import NoEventsFound from '../NoEventsFound';
 
 export default function WeekendView({ events, savedIds, onToggleSave }) {
   const weekendEvents = events
@@ -11,12 +12,7 @@ export default function WeekendView({ events, savedIds, onToggleSave }) {
     .sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
 
   if (weekendEvents.length === 0) {
-    return (
-      <div className="text-center py-12 text-muted-foreground">
-        <p className="text-sm font-medium text-foreground">No events this weekend</p>
-        <p className="text-xs mt-1">Enjoy a peaceful island weekend</p>
-      </div>
-    );
+    return <NoEventsFound message="No verified events found for this weekend" />;
   }
 
   return (

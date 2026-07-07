@@ -1,6 +1,7 @@
 import React from 'react';
 import { isToday, format } from 'date-fns';
 import EventCard from '../EventCard';
+import NoEventsFound from '../NoEventsFound';
 
 export default function TodayView({ events, savedIds, onToggleSave }) {
   const todayEvents = events
@@ -8,12 +9,7 @@ export default function TodayView({ events, savedIds, onToggleSave }) {
     .sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
 
   if (todayEvents.length === 0) {
-    return (
-      <div className="text-center py-12 text-muted-foreground">
-        <p className="text-sm font-medium text-foreground">No events today</p>
-        <p className="text-xs mt-1">Check back later or browse the week ahead</p>
-      </div>
-    );
+    return <NoEventsFound message="No verified events found for today" />;
   }
 
   return (

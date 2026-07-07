@@ -1,5 +1,6 @@
 import React from 'react';
 import EventCard from '../EventCard';
+import NoEventsFound from '../NoEventsFound';
 
 export default function ListView({ events, savedIds, onToggleSave }) {
   const upcoming = events
@@ -7,11 +8,7 @@ export default function ListView({ events, savedIds, onToggleSave }) {
     .sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
 
   if (upcoming.length === 0) {
-    return (
-      <div className="text-center py-12 text-muted-foreground">
-        <p className="text-sm font-medium text-foreground">No upcoming events</p>
-      </div>
-    );
+    return <NoEventsFound />;
   }
 
   return (
