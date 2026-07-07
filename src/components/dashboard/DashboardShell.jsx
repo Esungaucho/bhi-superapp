@@ -3,6 +3,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Home, User } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
 import BottomNav from '@/components/shared/BottomNav';
+import NotificationPermissionPrompt from '@/components/NotificationPermissionPrompt';
 
 export default function DashboardShell() {
   const location = useLocation();
@@ -47,6 +48,7 @@ export default function DashboardShell() {
         </main>
 
         <BottomNav />
+        <NotificationPermissionPrompt />
       </div>
     </div>
   );
