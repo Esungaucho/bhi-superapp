@@ -11,8 +11,8 @@ const SUN_DATA = [
   { sunsetH: 19, sunsetM: 55, sunriseH: 6,  sunriseM: 32 }, // Aug
   { sunsetH: 19, sunsetM: 19, sunriseH: 6,  sunriseM: 51 }, // Sep
   { sunsetH: 18, sunsetM: 30, sunriseH: 7,  sunriseM: 15 }, // Oct (DST ends)
-  { sunsetH: 17, sunsetM: 06, sunriseH: 6,  sunriseM: 46 }, // Nov
-  { sunsetH: 17, sunsetM: 04, sunriseH: 7,  sunriseM: 10 }, // Dec
+  { sunsetH: 17, sunsetM: 6, sunriseH: 6,  sunriseM: 46 }, // Nov
+  { sunsetH: 17, sunsetM: 4, sunriseH: 7,  sunriseM: 10 }, // Dec
 ];
 
 function getTimeForToday(hour, minute) {
