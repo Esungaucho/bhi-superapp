@@ -11,13 +11,16 @@ import ManualEventForm from '@/components/admin/ManualEventForm';
 import SyncLogList from '@/components/admin/SyncLogList';
 
 export const OFFICIAL_SOURCES = [
-  { key: 'bhi_limited', name: 'Bald Head Island Limited', url: 'https://www.baldheadisland.com/events-news', type: 'html' },
-  { key: 'village_of_bhi', name: 'Village of Bald Head Island', url: 'https://villagebhi.org/residents-owners/view/village-calendar/', type: 'html' },
-  { key: 'bhi_conservancy', name: 'BHI Conservancy', url: 'https://bhic.org/calendar/', type: 'html' },
-  { key: 'bald_head_association', name: 'Bald Head Association', url: 'https://www.baldheadassociation.com/calendar-bha', type: 'html' },
-  { key: 'old_baldy_foundation', name: 'Old Baldy Foundation', url: 'https://www.oldbaldy.org/events', type: 'html', dedicatedSync: true, automated: true },
-  { key: 'village_chapel', name: 'Village Chapel of BHI', url: 'https://www.villagechapelofbaldheadisland.com/calendars.html', type: 'html' },
-  { key: 'bhi_club', name: 'Bald Head Island Club', url: 'https://www.bhiclub.net/documents/20124/173104/BHI+Club+Public+Events+Cal+%282%29.pdf/b25a8906-6e91-713d-f524-40b94be3c31b?t=1780772669317', type: 'pdf' },
+  { key: 'old_baldy_foundation', name: 'Old Baldy Foundation', url: 'https://www.oldbaldy.org/events', type: 'html', automated: true },
+  { key: 'bhi_conservancy', name: 'BHI Conservancy', url: 'https://bhic.org/calendar/', type: 'html', automated: true },
+  { key: 'village_of_bhi', name: 'Village of Bald Head Island', url: 'https://villagebhi.org/residents-owners/view/village-calendar/', type: 'html', automated: true },
+  { key: 'bald_head_association', name: 'Bald Head Association', url: 'https://www.baldheadassociation.com/calendar-bha', type: 'html', automated: true },
+  { key: 'village_chapel', name: 'Village Chapel of BHI', url: 'https://www.villagechapelofbaldheadisland.com/calendars.html', type: 'html', automated: true },
+  { key: 'shoals_club', name: 'Shoals Club', url: 'https://www.shoalsclub.com/events', type: 'html', automated: true },
+  { key: 'bhi_club', name: 'Bald Head Island Club', url: 'https://www.bhiclub.net/', type: 'html', automated: true },
+  { key: 'bhi_marina', name: 'Bald Head Island Marina', url: 'https://www.baldheadisland.com/marina', type: 'html', automated: true },
+  { key: 'maritime_market', name: 'Maritime Market', url: 'https://www.maritimemarket.net/', type: 'html', automated: true },
+  { key: 'bhi_limited', name: 'Bald Head Island Limited', url: 'https://www.baldheadisland.com/events-news', type: 'html', automated: true },
 ];
 
 const STATUS_META = {
@@ -52,11 +55,7 @@ export default function EventSourceManager() {
     setSyncingSource(sourceKey);
     setSyncResult(null);
     try {
-      // Old Baldy Foundation has a dedicated sync function (LLM-based, bypasses IP blocks)
-      const isDedicated = OFFICIAL_SOURCES.find(s => s.key === sourceKey)?.dedicatedSync;
-      const functionName = isDedicated ? 'sync-old-baldy-events' : 'sync-island-events';
-      const payload = isDedicated ? {} : { source_key: sourceKey };
-      const res = await base44.functions.invoke(functionName, payload);
+      const res = await base44.functions.invoke('sync-all-island-events', { source_key: sourceKey });
       setSyncResult(res.data);
       queryClient.invalidateQueries({ queryKey: ['syncLogs'] });
       queryClient.invalidateQueries({ queryKey: ['islandEvents'] });
@@ -71,7 +70,7 @@ export default function EventSourceManager() {
     setSyncingAll(true);
     setSyncResult(null);
     try {
-      const res = await base44.functions.invoke('sync-island-events', {});
+      const res = await base44.functions.invoke('sync-all-island-events', {});
       setSyncResult(res.data);
       queryClient.invalidateQueries({ queryKey: ['syncLogs'] });
       queryClient.invalidateQueries({ queryKey: ['islandEvents'] });
@@ -118,6 +117,30 @@ export default function EventSourceManager() {
           <div className="mt-3 p-3 rounded-xl bg-secondary/30 border border-border/50 space-y-1.5">
             {syncResult.error ? (
               <p className="text-xs text-destructive">Error: {syncResult.error}</p>
+            ) : syncResult.sourceResults ? (
+              <>
+                <p className="text-xs text-muted-foreground">
+                  Sources: <span className="font-semibold text-foreground">{syncResult.sourcesSynced}</span> ·
+                  Found: <span className="font-semibold">{syncResult.totalFound}</span> ·
+                  New: <span className="font-semibold text-emerald-600">{syncResult.totalImported}</span> ·
+                  Updated: <span className="font-semibold text-foreground">{syncResult.totalUpdated}</span> ·
+                  Archived: <span className="font-semibold text-amber-600">{syncResult.totalArchived}</span> ·
+                  Failed: <span className="font-semibold text-destructive">{syncResult.totalFailed}</span>
+                </p>
+                {syncResult.sourceResults.map((sr, i) => {
+                  const meta = STATUS_META[sr.status] || STATUS_META.failed;
+                  return (
+                    <div key={i} className="flex items-center gap-2 text-[11px]">
+                      <meta.Icon className={`w-3 h-3 ${meta.color.split(' ')[0]}`} />
+                      <span className="font-medium text-foreground">{sr.source}</span>
+                      <span className="text-muted-foreground">— {meta.label}</span>
+                      {sr.eventsFound > 0 && <span className="text-muted-foreground">({sr.eventsFound} found, {sr.eventsImported} new{sr.eventsUpdated > 0 ? `, ${sr.eventsUpdated} updated` : ''})</span>}
+                      {sr.eventsArchived > 0 && <span className="text-amber-600">· {sr.eventsArchived} archived</span>}
+                      {sr.errors?.length > 0 && <span className="text-destructive italic">{sr.errors[0]}</span>}
+                    </div>
+                  );
+                })}
+              </>
             ) : syncResult.source ? (
               <>
                 <p className="text-xs text-muted-foreground">
@@ -128,9 +151,6 @@ export default function EventSourceManager() {
                   Archived: <span className="font-semibold text-amber-600">{syncResult.eventsArchived}</span> ·
                   Failed: <span className="font-semibold text-destructive">{syncResult.eventsFailed}</span>
                 </p>
-                {syncResult.monthsSynced && (
-                  <p className="text-[10px] text-muted-foreground">Months: {syncResult.monthsSynced.join(', ')}</p>
-                )}
                 {syncResult.errors?.length > 0 && (
                   <p className="text-[10px] text-destructive">{syncResult.errors.join('; ')}</p>
                 )}
@@ -142,7 +162,6 @@ export default function EventSourceManager() {
                   Updated: <span className="font-semibold text-foreground">{syncResult.updatedEvents}</span> ·
                   Duplicates: <span className="font-semibold">{syncResult.duplicates}</span> ·
                   Failed: <span className="font-semibold text-destructive">{syncResult.totalFailed}</span>
-                  {syncResult.expiredRemoved !== undefined && <> · Expired removed: <span className="font-semibold">{syncResult.expiredRemoved}</span></>}
                 </p>
                 {syncResult.sourceResults?.map((sr, i) => {
                   const meta = STATUS_META[sr.status] || STATUS_META.failed;
@@ -172,7 +191,7 @@ export default function EventSourceManager() {
           const meta = STATUS_META[status] || STATUS_META.pending;
           const Icon = meta.Icon;
           const isSyncing = syncingSource === src.key;
-          const needsManual = (status === 'needs_manual_setup' || status === 'failed') && !src.dedicatedSync;
+          const needsManual = (status === 'needs_manual_setup' || status === 'failed') && !src.automated;
 
           return (
             <div key={src.key} className="bg-card rounded-2xl border border-border p-3.5">

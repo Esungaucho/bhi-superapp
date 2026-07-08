@@ -32,7 +32,13 @@
         "holiday",
         "club_events",
         "member_only",
-        "seasonal"
+        "seasonal",
+        "history",
+        "lighthouse",
+        "turtle_programs",
+        "conservation",
+        "fundraiser",
+        "educational"
       ],
       "default": "community",
       "description": "Event category"
@@ -104,6 +110,8 @@
         "village_chapel",
         "shoals_club",
         "bhi_club",
+        "bhi_marina",
+        "maritime_market",
         "admin_manual",
         "community_submission",
         "other"
@@ -246,7 +254,7 @@
     },
     "sync_hash": {
       "type": "string",
-      "description": "Dedup hash \u2014 title + start_time normalized, used to prevent duplicate events across sources"
+      "description": "Dedup hash \u2014 title + start_time normalized + organization, used to prevent duplicate events across sources"
     },
     "admin_override": {
       "type": "boolean",

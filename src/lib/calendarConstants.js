@@ -3,7 +3,8 @@ import {
   Palette, Landmark, Heart, Gift, Crown, Calendar, Sparkles, TreePine,
   Feather, Fish, CloudSun, Waves, Ship, Wine, Puzzle, Mountain, Flag,
   Circle, CloudRain, Flower2, Shell, Bug, Star, Bell, MapPin, Clock,
-  Church, Building2, MessageCircle, Shield,
+  Church, Building2, MessageCircle, Shield, ScrollText, Turtle, Sprout,
+  BookOpen, Anchor,
 } from 'lucide-react';
 
 export const EVENT_CATEGORIES = [
@@ -13,8 +14,8 @@ export const EVENT_CATEGORIES = [
   { id: 'conservancy', label: 'Conservancy', Icon: Feather, color: 'emerald', badge: 'bg-emerald-500/10 text-emerald-600', dot: 'bg-emerald-500' },
   { id: 'fitness', label: 'Fitness', Icon: Dumbbell, color: 'orange', badge: 'bg-orange-500/10 text-orange-600', dot: 'bg-orange-500' },
   { id: 'arts_culture', label: 'Arts & Culture', Icon: Palette, color: 'purple', badge: 'bg-purple-500/10 text-purple-600', dot: 'bg-purple-500' },
-  { id: 'music', label: 'Music', Icon: Music, color: 'indigo', badge: 'bg-indigo-500/10 text-indigo-600', dot: 'bg-indigo-500' },
-  { id: 'dining', label: 'Dining', Icon: UtensilsCrossed, color: 'red', badge: 'bg-red-500/10 text-red-600', dot: 'bg-red-500' },
+  { id: 'music', label: 'Live Music', Icon: Music, color: 'indigo', badge: 'bg-indigo-500/10 text-indigo-600', dot: 'bg-indigo-500' },
+  { id: 'dining', label: 'Food & Drink', Icon: UtensilsCrossed, color: 'red', badge: 'bg-red-500/10 text-red-600', dot: 'bg-red-500' },
   { id: 'shopping', label: 'Shopping', Icon: ShoppingBag, color: 'amber', badge: 'bg-amber-500/10 text-amber-600', dot: 'bg-amber-500' },
   { id: 'community', label: 'Community', Icon: Users, color: 'teal', badge: 'bg-teal-500/10 text-teal-600', dot: 'bg-teal-500' },
   { id: 'government', label: 'Government', Icon: Landmark, color: 'slate', badge: 'bg-slate-500/10 text-slate-600', dot: 'bg-slate-500' },
@@ -23,6 +24,12 @@ export const EVENT_CATEGORIES = [
   { id: 'club_events', label: 'Club Events', Icon: Crown, color: 'violet', badge: 'bg-violet-500/10 text-violet-600', dot: 'bg-violet-500' },
   { id: 'member_only', label: 'Member Only', Icon: Crown, color: 'fuchsia', badge: 'bg-fuchsia-500/10 text-fuchsia-600', dot: 'bg-fuchsia-500' },
   { id: 'seasonal', label: 'Seasonal', Icon: Sparkles, color: 'cyan', badge: 'bg-cyan-500/10 text-cyan-600', dot: 'bg-cyan-500' },
+  { id: 'history', label: 'History', Icon: ScrollText, color: 'amber', badge: 'bg-amber-600/10 text-amber-700', dot: 'bg-amber-600' },
+  { id: 'lighthouse', label: 'Lighthouse', Icon: Landmark, color: 'yellow', badge: 'bg-yellow-500/10 text-yellow-600', dot: 'bg-yellow-500' },
+  { id: 'turtle_programs', label: 'Turtle Programs', Icon: Turtle, color: 'teal', badge: 'bg-teal-500/10 text-teal-600', dot: 'bg-teal-500' },
+  { id: 'conservation', label: 'Conservation', Icon: Sprout, color: 'emerald', badge: 'bg-emerald-600/10 text-emerald-700', dot: 'bg-emerald-600' },
+  { id: 'fundraiser', label: 'Fundraiser', Icon: Heart, color: 'rose', badge: 'bg-rose-500/10 text-rose-600', dot: 'bg-rose-500' },
+  { id: 'educational', label: 'Educational', Icon: BookOpen, color: 'blue', badge: 'bg-blue-600/10 text-blue-700', dot: 'bg-blue-600' },
 ];
 
 export const EVENT_ORGANIZATIONS = [
@@ -34,6 +41,8 @@ export const EVENT_ORGANIZATIONS = [
   { id: 'village_chapel', label: 'Village Chapel of BHI', source: 'village_chapel' },
   { id: 'shoals_club', label: 'Shoals Club', source: 'shoals_club' },
   { id: 'bhi_club', label: 'Bald Head Island Club', source: 'bhi_club' },
+  { id: 'bhi_marina', label: 'BHI Marina', source: 'bhi_marina' },
+  { id: 'maritime_market', label: 'Maritime Market', source: 'maritime_market' },
   { id: 'admin_manual', label: 'Admin (Manual)', source: 'admin_manual' },
   { id: 'community_submission', label: 'Community Submission', source: 'community_submission' },
   { id: 'other', label: 'Other', source: 'other' },
@@ -121,6 +130,8 @@ export const SOURCE_BADGES = {
   village_chapel: { label: 'Village Chapel', Icon: Church, badge: 'bg-purple-500/10 text-purple-600' },
   shoals_club: { label: 'Shoals Club', Icon: Crown, badge: 'bg-violet-500/10 text-violet-600' },
   bhi_club: { label: 'BHI Club', Icon: Crown, badge: 'bg-fuchsia-500/10 text-fuchsia-600' },
+  bhi_marina: { label: 'BHI Marina', Icon: Anchor, badge: 'bg-blue-500/10 text-blue-600' },
+  maritime_market: { label: 'Maritime Market', Icon: UtensilsCrossed, badge: 'bg-orange-500/10 text-orange-600' },
   admin_manual: { label: 'Island Concierge', Icon: Shield, badge: 'bg-ocean/10 text-ocean' },
   community_submission: { label: 'Community', Icon: MessageCircle, badge: 'bg-cyan-500/10 text-cyan-600' },
   other: { label: 'Island Event', Icon: Calendar, badge: 'bg-secondary text-muted-foreground' },
