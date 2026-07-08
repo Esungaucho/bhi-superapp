@@ -1,0 +1,67 @@
+{
+  "name": "RestaurantPrivate",
+  "type": "object",
+  "properties": {
+    "restaurant_id": {
+      "type": "string",
+      "description": "ID of the linked Restaurant record"
+    },
+    "commission_rate": {
+      "type": "number",
+      "default": 0.15,
+      "description": "Platform commission: 0.12 pickup, 0.15 delivery, 0.18 dine_in"
+    },
+    "delivery_fee": {
+      "type": "number",
+      "default": 3
+    },
+    "min_order": {
+      "type": "number",
+      "default": 0
+    },
+    "estimated_delivery_minutes": {
+      "type": "number",
+      "default": 30
+    },
+    "fulfillment_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "pickup, delivery, dine_in"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Restaurant account email for self-management"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal admin notes"
+    }
+  },
+  "required": [
+    "restaurant_id"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

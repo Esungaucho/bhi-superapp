@@ -68,6 +68,10 @@
     "estimated_ready_time": {
       "type": "string",
       "format": "date-time"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "description": "Client-supplied dedup key \u2014 prevents duplicate orders from retries"
     }
   },
   "required": [
@@ -81,14 +85,12 @@
   ],
   "rls": {
     "create": {
-      "user_condition": {
-        "role": "admin"
-      }
+      "created_by_id": "{{user.id}}"
     },
     "read": {
       "$or": [
         {
-          "data.user_email": "{{user.email}}"
+          "created_by_id": "{{user.id}}"
         },
         {
           "data.restaurant_id": {
@@ -107,7 +109,7 @@
     "update": {
       "$or": [
         {
-          "data.user_email": "{{user.email}}"
+          "created_by_id": "{{user.id}}"
         },
         {
           "data.restaurant_id": {
@@ -126,7 +128,7 @@
     "delete": {
       "$or": [
         {
-          "data.user_email": "{{user.email}}"
+          "created_by_id": "{{user.id}}"
         },
         {
           "user_condition": {

@@ -1,0 +1,62 @@
+{
+  "name": "CommunityInteraction",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email of the user who performed the interaction"
+    },
+    "post_id": {
+      "type": "string",
+      "description": "ID of the CommunityPost interacted with"
+    },
+    "comment_id": {
+      "type": "string",
+      "description": "ID of the CommunityComment interacted with"
+    },
+    "interaction_type": {
+      "type": "string",
+      "enum": [
+        "like",
+        "report"
+      ],
+      "description": "Type of interaction"
+    }
+  },
+  "required": [
+    "user_email",
+    "interaction_type"
+  ],
+  "rls": {
+    "create": {
+      "data.user_email": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "data.user_email": "{{user.email}}"
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.user_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}
