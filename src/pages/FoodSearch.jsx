@@ -3,25 +3,38 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import {
   Loader2, Search, Waves, Baby, Heart, Sunrise, Sun, Moon, Coffee,
-  Wine, Leaf, Wheat, Umbrella, UtensilsCrossed, X, Bird
+  Wine, Leaf, Wheat, Umbrella, UtensilsCrossed, X, Bird, IceCream,
+  Fish, Flag, Crown, Clock, Pizza, Sparkles, ConciergeBell
 } from 'lucide-react';
 import RestaurantCard from '@/components/food/RestaurantCard';
 import BirdieRecommendations, { BIRDIE_CATEGORIES } from '@/components/food/BirdieRecommendations';
 
-const CUISINES = ['All', 'Seafood', 'American', 'Pizza', 'Sandwiches', 'Italian', 'Breakfast', 'Drinks', 'Coffee', 'Bakery'];
+const CUISINES = [
+  { id: 'All', label: 'All', check: () => true },
+  { id: 'Seafood', label: 'Seafood', icon: Fish, check: r => r.cuisine?.toLowerCase().includes('seafood') },
+  { id: 'American', label: 'American', icon: Flag, check: r => r.cuisine?.toLowerCase().includes('american') },
+  { id: 'Mexican', label: 'Mexican', icon: ConciergeBell, check: r => r.cuisine?.toLowerCase().includes('mexican') },
+  { id: 'Pizza', label: 'Pizza', icon: Pizza, check: r => r.cuisine?.toLowerCase().includes('pizza') },
+  { id: 'Coffee', label: 'Coffee', icon: Coffee, check: r => r.cuisine?.toLowerCase().includes('coffee') },
+  { id: 'Ice Cream', label: 'Ice Cream', icon: IceCream, check: r => r.cuisine?.toLowerCase().includes('ice cream') },
+  { id: 'Fine Dining', label: 'Fine Dining', icon: Crown, check: r => r.price_range === '$$$$' },
+  { id: 'Casual', label: 'Casual', icon: UtensilsCrossed, check: r => r.price_range === '$' || r.price_range === '$$' },
+];
 
 const FILTERS = [
-  { id: 'waterfront', label: 'Waterfront', icon: Waves, check: r => r.is_waterfront },
-  { id: 'family_friendly', label: 'Family Friendly', icon: Baby, check: r => r.is_kid_friendly },
-  { id: 'date_night', label: 'Date Night', icon: Heart, check: r => r.dining_categories?.includes('date_night') },
-  { id: 'breakfast', label: 'Breakfast', icon: Sunrise, check: r => r.dining_categories?.includes('breakfast') || r.cuisine?.toLowerCase() === 'breakfast' },
+  { id: 'breakfast', label: 'Breakfast', icon: Sunrise, check: r => r.dining_categories?.includes('breakfast') },
   { id: 'lunch', label: 'Lunch', icon: Sun, check: r => r.dining_categories?.includes('lunch') },
   { id: 'dinner', label: 'Dinner', icon: Moon, check: r => r.dining_categories?.includes('dinner') },
-  { id: 'coffee', label: 'Coffee', icon: Coffee, check: r => r.dining_categories?.includes('coffee') || r.cuisine?.toLowerCase() === 'coffee' },
-  { id: 'drinks', label: 'Drinks', icon: Wine, check: r => r.dining_categories?.includes('drinks') || r.cuisine?.toLowerCase() === 'drinks' },
+  { id: 'coffee', label: 'Coffee', icon: Coffee, check: r => r.dining_categories?.includes('coffee') },
+  { id: 'waterfront', label: 'Waterfront', icon: Waves, check: r => r.is_waterfront },
+  { id: 'outdoor_seating', label: 'Outdoor Seating', icon: Umbrella, check: r => r.has_outdoor_seating },
+  { id: 'family_friendly', label: 'Family Friendly', icon: Baby, check: r => r.is_kid_friendly },
+  { id: 'pet_friendly', label: 'Pet Friendly', icon: Bird, check: r => r.is_dog_friendly },
+  { id: 'member_only', label: 'Member Only', icon: Crown, check: r => r.member_only },
+  { id: 'open_now', label: 'Open Now', icon: Clock, check: r => r.is_open },
+  { id: 'date_night', label: 'Date Night', icon: Heart, check: r => r.dining_categories?.includes('date_night') },
   { id: 'vegan', label: 'Vegan', icon: Leaf, check: r => r.has_vegan_options },
   { id: 'gluten_free', label: 'Gluten-Free', icon: Wheat, check: r => r.has_gluten_free_options },
-  { id: 'outdoor_seating', label: 'Outdoor Seating', icon: Umbrella, check: r => r.has_outdoor_seating },
 ];
 
 export default function FoodSearch() {
@@ -40,12 +53,14 @@ export default function FoodSearch() {
   };
 
   const activeBirdieCat = BIRDIE_CATEGORIES.find(c => c.id === birdieCategory);
+  const activeCuisine = CUISINES.find(c => c.id === cuisine);
 
   const filtered = useMemo(() => {
     return restaurants.filter(r => {
       if (search && !r.name?.toLowerCase().includes(search.toLowerCase()) &&
-          !r.cuisine?.toLowerCase().includes(search.toLowerCase())) return false;
-      if (cuisine !== 'All' && r.cuisine !== cuisine) return false;
+          !r.cuisine?.toLowerCase().includes(search.toLowerCase()) &&
+          !r.description?.toLowerCase().includes(search.toLowerCase())) return false;
+      if (activeCuisine && cuisine !== 'All' && !activeCuisine.check(r)) return false;
       if (activeBirdieCat && !activeBirdieCat.filter(r)) return false;
       if (activeFilters.length > 0) {
         for (const filterId of activeFilters) {
@@ -55,7 +70,7 @@ export default function FoodSearch() {
       }
       return true;
     });
-  }, [restaurants, search, cuisine, activeFilters, activeBirdieCat]);
+  }, [restaurants, search, cuisine, activeCuisine, activeFilters, activeBirdieCat]);
 
   const sorted = useMemo(() => {
     return [...filtered].sort((a, b) => {
@@ -69,6 +84,7 @@ export default function FoodSearch() {
 
   const featured = sorted.filter(r => r.is_featured_partner);
   const regular = sorted.filter(r => !r.is_featured_partner);
+  const activeFilterCount = activeFilters.length + (cuisine !== 'All' ? 1 : 0);
 
   return (
     <div>
@@ -78,13 +94,13 @@ export default function FoodSearch() {
           <UtensilsCrossed className="w-5 h-5 text-primary-foreground" strokeWidth={1.5} />
           <h2 className="text-primary-foreground font-heading text-xl">Island Dining</h2>
         </div>
-        <p className="text-primary-foreground/70 text-sm mt-0.5">Discover Bald Head Island restaurants</p>
+        <p className="text-primary-foreground/70 text-sm mt-0.5">A curated guide to Bald Head Island restaurants</p>
         <div className="relative mt-3">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="Search restaurants or cuisine…"
+            placeholder="Search restaurants, cuisine, or dishes…"
             className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-white/10 text-primary-foreground placeholder:text-primary-foreground/50 text-sm border border-white/20 focus:outline-none focus:bg-white/20 transition-colors"
           />
         </div>
@@ -113,14 +129,21 @@ export default function FoodSearch() {
 
       {/* Cuisine pills */}
       <div className="flex gap-2 px-4 py-3 overflow-x-auto no-scrollbar">
-        {CUISINES.map(c => (
-          <button key={c} onClick={() => setCuisine(c)}
-            className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${
-              cuisine === c
-                ? 'bg-accent text-accent-foreground border-accent'
-                : 'bg-card text-foreground border-border hover:border-accent/50'
-            }`}>{c}</button>
-        ))}
+        {CUISINES.map(c => {
+          const Icon = c.icon;
+          const active = cuisine === c.id;
+          return (
+            <button key={c.id} onClick={() => setCuisine(c.id)}
+              className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${
+                active
+                  ? 'bg-accent text-accent-foreground border-accent'
+                  : 'bg-card text-foreground border-border hover:border-accent/50'
+              }`}>
+              {Icon && <Icon className="w-3 h-3" strokeWidth={1.5} />}
+              {c.label}
+            </button>
+          );
+        })}
       </div>
 
       {/* Filter toggles */}
@@ -142,6 +165,21 @@ export default function FoodSearch() {
         })}
       </div>
 
+      {/* Active filters count */}
+      {activeFilterCount > 0 && (
+        <div className="px-4 pb-2 flex items-center justify-between">
+          <p className="text-[11px] text-muted-foreground">
+            {sorted.length} {sorted.length === 1 ? 'restaurant' : 'restaurants'} · {activeFilterCount} {activeFilterCount === 1 ? 'filter' : 'filters'} active
+          </p>
+          <button
+            onClick={() => { setActiveFilters([]); setCuisine('All'); }}
+            className="text-[11px] font-semibold text-accent hover:underline"
+          >
+            Clear all
+          </button>
+        </div>
+      )}
+
       <div className="px-4 pb-6">
         {isLoading ? (
           <div className="flex justify-center py-16"><Loader2 className="w-6 h-6 animate-spin text-accent" /></div>
@@ -161,7 +199,10 @@ export default function FoodSearch() {
             )}
             {featured.length > 0 && !activeBirdieCat && (
               <div>
-                <p className="text-xs font-bold text-muted-foreground uppercase tracking-luxe-sm mb-3">Featured Partners</p>
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-luxe-sm mb-3 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5" strokeWidth={1.5} />
+                  Featured Partners
+                </p>
                 <div className="space-y-3">
                   {featured.map(r => <RestaurantCard key={r.id} restaurant={r} featured />)}
                 </div>

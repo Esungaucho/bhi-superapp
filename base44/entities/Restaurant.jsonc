@@ -86,7 +86,8 @@
           "dinner",
           "coffee",
           "drinks",
-          "date_night"
+          "date_night",
+          "ice_cream"
         ]
       },
       "description": "Meal-type and occasion categories for filtering"
@@ -150,6 +151,11 @@
       "type": "boolean",
       "default": false,
       "description": "Can host private events"
+    },
+    "member_only": {
+      "type": "boolean",
+      "default": false,
+      "description": "Members and guests only"
     },
     "dress_code": {
       "type": "string",
