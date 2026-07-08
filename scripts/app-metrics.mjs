@@ -2,7 +2,7 @@
 // Computes the app-weight metrics row for docs/APP_WEIGHT_LOG.md.
 // Usage:  npm run build && node scripts/app-metrics.mjs [--append]
 //   --append  writes the row into docs/APP_WEIGHT_LOG.md under the metrics table
-import { readFileSync, readdirSync, statSync, appendFileSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync, writeFileSync, existsSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -32,7 +32,11 @@ const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
 const deps = Object.keys(pkg.dependencies || {}).length;
 
 const assets = walk(join(root, 'dist/assets'), () => true);
-const jsBytes = assets.filter(p => p.endsWith('.js')).reduce((n, f) => n + statSync(f).size, 0);
+const jsFiles = assets.filter(p => p.endsWith('.js'));
+// Entry chunk(s) = what every visitor downloads on first load; the rest are
+// route chunks fetched on demand.
+const entryBytes = jsFiles.filter(p => /[\\/]index-[^\\/]+\.js$/.test(p)).reduce((n, f) => n + statSync(f).size, 0);
+const jsBytes = jsFiles.reduce((n, f) => n + statSync(f).size, 0);
 const cssBytes = assets.filter(p => p.endsWith('.css')).reduce((n, f) => n + statSync(f).size, 0);
 const bundleNote = assets.length ? '' : ' (run `npm run build` first for bundle sizes)';
 
@@ -41,14 +45,18 @@ try { commit = execSync('git rev-parse --short HEAD', { cwd: root }).toString().
 
 const date = new Date().toISOString().slice(0, 10);
 const kb = b => b ? `${(b / 1024).toFixed(0)} KB` : 'n/a';
-const row = `| ${date} | ${commit} | ${pages} | ${components} | ${entities} | ${functions} | ${loc.toLocaleString('en-US')} | ${deps} | ${kb(jsBytes)} | ${kb(cssBytes)} |`;
+const row = `| ${date} | ${commit} | ${pages} | ${components} | ${entities} | ${functions} | ${loc.toLocaleString('en-US')} | ${deps} | ${kb(entryBytes)} | ${kb(jsBytes)} | ${kb(cssBytes)} |`;
 
 console.log(`\nApp weight @ ${commit}${bundleNote}`);
-console.log('| Date | Commit | Pages | Components | Entities | Functions | src LOC | Deps | JS bundle | CSS |');
+console.log('| Date | Commit | Pages | Components | Entities | Functions | src LOC | Deps | JS entry | JS total | CSS |');
 console.log(row);
 
 if (process.argv.includes('--append')) {
   const logPath = join(root, 'docs/APP_WEIGHT_LOG.md');
-  appendFileSync(logPath, row + '\n');
-  console.log(`\nAppended to ${logPath}`);
+  const lines = readFileSync(logPath, 'utf8').split('\n');
+  const lastRow = lines.reduce((acc, l, i) => (/^\| \d{4}-\d{2}-\d{2} \|/.test(l) ? i : acc), -1);
+  if (lastRow === -1) throw new Error('No metrics table found in APP_WEIGHT_LOG.md');
+  lines.splice(lastRow + 1, 0, row);
+  writeFileSync(logPath, lines.join('\n'));
+  console.log(`\nInserted row into ${logPath}`);
 }

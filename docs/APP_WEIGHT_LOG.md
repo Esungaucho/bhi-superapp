@@ -19,15 +19,18 @@ the batch added.
 
 ## Metrics
 
-- **JS bundle** is the strongest user-facing weight signal — it ships to every
-  visitor on first load. Vite recommends chunks stay under ~500 KB.
+- **JS entry** is the strongest user-facing weight signal — it's what every
+  visitor downloads before first paint. Keep it under ~500 KB.
+- **JS total** is all chunks combined; route chunks load on demand, so growth
+  here is cheap as long as JS entry stays flat.
 - **Entities/Functions** are backend surface: they don't slow the client but
   add operational load (sync jobs, LLM calls, quota usage) and audit surface.
 
-| Date | Commit | Pages | Components | Entities | Functions | src LOC | Deps | JS bundle | CSS |
-|------|--------|-------|------------|----------|-----------|---------|------|-----------|-----|
-| 2026-07-03 | d43578d | 107 | 136 | 71 | 8 | 33,915 | 64 | 2122 KB | 120 KB |
-| 2026-07-08 | 86a0588 | 120 | 153 | 85 | 21 | 38,972 | 64 | 2527 KB | 127 KB |
+| Date | Commit | Pages | Components | Entities | Functions | src LOC | Deps | JS entry | JS total | CSS |
+|------|--------|-------|------------|----------|-----------|---------|------|----------|----------|-----|
+| 2026-07-03 | d43578d | 107 | 136 | 71 | 8 | 33,915 | 64 | 2122 KB | 2122 KB | 120 KB |
+| 2026-07-08 | 86a0588 | 120 | 153 | 85 | 21 | 38,972 | 64 | 2527 KB | 2527 KB | 127 KB |
+| 2026-07-08 | 3518da6+split | 122 | 170 | 86 | 23 | 41,624 | 64 | 388 KB | 2772 KB | 132 KB |
 
 ## Change index
 
@@ -75,3 +78,13 @@ Biggest available win: route-based code splitting (`React.lazy` per shell) so
 guests stop downloading admin/agent/captain code — worth doing before the next
 feature batch. Backend surface nearly tripled (8 → 21 functions); watch Base44
 usage quotas on the sync/LLM functions via `SyncLog`.
+
+### 2026-07-08: route-based code splitting
+
+All 12 shells and ~127 pages in `src/App.jsx` converted to `React.lazy` with a
+`Suspense` spinner fallback. **JS entry dropped 2,527 KB → 388 KB (−85%)**;
+the app now builds as 317 on-demand chunks, so admin/agent/captain code no
+longer ships to guests, recharts loads only with the revenue dashboard, and
+leaflet only with map pages. JS total rose slightly (chunk overhead) — that's
+expected and fine. Also fixed a build-breaking legacy octal literal (`06`) in
+`src/lib/sunTimes.js` that arrived with the sunset-times feature.
