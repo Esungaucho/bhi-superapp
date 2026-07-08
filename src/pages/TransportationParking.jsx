@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 
 const SECTIONS = [
+  { label: 'Ferry + Tram Hub', path: '/ferry-tram', Icon: Ship },
   { label: 'Ferry Schedule', path: '/ferry', Icon: Ship },
   { label: 'Ferry Ticket Reservations', path: '/ferry/book', Icon: Ticket },
   { label: 'Ferry Parking Information', path: '/ferry/parking', Icon: ParkingSquare },

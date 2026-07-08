@@ -42,6 +42,7 @@ const SECTIONS = [
   {
     label: 'Transportation & Parking', path: '/transportation', Icon: Car,
     children: [
+      { label: 'Ferry + Tram Hub', path: '/ferry-tram' },
       { label: 'Ferry Schedule', path: '/ferry' },
       { label: 'Ferry Status', path: '/ferry/status' },
       { label: 'Ferry Ticket Reservations', path: '/ferry/book' },

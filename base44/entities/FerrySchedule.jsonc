@@ -82,6 +82,16 @@
       "default": "daily",
       "description": "Day type for this schedule entry"
     },
+    "schedule_type": {
+      "type": "string",
+      "enum": [
+        "passenger",
+        "contractor",
+        "freight"
+      ],
+      "default": "passenger",
+      "description": "Type of ferry service"
+    },
     "notes": {
       "type": "string",
       "description": "Special notes for this departure"
@@ -94,6 +104,10 @@
       "type": "string",
       "format": "date-time",
       "description": "When our system last synced this entry"
+    },
+    "sync_hash": {
+      "type": "string",
+      "description": "Dedup hash \u2014 direction + date + time + schedule_type"
     },
     "gps_lat": {
       "type": "number",

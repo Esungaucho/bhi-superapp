@@ -46,6 +46,11 @@
       "type": "boolean",
       "default": true,
       "description": "Whether this is the current active status"
+    },
+    "is_admin_override": {
+      "type": "boolean",
+      "default": false,
+      "description": "Manual admin override \u2014 appears above automated data in the app"
     }
   },
   "required": [

@@ -7,6 +7,7 @@ import QuickActions from '@/components/dashboard/QuickActions';
 import UpcomingBookings from '@/components/dashboard/UpcomingBookings';
 import DealsCarousel from '@/components/dashboard/DealsCarousel';
 import SponsoredBanner from '@/components/dashboard/SponsoredBanner';
+import NextFerryWidget from '@/components/ferry/NextFerryWidget';
 
 export default function Dashboard() {
   const { data: user } = useQuery({
@@ -47,6 +48,7 @@ export default function Dashboard() {
   return (
     <div className="pb-12">
       <DashboardHero user={user} />
+      <div className="mt-4"><NextFerryWidget /></div>
       <div className="mt-6"><SearchBar /></div>
       <QuickActions />
       <UpcomingBookings

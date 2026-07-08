@@ -131,6 +131,7 @@ import MyPlans from '@/pages/MyPlans';
 import Membership from '@/pages/Membership';
 import MainlandShoppers from '@/pages/MainlandShoppers';
 import ShopBeforeArrive from '@/pages/ShopBeforeArrive';
+import FerryTramHub from '@/pages/FerryTramHub';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -212,6 +213,7 @@ const AuthenticatedApp = () => {
         <Route path="/membership" element={<Membership />} />
         <Route path="/mainland-shoppers" element={<MainlandShoppers />} />
         <Route path="/shop-before-arrive" element={<ShopBeforeArrive />} />
+        <Route path="/ferry-tram" element={<FerryTramHub />} />
         <Route path="/bookings" element={<AllBookings />} />
       </Route>
       <Route path="/thank-you" element={<ThankYou />} />

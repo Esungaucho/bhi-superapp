@@ -6,6 +6,7 @@ import {
   RefreshCw, Loader2, Ship, AlertTriangle, CheckCircle2, XCircle,
   Plus, Trash2, Settings, ExternalLink, Radio
 } from 'lucide-react';
+import AdminOverridePanel from '@/components/ferry/AdminOverridePanel';
 
 const VESSEL_STATUSES = ['active', 'inactive', 'maintenance', 'unknown'];
 
@@ -105,6 +106,7 @@ export default function FerryAdmin() {
       <div className="flex gap-1.5 mb-4">
         {[
           { id: 'overview', label: 'Status History' },
+          { id: 'override', label: 'Quick Override' },
           { id: 'vessels', label: 'Vessels' },
           { id: 'announcements', label: 'Announcements' },
         ].map(t => (
@@ -151,6 +153,8 @@ export default function FerryAdmin() {
           {statuses.length === 0 && <p className="text-xs text-muted-foreground text-center py-4">No status records yet</p>}
         </div>
       )}
+
+      {tab === 'override' && <AdminOverridePanel />}
 
       {tab === 'vessels' && (
         <div className="space-y-2.5">
