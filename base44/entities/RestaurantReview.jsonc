@@ -1,0 +1,91 @@
+{
+  "name": "RestaurantReview",
+  "type": "object",
+  "properties": {
+    "restaurant_id": {
+      "type": "string",
+      "description": "ID of the reviewed restaurant"
+    },
+    "restaurant_name": {
+      "type": "string",
+      "description": "Restaurant name snapshot"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Reviewer email"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "Reviewer display name"
+    },
+    "food_rating": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Food quality rating"
+    },
+    "service_rating": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Service quality rating"
+    },
+    "atmosphere_rating": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Atmosphere rating"
+    },
+    "value_rating": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Value for money rating"
+    },
+    "overall_rating": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Calculated overall rating"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Review text"
+    },
+    "visit_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of visit"
+    },
+    "visit_type": {
+      "type": "string",
+      "enum": [
+        "dine_in",
+        "takeout",
+        "delivery"
+      ],
+      "default": "dine_in",
+      "description": "How they dined"
+    }
+  },
+  "required": [
+    "restaurant_id",
+    "user_email",
+    "food_rating",
+    "service_rating",
+    "atmosphere_rating",
+    "value_rating"
+  ],
+  "rls": {
+    "create": {
+      "data.user_email": "{{user.email}}"
+    },
+    "read": {},
+    "update": {
+      "data.user_email": "{{user.email}}"
+    },
+    "delete": {
+      "data.user_email": "{{user.email}}"
+    }
+  }
+}

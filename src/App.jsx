@@ -30,6 +30,7 @@ import MyRentals from '@/pages/MyRentals';
 import FoodShell from '@/components/food/FoodShell';
 import FoodSearch from '@/pages/FoodSearch';
 import RestaurantMenu from '@/pages/RestaurantMenu';
+import RestaurantDetail from '@/pages/RestaurantDetail';
 import MyOrders from '@/pages/MyOrders';
 import ShopsShell from '@/components/shops/ShopsShell';
 import ShopsDirectory from '@/pages/ShopsDirectory';
@@ -241,6 +242,7 @@ const AuthenticatedApp = () => {
       <Route element={<FoodShell />}>
         <Route path="/food" element={<FoodSearch />} />
         <Route path="/food/:restaurantId" element={<RestaurantMenu />} />
+        <Route path="/dining/:restaurantId" element={<RestaurantDetail />} />
         <Route path="/food/my-orders" element={<MyOrders />} />
       </Route>
       <Route element={<ShopsShell />}>

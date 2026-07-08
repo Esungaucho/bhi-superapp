@@ -37,7 +37,7 @@ export default function RestaurantCard({ restaurant, featured }) {
   const handleShare = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const shareUrl = restaurant.website_url || `${window.location.origin}/food/${restaurant.id}`;
+    const shareUrl = restaurant.website_url || `${window.location.origin}/dining/${restaurant.id}`;
     if (navigator.share) {
       try {
         await navigator.share({ title: restaurant.name, text: restaurant.description || '', url: shareUrl });
@@ -52,7 +52,7 @@ export default function RestaurantCard({ restaurant, featured }) {
   return (
     <div className={`bg-card rounded-2xl border overflow-hidden shadow-luxe-sm hover:shadow-luxe transition-all ${featured ? 'border-accent/20' : 'border-border/50'}`}>
       {/* Image + overlay */}
-      <Link to={`/food/${restaurant.id}`}>
+      <Link to={`/dining/${restaurant.id}`}>
         <div className="relative h-44 bg-muted overflow-hidden">
           <img src={image} alt={restaurant.name} className="w-full h-full object-cover" loading="lazy" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
@@ -90,7 +90,7 @@ export default function RestaurantCard({ restaurant, featured }) {
 
       {/* Content */}
       <div className="p-3.5 space-y-2">
-        <Link to={`/food/${restaurant.id}`}>
+        <Link to={`/dining/${restaurant.id}`}>
           <p className="font-heading font-semibold text-[15px] text-foreground leading-tight">{restaurant.name}</p>
           {restaurant.description && (
             <p className="text-xs text-muted-foreground mt-1 leading-relaxed line-clamp-2">{restaurant.description}</p>

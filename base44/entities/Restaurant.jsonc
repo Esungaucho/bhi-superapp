@@ -92,6 +92,27 @@
       },
       "description": "Meal-type and occasion categories for filtering"
     },
+    "concierge_badges": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "best_sunset",
+          "best_date_night",
+          "best_family",
+          "best_cocktails",
+          "best_brunch",
+          "best_coffee",
+          "best_grab_go",
+          "best_seafood",
+          "kids_favorite",
+          "local_favorite",
+          "hidden_gem",
+          "best_waterfront"
+        ]
+      },
+      "description": "Concierge recommendation badges"
+    },
     "is_waterfront": {
       "type": "boolean",
       "default": false,
@@ -160,6 +181,32 @@
     "dress_code": {
       "type": "string",
       "description": "Dress code e.g. Casual, Smart Casual, Formal"
+    },
+    "accessibility_info": {
+      "type": "string",
+      "description": "Accessibility information e.g. wheelchair accessible, ramp available"
+    },
+    "nearby_attractions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Nearby landmarks and attractions"
+    },
+    "transportation_notes": {
+      "type": "string",
+      "description": "Golf cart time, walking time from ferry, parking notes"
+    },
+    "wait_time_estimate": {
+      "type": "string",
+      "description": "Estimated wait time e.g. No Wait, 10-20 min, Busy"
+    },
+    "specials": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Today's specials and recurring events e.g. Happy Hour 4-6 PM, Live Music Friday"
     },
     "is_featured_partner": {
       "type": "boolean",
