@@ -129,11 +129,12 @@ function RequestForm({ onClose }) {
     if (!form.name || !form.phone || !form.email || !form.store || !form.shopping_list) return;
     setSaving(true);
     try {
-      await base44.entities.ShoppingRequest.create({ user_email: '', ...form, status: 'request_received' });
+      const user = await base44.auth.me();
+      await base44.entities.ShoppingRequest.create({ user_email: user.email, ...form, status: 'request_received' });
       queryClient.invalidateQueries({ queryKey: ['shoppingRequests'] });
       onClose();
-    } catch {
-      alert('Failed to submit request.');
+    } catch (err) {
+      alert(err?.response?.data?.error || 'Failed to submit request.');
     } finally {
       setSaving(false);
     }
