@@ -57,6 +57,10 @@
         "to_mainland"
       ],
       "description": "Direction snapshot"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "description": "Client-supplied dedup key \u2014 prevents duplicate bookings from retries"
     }
   },
   "required": [
@@ -68,14 +72,12 @@
   ],
   "rls": {
     "create": {
-      "user_condition": {
-        "role": "admin"
-      }
+      "created_by_id": "{{user.id}}"
     },
     "read": {
       "$or": [
         {
-          "data.user_email": "{{user.email}}"
+          "created_by_id": "{{user.id}}"
         },
         {
           "user_condition": {
@@ -87,7 +89,7 @@
     "update": {
       "$or": [
         {
-          "data.user_email": "{{user.email}}"
+          "created_by_id": "{{user.id}}"
         },
         {
           "user_condition": {
