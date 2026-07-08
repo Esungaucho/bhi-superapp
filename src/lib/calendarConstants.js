@@ -3,6 +3,7 @@ import {
   Palette, Landmark, Heart, Gift, Crown, Calendar, Sparkles, TreePine,
   Feather, Fish, CloudSun, Waves, Ship, Wine, Puzzle, Mountain, Flag,
   Circle, CloudRain, Flower2, Shell, Bug, Star, Bell, MapPin, Clock,
+  Church, Building2, MessageCircle, Shield,
 } from 'lucide-react';
 
 export const EVENT_CATEGORIES = [
@@ -109,3 +110,20 @@ export const getCategory = (id) => {
 export const getSeason = (id) => SEASONS.find(s => s.id === id) || { label: id, Icon: Leaf, desc: '' };
 export const getInterest = (id) => INTERESTS.find(i => i.id === id) || { label: id, Icon: Star };
 export const getOrganization = (id) => EVENT_ORGANIZATIONS.find(o => o.id === id || o.source === id) || { label: id || 'Unknown', source: id };
+
+// Source badges with Lucide icons for display on event cards and detail pages
+export const SOURCE_BADGES = {
+  old_baldy_foundation: { label: 'Old Baldy Foundation', Icon: Landmark, badge: 'bg-amber-500/10 text-amber-700' },
+  bhi_conservancy: { label: 'BHI Conservancy', Icon: Leaf, badge: 'bg-emerald-500/10 text-emerald-600' },
+  bhi_limited: { label: 'Bald Head Island Limited', Icon: Ship, badge: 'bg-blue-500/10 text-blue-600' },
+  village_of_bhi: { label: 'Village of BHI', Icon: Building2, badge: 'bg-slate-500/10 text-slate-600' },
+  bald_head_association: { label: 'Bald Head Association', Icon: Users, badge: 'bg-teal-500/10 text-teal-600' },
+  village_chapel: { label: 'Village Chapel', Icon: Church, badge: 'bg-purple-500/10 text-purple-600' },
+  shoals_club: { label: 'Shoals Club', Icon: Crown, badge: 'bg-violet-500/10 text-violet-600' },
+  bhi_club: { label: 'BHI Club', Icon: Crown, badge: 'bg-fuchsia-500/10 text-fuchsia-600' },
+  admin_manual: { label: 'Island Concierge', Icon: Shield, badge: 'bg-ocean/10 text-ocean' },
+  community_submission: { label: 'Community', Icon: MessageCircle, badge: 'bg-cyan-500/10 text-cyan-600' },
+  other: { label: 'Island Event', Icon: Calendar, badge: 'bg-secondary text-muted-foreground' },
+};
+
+export const getSourceBadge = (sourceKey) => SOURCE_BADGES[sourceKey] || SOURCE_BADGES.other;

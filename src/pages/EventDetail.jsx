@@ -17,7 +17,7 @@ import {
   Bookmark, Share2, Calendar, MapPin, Clock, Users, Bell, CalendarPlus,
   Navigation, ExternalLink, UtensilsCrossed, ShoppingBag, Waves, Ship, ChevronLeft, Star,
 } from 'lucide-react';
-import { getCategory, getOrganization, NOTIFICATION_TIMINGS } from '@/lib/calendarConstants';
+import { getCategory, getOrganization, getSourceBadge, NOTIFICATION_TIMINGS } from '@/lib/calendarConstants';
 
 export default function EventDetail() {
   const { id } = useParams();
@@ -38,6 +38,7 @@ export default function EventDetail() {
   const savedRecord = saved.find(s => s.event_id === id);
   const cat = event ? getCategory(event.category) : null;
   const org = event?.organization ? getOrganization(event.organization) : null;
+  const sourceBadge = event ? getSourceBadge(event.source) : null;
   const heroImage = event?.featured_image || event?.image_url;
   const hasCoords = event?.latitude && event?.longitude;
 
@@ -128,6 +129,12 @@ export default function EventDetail() {
                 <Star className="w-3 h-3 fill-current" /> Featured
               </span>
             )}
+            {sourceBadge && event.source !== 'admin_manual' && (
+              <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold ml-2 ${sourceBadge.badge}`}>
+                {sourceBadge.Icon && <sourceBadge.Icon className="w-3 h-3" strokeWidth={1.5} />}
+                {sourceBadge.label}
+              </span>
+            )}
           </div>
         </div>
       )}
@@ -213,12 +220,12 @@ export default function EventDetail() {
           </div>
         )}
 
-        {/* Source link */}
+        {/* Visit Official Event Page — prominent button */}
         {event.source_url && (
           <a href={event.source_url} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs text-muted-foreground hover:text-accent transition-colors">
-            <ExternalLink className="w-3.5 h-3.5" strokeWidth={1.5} />
-            View original source{org ? ` · ${org.label}` : ''}
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-full text-sm font-semibold bg-ocean text-white">
+            <ExternalLink className="w-4 h-4" strokeWidth={1.5} />
+            Visit Official Event Page
           </a>
         )}
 

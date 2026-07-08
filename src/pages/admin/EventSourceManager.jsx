@@ -15,7 +15,7 @@ export const OFFICIAL_SOURCES = [
   { key: 'village_of_bhi', name: 'Village of Bald Head Island', url: 'https://villagebhi.org/residents-owners/view/village-calendar/', type: 'html' },
   { key: 'bhi_conservancy', name: 'BHI Conservancy', url: 'https://bhic.org/calendar/', type: 'html' },
   { key: 'bald_head_association', name: 'Bald Head Association', url: 'https://www.baldheadassociation.com/calendar-bha', type: 'html' },
-  { key: 'old_baldy_foundation', name: 'Old Baldy Foundation', url: 'https://www.oldbaldy.org/events', type: 'html' },
+  { key: 'old_baldy_foundation', name: 'Old Baldy Foundation', url: 'https://www.oldbaldy.org/events', type: 'html', dedicatedSync: true, automated: true },
   { key: 'village_chapel', name: 'Village Chapel of BHI', url: 'https://www.villagechapelofbaldheadisland.com/calendars.html', type: 'html' },
   { key: 'bhi_club', name: 'Bald Head Island Club', url: 'https://www.bhiclub.net/documents/20124/173104/BHI+Club+Public+Events+Cal+%282%29.pdf/b25a8906-6e91-713d-f524-40b94be3c31b?t=1780772669317', type: 'pdf' },
 ];
@@ -52,7 +52,11 @@ export default function EventSourceManager() {
     setSyncingSource(sourceKey);
     setSyncResult(null);
     try {
-      const res = await base44.functions.invoke('sync-island-events', { source_key: sourceKey });
+      // Old Baldy Foundation has a dedicated sync function (LLM-based, bypasses IP blocks)
+      const isDedicated = OFFICIAL_SOURCES.find(s => s.key === sourceKey)?.dedicatedSync;
+      const functionName = isDedicated ? 'sync-old-baldy-events' : 'sync-island-events';
+      const payload = isDedicated ? {} : { source_key: sourceKey };
+      const res = await base44.functions.invoke(functionName, payload);
       setSyncResult(res.data);
       queryClient.invalidateQueries({ queryKey: ['syncLogs'] });
       queryClient.invalidateQueries({ queryKey: ['islandEvents'] });
@@ -114,6 +118,23 @@ export default function EventSourceManager() {
           <div className="mt-3 p-3 rounded-xl bg-secondary/30 border border-border/50 space-y-1.5">
             {syncResult.error ? (
               <p className="text-xs text-destructive">Error: {syncResult.error}</p>
+            ) : syncResult.source ? (
+              <>
+                <p className="text-xs text-muted-foreground">
+                  <span className="font-semibold text-foreground">{syncResult.source}</span> —
+                  Found: <span className="font-semibold">{syncResult.eventsFound}</span> ·
+                  New: <span className="font-semibold text-emerald-600">{syncResult.eventsImported}</span> ·
+                  Updated: <span className="font-semibold text-foreground">{syncResult.eventsUpdated}</span> ·
+                  Archived: <span className="font-semibold text-amber-600">{syncResult.eventsArchived}</span> ·
+                  Failed: <span className="font-semibold text-destructive">{syncResult.eventsFailed}</span>
+                </p>
+                {syncResult.monthsSynced && (
+                  <p className="text-[10px] text-muted-foreground">Months: {syncResult.monthsSynced.join(', ')}</p>
+                )}
+                {syncResult.errors?.length > 0 && (
+                  <p className="text-[10px] text-destructive">{syncResult.errors.join('; ')}</p>
+                )}
+              </>
             ) : (
               <>
                 <p className="text-xs text-muted-foreground">
@@ -151,7 +172,7 @@ export default function EventSourceManager() {
           const meta = STATUS_META[status] || STATUS_META.pending;
           const Icon = meta.Icon;
           const isSyncing = syncingSource === src.key;
-          const needsManual = status === 'needs_manual_setup' || status === 'failed';
+          const needsManual = (status === 'needs_manual_setup' || status === 'failed') && !src.dedicatedSync;
 
           return (
             <div key={src.key} className="bg-card rounded-2xl border border-border p-3.5">
@@ -172,6 +193,11 @@ export default function EventSourceManager() {
                     </span>
                     {src.type === 'pdf' && (
                       <span className="text-[9px] bg-secondary text-muted-foreground rounded-full px-2 py-0.5">PDF</span>
+                    )}
+                    {src.automated && (
+                      <span className="text-[9px] bg-primary/10 text-primary rounded-full px-2 py-0.5 flex items-center gap-1">
+                        <Clock className="w-2.5 h-2.5" /> Auto · 6h
+                      </span>
                     )}
                     {latestLog && (
                       <>

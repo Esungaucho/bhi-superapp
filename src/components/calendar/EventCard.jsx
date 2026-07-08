@@ -2,12 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { Bookmark, MapPin, Star, Clock, CalendarPlus } from 'lucide-react';
-import { getCategory, getOrganization } from '@/lib/calendarConstants';
+import { getCategory, getOrganization, getSourceBadge } from '@/lib/calendarConstants';
 
 export default function EventCard({ event, isSaved, onToggleSave }) {
   const cat = getCategory(event.category);
   const startTime = new Date(event.start_time);
   const org = event.organization ? getOrganization(event.organization) : null;
+  const sourceBadge = getSourceBadge(event.source);
   const heroImage = event.featured_image || event.image_url;
 
   const gcalUrl = () => {
@@ -70,8 +71,11 @@ export default function EventCard({ event, isSaved, onToggleSave }) {
               <span className="truncate">{event.location_name}</span>
             </div>
           )}
-          {org && org.label !== 'Unknown' && org.label !== 'Admin (Manual)' && (
-            <p className="text-[10px] text-muted-foreground/60 mt-1.5">{org.label}</p>
+          {event.source && event.source !== 'admin_manual' && (
+            <div className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-medium ${sourceBadge.badge} mt-1.5`}>
+              {sourceBadge.Icon && <sourceBadge.Icon className="w-2.5 h-2.5" strokeWidth={1.5} />}
+              {sourceBadge.label}
+            </div>
           )}
         </div>
       </Link>

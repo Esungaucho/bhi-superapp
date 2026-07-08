@@ -113,7 +113,7 @@
     },
     "source_url": {
       "type": "string",
-      "description": "Original source URL for the event"
+      "description": "Direct URL to the event detail page on the source website"
     },
     "source_name": {
       "type": "string",
@@ -217,10 +217,11 @@
         "approved",
         "pending",
         "rejected",
-        "synced"
+        "synced",
+        "archived"
       ],
       "default": "pending",
-      "description": "Admin approval status \u2014 synced events start as 'synced' and may need approval"
+      "description": "Admin approval status. 'archived' = removed from source but kept in DB (hidden from users)"
     },
     "image_url": {
       "type": "string",
