@@ -1,899 +1,558 @@
 # BHI SuperApp Product Requirements Document
 
-Version: 0.1
-Date: May 6, 2026
-Status: Draft for product, engineering, partnership, and investor review
+Version: 0.2
+Date: July 8, 2026
+Status: Living document — reconciled against the shipped codebase at commit `b058e41`
 Repository: bhi-superapp
+Supersedes: v0.1 (May 6, 2026)
+
+---
+
+## 0. Reconciliation Note (what changed since v0.1)
+
+**v0.1 was a "don't ship the transaction prototype" document.** It recommended
+launching an informational-only companion, deferring all transactions to a
+Phase 3 that required signed partner agreements, a Postgres/Next.js backend, and
+payment infrastructure. Its signature monetization idea was a paid
+Wildlife/Nature Mode subscription.
+
+**The product went the other way.** Between May and July 2026 the team built a
+full transactional island super-app on Base44: live payments, commission
+tracking, and ~10 service verticals. This v0.2 documents the product **as it
+actually exists**, keeps the v1 guidance that is still correct (wildlife
+safety, data-freshness labeling, privacy, trust copy, RBAC/audit), and retires
+the guidance that reality has overtaken.
+
+Key divergences from v0.1, stated plainly so nobody plans against a stale map:
+
+| v0.1 said | Reality at `b058e41` |
+|-----------|----------------------|
+| Do **not** sell inside the app; defer to Phase 3 | Live payments via Wix tokenized checkout; ferry/rental/food/babysitting/lodging booking flows shipped |
+| Monetize via listings, sponsorships, guest guides, paid Nature Mode | Monetizing via **commissions** (`RevenueEntry`) + a **$19/mo · $199/yr "BHI Concierge" membership**; listings/sponsorship infra exists but Nature Mode was never built |
+| ~11 informational screens | 90+ pages, 86 entities, 23 backend functions, 22 admin consoles |
+| Move off Base44 to Postgres/Next.js for production | Still 100% Base44 + Vite/React SPA |
+| Remove client-side ferry booking, parking reservation, fake ETA confidence (P0) | Booking moved server-side ✅, **but** `FerryParking.jsx` still does `ParkingReservation.create` client-side and `FerryETA.jsx` still shows "92% confidence" ❌ |
+
+The strategic question v0.2 forces is no longer "should we add transactions?"
+It's **"we have a broad, live, transaction-heavy super-app — how do we make it
+trustworthy, operationally supportable, and defensible?"** Depth of support and
+partner legitimacy now matter more than breadth of features.
+
+---
 
 ## 1. Executive Summary
 
-BHI SuperApp should launch first as a trusted informational companion for Bald Head Island residents, homeowners, rental guests, contractors, day visitors, and local businesses. The current prototype correctly identifies the island's core user needs: ferry logistics, parking, tram timing, weather, beach conditions, maps, restaurants, lodging, rentals, shops, alerts, and local discovery. However, the application should not launch as a transactional marketplace until official operators and partners provide authoritative inventory, booking rights, support processes, and commercial agreements.
+BHI SuperApp is a mobile-first web application (Vite/React PWA on Base44) that
+serves Bald Head Island residents, homeowners, rental guests, and visitors as
+both a **daily island-intelligence layer** and a **transactional services
+marketplace**. It combines live operational data (ferry tracking, weather and
+marine conditions, an LLM-assisted island event calendar) with booking and
+ordering across roughly ten verticals: ferry, equipment rentals, dining,
+babysitting, mainland personal shopping ("Birdie"), events and weddings,
+concierge services, fishing charters, lodging, and a community feed.
 
-The recommended product strategy is to become the most trusted daily and trip-planning intelligence layer for Bald Head Island:
+The app takes payment today through a tokenized Wix checkout (no card data
+touches our systems — PCI scope is minimized) and records platform commissions
+in a `RevenueEntry` ledger. A premium **BHI Concierge membership** ($19/month or
+$199/year, 7-day free trial) layers subscription revenue on top.
 
-- What do I need to know today?
-- How do I get to, around, and off the island?
-- What is open, safe, available, or worth doing?
-- Where do I go to complete official bookings?
-- How do I enjoy the island while respecting residents, property, and wildlife?
+The product's strengths are breadth and a genuinely useful live-data core. Its
+risks are the natural consequences of building a marketplace fast on a
+prototyping platform: **authorization and automation-endpoint security**
+(documented in `SECURITY_AUDIT_2026-07-08_codex.md`), **operational support
+depth** (bookings can be created faster than a human can service them), and
+**partner legitimacy** (several flows imply operator relationships that must be
+real before scale).
 
-The initial business model should rely on trust-based revenue rather than transaction volume:
-
-- Verified business listings
-- Sponsored placements
-- Property-manager guest guides
-- Premium visitor/resident intelligence
-- Privacy-preserving wildlife and nature mode
-- Partner analytics and lead attribution
-
-Transactional revenue should be deferred until phase 3, after the product has trust, traffic, and signed partner integrations.
+The near-term mandate is to **harden and legitimize what exists** rather than
+add verticals: close the security findings, ensure every booking/order vertical
+has a real fulfillment and support path, and label every piece of operational
+data with its source and freshness.
 
 ## 2. Product Positioning
 
-### Working Name
+### Name
 
-BHI Companion
-
-Alternative names:
-
-- Bald Head Daily
-- BHI Guide
-- Island Companion
-- BHI Today
-
-The app should not over-index on the term "SuperApp" in public positioning. "SuperApp" communicates ambition internally, but residents and high-income visitors will respond better to language that feels trusted, calm, official-adjacent, and service-oriented.
+The app ships as **BHI SuperApp** internally; the premium tier is branded **BHI
+Concierge**. v0.1's caution against the "SuperApp" label in *public consumer*
+positioning still holds — residents and affluent visitors respond to "trusted,
+calm, concierge-grade," not "everything app." Recommend keeping "SuperApp" as
+the internal/investor name and leading consumer-facing surfaces with a calmer
+promise.
 
 ### Product Promise
 
-The calm, trusted way to plan and enjoy Bald Head Island.
+The trusted way to plan, move around, and get things done on Bald Head Island.
 
-### Public Description
+### Target Quality Bar (unchanged from v0.1 — still the north star)
 
-BHI Companion gives residents and visitors a clear view of ferry and tram planning, island conditions, open businesses, maps, wildlife safety, local alerts, and official booking links.
+Accurate · Current · Quietly premium · Non-gimmicky · Privacy-aware · Locally
+respectful · Operationally reliable.
 
-### Target Quality Bar
-
-The audience includes affluent homeowners, repeat seasonal visitors, property managers, and guests expecting a high-service island experience. The product should feel:
-
-- Accurate
-- Current
-- Quietly premium
-- Non-gimmicky
-- Privacy-aware
-- Locally respectful
-- Operationally reliable
-
-The product should not feel like a coupon app, fake marketplace, generic travel template, or speculative AI demo.
+The product must not feel like a coupon app, a fake marketplace, or a
+speculative AI demo. Given that it now takes real money, "operationally
+reliable" is no longer aspirational — it is a launch gate.
 
 ## 3. Strategic Rationale
 
-### Why Not Transactions First
+### The pivot, and why it is defensible
 
-The current prototype contains several transactional flows that are not safe to ship:
+v0.1 warned that a transaction-heavy launch "risks user trust, partner trust,
+public safety, and legal exposure." That warning is still correct — but the
+team has been retiring the risk rather than the transactions:
 
-- Ferry bookings are created client-side and marked confirmed without official operator confirmation.
-- Parking reservations are created against hard-coded lot data.
-- Lodging, rental, and food orders can be marked confirmed without payment, vendor acceptance, inventory locking, cancellation policy enforcement, or support workflows.
-- Admin revenue screens imply business operations that are not yet reconciled against real payments.
+- **Payment integrity:** pricing for ferry, rental, and food orders is now
+  computed server-side from trusted entity data, not client input (see the
+  July security work and `SECURITY_AUDIT_2026-07-08_codex.md` finding #6). Card
+  data is tokenized through Wix; the payment webhook verifies its JWT and fails
+  closed.
+- **Access control:** entity-level RLS is present across the data model; admin
+  routes are role-gated at the shell.
+- **Auditability:** `UserActionLog`, `RevenueEntry`, and `SyncLog` exist.
 
-This risks user trust, partner trust, public safety, and legal exposure.
+### What still has to be true for the pivot to hold
 
-### Recommended Trust Ladder
+1. **Every vertical that takes money must have a real fulfillment path** — a
+   named operator/provider, an acceptance step, a cancellation/refund policy,
+   and a support contact. Verticals that cannot meet this bar should be reverted
+   to lead-gen ("request info," "official booking") rather than checkout.
+2. **The remaining v0.1 P0 anti-patterns must go:** client-side
+   `ParkingReservation.create` and the fabricated "92% confidence" ETA both
+   still ship and directly contradict the trust bar.
+3. **The security findings must be closed** before any paid marketing push.
 
-1. Informational utility: become useful every day and before every trip.
-2. Verified local guide: become the best current directory and map.
-3. Partner lead generation: drive users to official booking and business channels.
-4. Assisted requests: introduce low-risk requests where humans can confirm.
-5. Transactions: add payments only where inventory, support, and partner contracts exist.
+### Trust Ladder (retained, re-anchored to today)
+
+The app has jumped to rung 5 for several verticals. The work now is to
+*retroactively satisfy* rungs 2–4 (verified data, real lead handoff, human
+confirmation) underneath the transactions already built.
 
 ## 4. Goals
 
 ### Product Goals
 
-- Make BHI logistics easier for first-time and repeat visitors.
-- Reduce confusion around ferry, tram, parking, luggage, arrival timing, and departure timing.
-- Create a trusted daily island dashboard for homeowners and residents.
-- Help local businesses and property managers communicate accurate information.
-- Provide wildlife and nature features that educate users without encouraging unsafe crowding.
-- Build monetizable engagement before transaction infrastructure is ready.
+- Be the daily-habit island dashboard (ferry status, weather/marine, alerts,
+  events) for residents and homeowners.
+- Make island logistics — arrival, ferry, tram, parking, luggage, departure —
+  low-anxiety for first-time and repeat visitors.
+- Provide dependable, well-supported booking/ordering in the verticals where a
+  real operator relationship exists.
+- Educate about island wildlife and conservation without encouraging unsafe
+  proximity or crowding.
 
 ### Business Goals
 
-- Build audience and repeat usage without needing immediate transaction agreements.
-- Create sellable partner inventory: enhanced listings, sponsorships, guest guides, and analytics.
-- Establish credibility with BHI Development Corp, BHI Transportation, BHI Conservancy, Village of BHI, property managers, and local merchants.
-- Prepare a technical foundation that can later support transactions safely.
+- Grow commission GMV in verticals with genuine operator partnerships.
+- Grow BHI Concierge membership conversion and retention.
+- Build sellable partner inventory (enhanced listings, sponsored placement) on
+  top of the existing directory.
+- Establish credibility with BHI Development Corp, BHI Transportation, BHI
+  Conservancy, Village of BHI, property managers, and merchants.
 
 ### Engineering Goals
 
-- Remove fake transactional behavior from public flows.
-- Make public information accessible without authentication.
-- Establish an architecture that separates public content, partner/admin tools, and future transaction services.
-- Reduce dependency risk and clean up quality gates.
-- Implement privacy, role-based access control, auditability, and analytics from the start.
+- Close the P0/P1 items in `SECURITY_AUDIT_2026-07-08_codex.md` (automation-
+  endpoint auth, browser-side service-role removal, dependency audit).
+- Add idempotency, capacity checks, and reconciliation to booking/order/sync
+  paths.
+- Keep first-load weight in check (see `APP_WEIGHT_LOG.md`; entry JS held at
+  ~388 KB post code-splitting) as features grow.
+- Maintain source + freshness metadata on all operational data.
 
 ## 5. Non-Goals
 
-The MVP will not:
+The product will **not**:
 
-- Sell ferry tickets inside the app.
-- Confirm parking reservations inside the app.
-- Take lodging, rental, food, or retail payments.
-- Display exact real-time locations for sensitive wildlife.
-- Present unofficial estimates as authoritative facts.
-- Replace official BHI Transportation, Village of BHI, or BHI Conservancy channels.
-- Launch a native mobile app before validating web/PWA retention.
+- Take payment in a vertical that lacks a real operator, acceptance step, and
+  support/refund path. (If it can't be supported, it's lead-gen, not checkout.)
+- Sell ferry, tram, or parking transactions without an explicit BHI
+  Transportation integration. (Informational + official-link handoff only.)
+- Display exact real-time locations for sensitive wildlife, or sell coordinates.
+- Present unofficial estimates (ETA, availability) as authoritative fact.
+- Replace official BHI Transportation, Village of BHI, or BHI Conservancy
+  channels.
+- Ship a native mobile app before validating PWA retention.
 
 ## 6. Users and Personas
 
-### First-Time Visitor
+Retained from v0.1 (First-Time Visitor, Repeat Vacation Guest, Homeowner/
+Resident, Property Manager, Local Business, Contractor/Service Provider,
+Naturalist/Conservancy Partner, Admin/Operator). Personas added by verticals the
+app actually shipped:
 
-Needs simple travel instructions, ferry/tram/parking clarity, safe wildlife guidance, what is open, and a shareable trip checklist.
+- **Service provider (marketplace supply):** babysitters, personal shoppers
+  ("Birdie" shoppers), fishing captains, concierge providers, event vendors —
+  each has onboarding, approval status, and in some cases background-check and
+  private-info handling (`BabysitterPrivateInfo`, `BirdieShopperPrivateInfo`).
+- **Premium member:** a resident/frequent visitor paying for BHI Concierge.
+- **Event host:** planning a wedding or gathering via the events vertical
+  (`EventPlan`, `EventVendor`, `EventGuest`, `EventTimelineItem`).
 
-### Repeat Vacation Guest
+## 7. Product Concept — Feature Catalog (as built)
 
-Needs departure reminders, seasonal business hours, restaurant/rental suggestions, weather/tide conditions, and family-friendly alerts.
+The app is organized into shells (navigation areas), each lazy-loaded. Verticals
+marked **[$]** take payment or record commission today; **[live]** consume live
+external/synced data.
 
-### Homeowner or Resident
+### 7.1 Daily Intelligence
 
-Needs daily conditions, ferry status, local alerts, business hours, maintenance/service directory, wildlife safety, and discreet resident-oriented information.
+- **Today Dashboard** — entry surface; conditions, ferry, alerts, discovery.
+- **Weather & Marine** **[live]** — `fetch-weather`, `getBHIWeatherMarineStatus`;
+  temperature, wind, tide, marine status, beach conditions.
+- **Ferry Status & Tracking** **[live]** — `FerryVessel`, `FerryStatus`,
+  `FerryAnnouncement`, `sync-ferry-status`; tracker map, departure list, alerts.
+- **Island Calendar / Events** **[live]** — LLM-assisted ingestion pipeline
+  (`EventSource`, `sync-island-events`, `sync-all-island-events`,
+  `sync-old-baldy-events`, `analyze-event-source`); search, filter, saved events.
+- **Alerts & Push Notifications** — `PushNotification`, opt-in permission prompt,
+  ferry/event notification functions.
 
-### Property Manager
+### 7.2 Getting Here & Around
 
-Needs a polished guest guide, fewer repetitive guest questions, trusted arrival/departure instructions, and controlled recommendations.
+- **Ferry & Tram Hub / Schedule / ETA / Map / Route detail.**
+- **Book Ferry** **[$]** — `book-ferry`, commission recorded.
+- **Ferry Parking** — ⚠️ still creates `ParkingReservation` client-side (v0.1 P0,
+  unresolved).
+- **Transportation & Parking, Car Locator, Valet Waitlist** — `ParkingSpot`,
+  `ValetWaitlist`.
 
-### Local Business
+### 7.3 Marketplace & Services
 
-Needs accurate listings, visibility, sponsored placement, seasonal updates, analytics, and a path toward future transactions.
+- **Equipment Rentals** **[$]** — `book-rental`, server-side pricing, inventory
+  decrement, commission.
+- **Dining / Food Orders** **[$]** — `place-food-order`, `MenuItem`, `OrderItem`,
+  fulfillment types (pickup/delivery/dine-in) with tiered commission.
+- **Lodging** **[$]** — `Lodging`, `LodgingBooking`, `LodgingReview`.
+- **Babysitting** **[$]** — full marketplace: `Babysitter`, `BabysitterBooking`,
+  reviews, in-app messaging, safety check-ins, background-check status, private
+  info separation. Payment via `create-checkout`.
+- **Birdie (mainland personal shopping)** **[$]** — `BirdieShopper`,
+  `BirdieRequest`, tracking events, shopper private info.
+- **Fishing Charters** — `FishingCharter`, `FishingSpot`, `CaptainAvailability`,
+  `CaptainCatch`, captain dashboard, availability notifications.
+- **Concierge Services** — `ConciergeProvider`, `ConciergeRequest`, provider
+  dashboard, tracking.
+- **Events & Weddings** — `EventPlan`, `EventVendor`, `EventQuoteRequest`,
+  `EventConciergeRequest`, `WeddingInquiry`, guest logistics, timeline, rentals.
+- **Shops & Island Retail** — `Shop`, `Product`, `IslandShopProduct`,
+  `PromoDeal`, marketplace + directory.
 
-### Contractor or Service Provider
+### 7.4 Community & Content
 
-Needs transportation, barge, parking, map, island access, and directory information.
+- **Community Feed** — `CommunityPost`, `CommunityComment`, `CommunitySubmission`,
+  moderation (`moderateCommunityPost`, `reviewSubmission` with LLM scoring),
+  reporting, user blocks/status.
+- **AI Agents** — `Agents`, `AgentChat`, `LogisticsAgent` (island Q&A/assistance).
 
-### Naturalist / Conservancy Partner
+### 7.5 Wildlife & Conservation
 
-Needs wildlife reporting that improves awareness and citizen science without encouraging harassment, feeding, crowding, or unsafe behavior.
+- **Turtle Education & Nest Map** — `TurtleNest`, `sendTurtleHatchingAlert`.
+  Note: this is the **education-and-awareness** slice of v0.1's wildlife vision;
+  the **paid Nature Mode subscription and sensitivity-tiered sightings model was
+  not built.** See §10 for the decision this leaves open.
 
-### Admin / Operator
+### 7.6 Membership & Monetization Surfaces
 
-Needs content moderation, listing verification, partner management, ads, analytics, source freshness, and emergency override controls.
+- **BHI Concierge Membership** **[$]** — `Membership`, 7-day trial, $19/mo or
+  $199/yr, premium features + notifications.
+- **Founders** page, **Premium Upgrade** prompts.
+- **Sponsorship / Ads / Partner** infrastructure — `Sponsorship`, `AdCampaign`,
+  `PreferredPartner`, `PartnerReferralEvent`, `RelationshipCRM`,
+  `ReferralInquiry`.
 
-## 7. MVP Product Concept
+### 7.7 Accounts, Trip Planning, Admin
 
-### MVP Name
+- **Accounts & onboarding** — role/tier-based onboarding wizard, profile,
+  communication/privacy settings, saved items.
+- **My Plans / Trip Planner** — `PlanItem` (the v0.1 "Trip Packet" concept,
+  partially realized).
+- **Admin Console** — 22 role-gated admin pages (revenue, CRM, sponsorships,
+  partners, submissions/community moderation, events + event sources,
+  newsletter, shop, birdie, concierge, babysitting, turtles, restaurants,
+  notifications, ferry, referrals, rental properties). Generic service-role CRUD
+  is centralized in the `admin-ops` function.
 
-BHI Companion: Public Information and Island Intelligence MVP
+## 8. Functional Requirements (normative, current)
 
-### MVP Core Screens
+The v0.1 acceptance criteria for informational surfaces (Dashboard, Getting
+Here, Conditions, Map/Directory, Alerts, Accounts, Admin) remain in force and
+are **not** repeated here. The following are the requirements that changed
+because the product now transacts.
 
-1. Today Dashboard
-2. Getting Here
-3. Ferry and Tram Planner
-4. Parking Guide
-5. Island Conditions
-6. Map and Directory
-7. Food, Shops, Rentals, and Services
-8. Wildlife and Nature Mode
-9. Trip Packet
-10. Alerts and Notifications
-11. Partner/Admin Console
+### 8.1 Transactional Verticals (ferry, rental, food, lodging, babysitting, birdie)
 
-## 8. Functional Requirements
+Every vertical that takes payment or records commission **must**:
 
-### 8.1 Public Today Dashboard
-
-Purpose:
-Give users a fast answer to "What should I know right now?"
-
-Requirements:
-
-- Show ferry status and next departures using official or clearly sourced data.
-- Show tram/arrival reminders and official booking link.
-- Show current weather, wind, tide, beach flag, and last updated time.
-- Show "open now" businesses and key services.
-- Show relevant alerts: weather, ferry delay, safety, wildlife, event, infrastructure.
-- Show wildlife safety card when recent sensitive activity is reported.
-- Show official booking buttons that link out to official sites.
-- No login required.
-
-Acceptance criteria:
-
-- Dashboard loads for anonymous users.
-- Every operational data point has a visible source or "last updated" marker.
-- Official booking CTAs never imply in-app confirmation.
-- If data is stale, UI degrades gracefully with a freshness warning.
-
-### 8.2 Getting Here
-
-Purpose:
-Reduce trip anxiety and missed ferry/tram reservations.
-
-Requirements:
-
-- Explain the basic BHI arrival flow: drive to ferry terminal, park, handle luggage, board ferry, connect to tram if applicable.
-- Provide official ferry/tram reservation link.
-- Provide official parking link.
-- Provide reminders based on official guidance, including arriving early enough for parking, luggage handling, and boarding.
-- Include checklists for day trip, overnight stay, family trip, pets, and contractors.
-- Allow trip date entry without account creation.
-
-Acceptance criteria:
-
-- Users can generate a pre-trip checklist in under 60 seconds.
-- All official action buttons open official BHI Transportation or other authorized pages.
-- The app never creates a ferry, tram, or parking reservation in MVP.
-
-### 8.3 Ferry and Tram Planner
-
-Purpose:
-Help users choose and prepare for the correct ferry and tram flow.
-
-Requirements:
-
-- Display ferry schedules with source and last updated time.
-- Display "reserve officially" CTA.
-- Display tram planning guidance, including outbound pickup windows when applicable.
-- Display common FAQ items: luggage timing, standby, missed ferry, tram pickup, where to go.
-- Allow users to save a planned ferry time locally or in their account.
-- Use the saved plan for reminders and the trip packet.
-
-Acceptance criteria:
-
-- Saving a planned ferry does not claim a confirmed booking.
-- The UI labels saved plans as "planned" or "saved," not "booked" or "confirmed."
-- Users can jump from a ferry plan to official reservation flow.
-
-### 8.4 Parking Guide
-
-Purpose:
-Provide clear, current parking information without pretending to control inventory.
-
-Requirements:
-
-- Replace hard-coded reservation flow with informational parking guide.
-- Link to official parking page.
-- Display known lot options only if sourced and timestamped.
-- Avoid showing non-authoritative pricing unless verified.
-- Allow users to add vehicle plate and parking notes to their private trip packet.
+- Compute price server-side from trusted entity data; never trust client price,
+  quantity, or commission fields. *(Met for ferry/rental/food; verify for
+  babysitting/lodging/birdie.)*
+- Verify availability/capacity server-side before confirming; decrement
+  inventory atomically or reconcile. *(Gap: writes are non-atomic — audit #6.)*
+- Use an idempotency key so retries/double-taps cannot double-charge or
+  double-book. *(Gap — audit #6.)*
+- Have a defined acceptance step (provider/operator confirms) before a booking
+  is presented as "Confirmed."
+- Expose a cancellation/refund policy and a support contact in the flow.
+- Record the transaction in `RevenueEntry` via service role only.
 
 Acceptance criteria:
 
-- No `ParkingReservation.create` call in public MVP.
-- No hard-coded rate displayed as current unless sourced and dated.
-- Parking CTA uses language like "Open official parking" or "Check parking."
+- No user can alter the amount charged by manipulating the request.
+- No booking displays "Confirmed" state that is not backed by a
+  server/operator-confirmed record.
+- Every paid vertical links to its cancellation/refund terms before payment.
 
-### 8.5 ETA and Door-to-Door Planning
+### 8.2 Parking (must be de-transactionalized)
 
-Purpose:
-Help users understand travel timing without overstating precision.
+- Remove `ParkingReservation.create` from the client. Parking is informational
+  + official-link handoff until an operator integration exists (this was v0.1
+  P0 and remains open).
 
-Requirements:
+### 8.3 ETA / Planning
 
-- Replace hard-coded city-to-minute logic with either:
-  - Real routing API integration, or
-  - Clearly labeled planning estimates.
-- Remove unsupported confidence claims such as "92% confidence."
-- Provide buffer recommendations for parking, luggage, ferry boarding, and tram timing.
-- Explain what assumptions are included.
-- Allow users to save a leave-by reminder.
+- Remove the fabricated "92% confidence" figure from `FerryETA`. Show
+  "estimated" ranges unless a real routing model with validation exists (v0.1
+  P0, remains open).
 
-Acceptance criteria:
+### 8.4 Automation & Sync Functions (new, security-critical)
 
-- Every ETA displays "estimated" or "based on current routing" depending on data source.
-- If no routing API is enabled, the app uses conservative ranges rather than precise values.
-- No confidence percentage is shown without a real model and validation process.
+- Notification and sync functions (`notify-ferry-alert`, `notify-new-event`,
+  `sync-*`, `reviewSubmission`) **must fail closed** on missing auth and require
+  a signed automation secret or Base44-native automation identity. Treating an
+  `auth.me()` failure as permission to run is prohibited (audit #1, #2).
 
-### 8.6 Island Conditions
+### 8.5 Community Integrity
 
-Purpose:
-Make weather, tide, beach, and safety conditions a daily habit.
-
-Requirements:
-
-- Show temperature, feels-like, wind, humidity, tide, beach flag, water temperature, wave height, UV, and source.
-- Show last updated time.
-- Integrate official or reputable weather/tide data provider.
-- Allow admin override for urgent local notes.
-- Provide condition-triggered safety guidance.
-
-Acceptance criteria:
-
-- Conditions page shows stale-data warning if older than configured threshold.
-- Safety copy is concise and source-linked.
-- Weather data failures do not break the app.
-
-### 8.7 Map and Directory
-
-Purpose:
-Create the most useful local map for visitors and residents.
-
-Requirements:
-
-- Show restaurants, shops, services, rentals, lodging, beach accesses, restrooms, parking, emergency services, and key landmarks.
-- Support category filters and "open now."
-- Display verified status and last updated timestamp.
-- Allow businesses to claim/update listing through admin workflow.
-- Support sponsored pins with clear labeling.
-- Avoid over-clutter with tasteful priority rules.
-
-Acceptance criteria:
-
-- Users can find a business by name, category, and map.
-- Sponsored content is clearly labeled.
-- Unverified listings are visually distinct or excluded from premium placement.
-
-### 8.8 Food, Shops, Rentals, and Services
-
-Purpose:
-Support discovery before commerce.
-
-Requirements:
-
-- Convert restaurant, shop, rental, and service pages to informational or lead-gen pages.
-- Replace "order," "checkout," and "reserve" with "call," "website," "directions," "request info," or "official booking" as appropriate.
-- Add source, verified status, hours, phone, website, map link, and seasonal notes.
-- Allow partner-paid enhanced content: images, featured items, offers, service areas.
-
-Acceptance criteria:
-
-- No public MVP flow creates paid orders or confirmed reservations.
-- Business contact actions are tracked for analytics.
-- Listings can be updated by admin without deploy.
-
-### 8.9 Trip Packet
-
-Purpose:
-Turn the app into a practical pre-arrival and departure companion.
-
-Requirements:
-
-- Users can create a trip with arrival date, departure date, lodging area, party type, and optional saved ferry plans.
-- Generate arrival checklist.
-- Generate departure checklist.
-- Include official booking links.
-- Include weather/wildlife/conditions summary.
-- Include property-manager custom notes where applicable.
-- Allow shareable read-only link.
-
-Acceptance criteria:
-
-- Anonymous users can create a local trip packet.
-- Logged-in users can save trip packets across devices.
-- Property managers can create branded guest packets in admin.
-
-### 8.10 Wildlife and Nature Mode
-
-Purpose:
-Monetize island-specific nature intelligence while protecting wildlife and public safety.
-
-Product principle:
-Paid access may provide better context, education, and freshness, but it must not provide precise real-time locations for sensitive wildlife.
-
-Free requirements:
-
-- Species guide for alligators, sea turtles, birds, foxes, deer, coyotes, and other local wildlife.
-- Safety guidance for alligator areas, lagoons, pets, children, beach wildlife, and injured animals.
-- 48-hour-delayed sightings for non-sensitive species, displayed at coarse area level.
-- Historic/seasonal heatmaps.
-- Links and phone guidance for BHI Conservancy and Public Safety.
-
-Paid requirements:
-
-- Fresh zone-level wildlife activity.
-- Naturalist commentary.
-- Verified photo feed.
-- Tide/weather-linked nature predictions.
-- Alerts such as "large alligator activity reported near freshwater lagoon areas today."
-- Safe viewing recommendations and education.
-- Optional contribution/revenue share to BHI Conservancy or conservation partner.
-
-Sensitive species requirements:
-
-- Alligators: no exact live pins, no named-animal tracking page, no route-to-animal button.
-- Sea turtles: no nest, hatchling, or crawl exact locations unless approved for public education by proper authority.
-- Nesting birds, dens, injured animals, and rare species: hidden or heavily generalized.
-- Reports of feeding, harassment, unsafe proximity, fishing in lagoons, or emergency wildlife issues route to proper authority guidance.
-
-Location privacy rules:
-
-- Sensitive sightings are stored with exact coordinates internally only if needed for moderation or partner research.
-- Public display uses zone-level, grid-level, or landmark-area approximation.
-- Display delay depends on sensitivity:
-  - Low sensitivity: real-time or near real-time allowed.
-  - Medium sensitivity: approximate and delayed.
-  - High sensitivity: approximate only, delayed, or not public.
-  - Critical sensitivity: private to moderators/partners only.
-- Paid users never receive precise locations for high-risk wildlife.
-
-Moderation requirements:
-
-- Users can submit sighting with species, photo, behavior, approximate location, timestamp, and notes.
-- Submissions start as unverified.
-- Moderators can approve, reject, generalize, classify sensitivity, and escalate.
-- Repeat unsafe submitters can be blocked.
-- App educates before submission: do not approach, feed, touch, harass, or crowd wildlife.
-
-Acceptance criteria:
-
-- No UI encourages users to approach wildlife.
-- No sensitive species exact location appears in public or paid UI.
-- Every wildlife screen includes safety framing.
-- Emergency concern flow links users to BHI Conservancy wildlife hotline guidance and Public Safety guidance.
-
-### 8.11 Alerts and Notifications
-
-Purpose:
-Provide timely island-relevant alerts without becoming noisy.
-
-Requirements:
-
-- Alert categories: ferry, tram, weather, beach, wildlife, business hours, event, emergency, property-manager note.
-- Users can follow a trip, category, or location area.
-- Push notifications are optional and require explicit opt-in.
-- Alerts have severity, source, expiry, and last updated metadata.
-- Admin can publish urgent alerts.
-
-Acceptance criteria:
-
-- Alerts expire automatically.
-- Users can configure alert categories.
-- Emergency-style alerts require admin confirmation.
-
-### 8.12 Accounts and Personalization
-
-Purpose:
-Make accounts useful but not required.
-
-Requirements:
-
-- Public app works without login.
-- Login unlocks saved trip packets, favorites, notification preferences, resident/homeowner profile, and paid features.
-- User profile options should align with actual use cases:
-  - Visitor
-  - Homeowner
-  - Resident
-  - Long-term renter
-  - Contractor
-  - Business owner
-  - Property manager
-- Avoid gating basic information behind authentication.
-
-Acceptance criteria:
-
-- Anonymous user can access dashboard, guide, map, directory, weather, wildlife safety, and official links.
-- Account prompt appears only when saving, subscribing, claiming listing, or setting notifications.
-
-### 8.13 Admin Console
-
-Purpose:
-Run the product like a local information business.
-
-Requirements:
-
-- Admin routes must be role-gated.
-- Admin users can manage listings, sources, alerts, sponsorships, wildlife moderation, partners, trip packet templates, and analytics.
-- Partner users can manage only their own listing and campaigns.
-- Naturalist/verifier users can moderate wildlife sightings only within assigned permissions.
-- Every material content change is audit logged.
-
-Acceptance criteria:
-
-- Non-admin users cannot see admin navigation or load admin routes.
-- All admin mutations record actor, timestamp, before/after data, and reason where relevant.
-- Partner permissions cannot access revenue-wide or cross-partner data.
+- Likes, comments, and reports must be backed by per-user rows keyed to
+  user+content, with counts derived — not free-floating incrementable counters
+  (audit #5).
 
 ## 9. Monetization Requirements
 
-### Phase 1 Revenue
+### Live today
 
-1. Enhanced business listings
-   - Monthly pricing by category and prominence.
-   - Includes photos, verified badge, seasonal notes, offers, and analytics.
+1. **Transaction commissions** — `RevenueEntry` records ferry, rental, lodging
+   commissions and food-order platform fees. This is the primary realized
+   revenue mechanic.
+2. **BHI Concierge membership** — $19/mo or $199/yr, 7-day free trial
+   (`Membership`).
 
-2. Sponsored placements
-   - Dashboard placements.
-   - Map sponsored pins.
-   - Weather/contextual placements.
-   - Directory category sponsorships.
+### Built but not yet activated as revenue
 
-3. Property-manager guest guides
-   - Branded trip packets for rental guests.
-   - Seasonal information updates.
-   - Guest analytics and support deflection.
+3. **Enhanced listings & sponsored placement** — `Sponsorship`, `AdCampaign`,
+   `PreferredPartner` schemas and admin tooling exist; packaging, pricing, and
+   partner sales are the missing pieces.
+4. **Partner lead attribution** — `PartnerReferralEvent`, `ReferralInquiry`,
+   `RelationshipCRM` support this but it is not yet a sold product.
 
-4. Wildlife/Nature Mode subscription
-   - Suggested starting point: $5/month or seasonal pass.
-   - Must be positioned as education, safety, and conservation-aware intelligence.
-   - Consider donating or revenue sharing with conservation partner.
+### Deferred / decision-required
 
-### Phase 2 Revenue
+5. **Paid Wildlife/Nature Mode** — v0.1's signature idea; not built. Decide
+   whether to invest (see §10) or formally drop it from the roadmap.
 
-- Lead attribution for official booking links and partner actions.
-- Concierge request forms.
-- Featured seasonal packages.
-- Sponsored alerts and tasteful offers.
+## 10. Open Decision — Wildlife/Nature Mode
 
-### Phase 3 Revenue
+v0.1 positioned a sensitivity-tiered, conservation-partnered paid Nature Mode as
+the signature differentiator. The app instead shipped turtle education + a nest
+map only. Leadership should explicitly choose:
 
-- Integrated transactions only after signed partner agreements:
-  - Rentals
-  - Activities
-  - Restaurant pickup
-  - Grocery/pre-arrival packages
-  - Concierge requests
-  - Lodging leads or bookings where properly contracted
-- Ferry, tram, and parking transactions require explicit operator integration and should not be attempted without it.
+- **(a) Invest** — build the sightings model with the v0.1 safety rules
+  (sensitivity levels, delayed/coarse public display, moderation, BHIC revenue
+  share). High differentiation, requires BHI Conservancy partnership.
+- **(b) Keep as free education** — current turtle content stays as trust/brand
+  value, not a revenue line.
+- **(c) Drop** — remove from roadmap and reclaim the narrative.
 
-## 10. Technical Architecture
+Whichever is chosen, the wildlife safety requirements in §12 remain binding for
+any wildlife content, free or paid. **Do not sell coordinates.**
 
-### Current Prototype Assessment
+## 11. Data Model (as built — 86 entities)
 
-The current Vite/React/Base44 prototype is useful as:
+The production data model lives in `base44/entities/*.jsonc`. Grouped:
 
-- Product concept map
-- UI prototype
-- Base entity sketch
-- Demo for partners
+- **Users & prefs:** User, UserProfile-equivalent fields on User, UserPreference,
+  UserActionLog, UserBlock, Membership, NewsletterSubscription.
+- **Ferry & transport:** FerryRoute, FerrySchedule, FerryStatus, FerryVessel,
+  FerryAnnouncement, FerryBooking, ParkingSpot, ParkingReservation, ValetWaitlist,
+  ETACalculation.
+- **Conditions & events:** IslandConditions, IslandEvent, EventSource, SavedEvent,
+  SyncLog.
+- **Marketplace supply/demand:** RentalItem, RentalInventory, RentalBooking,
+  RentalProperty, Restaurant, MenuItem, FoodOrder, OrderItem, Lodging,
+  LodgingBooking, LodgingReview, Shop, Product, IslandShopProduct, PromoDeal,
+  ShopSubscription.
+- **People-services marketplaces:** Babysitter (+Booking, +Review, +Message,
+  +SafetyCheckin, +PrivateInfo, SavedBabysitter), BirdieShopper (+Request,
+  +TrackingEvent, +PrivateInfo), FishingCharter, FishingSpot, CaptainAvailability,
+  CaptainCatch, CaptainAnnouncement, SavedCaptain, ConciergeProvider,
+  ConciergeRequest.
+- **Events & weddings:** EventPlan, EventVendor, EventGuest, EventTimelineItem,
+  EventQuoteRequest, EventConciergeRequest, WeddingInquiry.
+- **Community:** CommunityPost, CommunityComment, CommunitySubmission,
+  CommunityReport, CommunityUserStatus, CommunityPartner.
+- **Wildlife:** TurtleNest.
+- **Business/partner/revenue:** RevenueEntry, Sponsorship, AdCampaign,
+  PreferredPartner, PartnerReferralEvent, PartnerReview, ReferralInquiry,
+  RelationshipCRM, BusinessPin, RealEstateAgent, BuilderHomeService.
+- **Misc:** AffiliateProduct, ShoppingRequest, PushNotification.
 
-It is not sufficient as:
-
-- Transaction system
-- Source of truth for inventory
-- Public SEO platform in current hosted configuration
-- Secure admin platform
-- Wildlife moderation system
-
-### Recommended Architecture
-
-#### Frontend
-
-Option A: Continue Vite/PWA for fast iteration.
-
-Option B: Move public surface to Next.js for SEO, metadata, public pages, and server-side rendering.
-
-Recommendation:
-Use Next.js or a hybrid approach before broad public launch if SEO and public content acquisition matter. Keep the current React components as design/prototype input.
-
-#### Backend
-
-Use a real backend and database for production:
-
-- Postgres for structured data.
-- API service for content, users, listings, sightings, alerts, analytics, and partner workflows.
-- Server-side RBAC.
-- Audit logging.
-- Scheduled jobs for source refresh and stale data checks.
-- Webhook ingestion for future payment and booking integrations.
-
-Base44 may remain useful for prototyping or early CMS workflows, but it should not be the long-term production system of record for sensitive data or transactions.
-
-#### Data Sources
-
-- Official BHI Transportation ferry/tram links and guidance.
-- Weather provider.
-- Tide provider.
-- Village/BHIC safety guidance.
-- Admin-entered local alerts.
-- Partner-updated business data.
-- User-submitted wildlife sightings with moderation.
-
-#### Analytics
-
-Track:
-
-- Dashboard active users.
-- Official booking link clicks.
-- Directory searches.
-- Calls, website clicks, directions clicks.
-- Trip packets created/shared.
-- Alerts subscribed/opened.
-- Wildlife reports submitted/verified.
-- Paid conversion.
-- Partner lead attribution.
-
-Do not track:
-
-- Precise user location by default.
-- Sensitive wildlife exact public locations.
-- Children's data beyond normal account safeguards.
-
-## 11. Data Model Requirements
-
-### Core Entities
-
-- User
-- UserProfile
-- Trip
-- TripPlanItem
-- Business
-- BusinessClaim
-- BusinessHours
-- BusinessOffer
-- SponsoredPlacement
-- Alert
-- SourceStatus
-- FerryScheduleSnapshot
-- ParkingInfoSnapshot
-- IslandCondition
-- MapPoint
-- WildlifeSighting
-- WildlifeSpecies
-- WildlifeModerationAction
-- Subscription
-- PartnerAccount
-- AnalyticsEvent
-- AuditLog
-
-### WildlifeSighting Fields
-
-- id
-- submitted_by_user_id
-- species_id
-- submitted_at
-- observed_at
-- exact_lat_internal
-- exact_lng_internal
-- public_area_label
-- public_geohash_or_zone
-- location_precision_public
-- sensitivity_level
-- status: pending, verified, rejected, hidden, escalated
-- photo_url
-- behavior: basking, crossing, swimming, nesting, injured, feeding_by_humans, aggressive, unknown
-- moderator_notes
-- public_notes
-- source: user, moderator, partner, imported
-- expires_at
-
-### Sensitivity Levels
-
-- low: common/non-sensitive, approximate or precise depending on species
-- medium: approximate location, optional delay
-- high: approximate zone only, no exact public map
-- critical: private only, authority or partner visibility
+The v0.1 `WildlifeSighting` sensitivity model was never implemented; if §10
+option (a) is chosen, add it per the v0.1 field spec (preserved in git history).
 
 ## 12. Safety, Legal, and Trust Requirements
 
-### Wildlife Safety
+**Wildlife safety (retained verbatim in intent from v0.1 — binding).** No exact
+alligator/sea-turtle location tracking, no "navigate to animal" action, no
+gamified sighting leaderboard, no rewards for proximity, prominent safety
+education. Align with NC Wildlife, Village of BHI, and BHI Conservancy guidance
+(§18 sources).
 
-The app must align with official guidance:
+**Transaction trust (now load-bearing, not hypothetical).**
 
-- BHI notes alligators are common around golf course lagoons and freshwater ponds.
-- BHI prohibits fishing and swimming in lagoons and freshwater ponds.
-- Feeding alligators violates rules/laws and can lead to fines.
-- BHI guidance says to observe alligators from a safe distance.
-- BHI Conservancy directs wildlife emergencies or concerns to its wildlife hotline and unsafe human interactions to Public Safety.
-- NC Wildlife says alligators should not be fed, approached, handled, harassed, or provoked.
+- No booking is "Confirmed" unless a server/operator-confirmed record backs it.
+- No payment state is trusted until confirmed server-side (webhook verified).
+- No inventory is reduced by client code.
+- No ticket/QR artifact is shown without official validity.
 
-Product implications:
+**Privacy.**
 
-- No exact alligator tracking.
-- No "navigate to animal" actions.
-- No gamified leaderboard for sightings.
-- No rewards that encourage approaching wildlife.
-- No user language that romanticizes dangerous proximity.
-- Prominent safety education in report and view flows.
+- Service-provider PII (legal names, background checks, IDs) stays in the
+  `*PrivateInfo` entities with restricted RLS; never expose in public records.
+- Public records must not leak `owner_email`, `commission_rate`,
+  `subscription_status`, internal notes, or reviewer emails (audit #8).
+- Admin exports and `downloadUserData` remain access-controlled and
+  self-scoped.
 
-### Transaction Trust
+**Security posture.** The current findings and remediation order are tracked in
+`docs/SECURITY_AUDIT_2026-07-08_codex.md`. Closing P0/P1 there is a launch gate
+for any paid marketing push.
 
-- No booking is confirmed unless confirmed by authoritative system.
-- No payment state is trusted until confirmed server-side.
-- No inventory is reduced client-side.
-- No QR/ticket artifact is shown without official validity.
+## 13. UX & Copy Principles
 
-### Privacy
+Unchanged from v0.1 and still binding. Use "Official booking," "Planned ferry,"
+"Last updated," "Verified," "Approximate area," "Observe from a safe distance."
+Avoid "Confirmed" (unless source-backed), "Real-time animal location," "92%
+confidence" (currently violated in FerryETA), "Guaranteed availability."
 
-- Public user submissions must not expose home addresses.
-- Wildlife sightings near private homes should be generalized.
-- Property-manager guest guides must avoid exposing private access details unless intended.
-- Admin exports should be access-controlled.
+## 14. Current State & Rollout
 
-## 13. UX Requirements
+The v0.1 phase plan (Phase 0 stabilize → Phase 1 informational → Phase 2 revenue
+→ Phase 3 transactions) no longer maps to reality: the product is effectively
+operating at "Phase 2/3" already. Re-cast the roadmap as **hardening waves**:
 
-### Design Principles
+### Wave A — Security & Integrity (immediate, launch gate)
 
-- Calm, island-premium, highly legible.
-- Mobile-first, but not app-only.
-- Information density should be useful, not cluttered.
-- Avoid cartoonish wildlife treatment for serious safety contexts.
-- Sponsored content should feel native but clearly labeled.
-- Official links should be unmistakable.
+- Close audit P0: automation/notification auth (fail closed); remove browser
+  `asServiceRole` from admin pages.
+- Remove client-side `ParkingReservation.create` and the "92% confidence" ETA.
+- Add idempotency + capacity/reconciliation to booking/order paths.
+- Resolve `npm audit`; restore meaningful lint/typecheck gates.
 
-### Copy Principles
+Exit: no request can alter a charge; no endpoint runs unauthenticated; audit
+P0/P1 closed.
 
-Use:
+### Wave B — Operational Legitimacy
 
-- "Official booking"
-- "Planned ferry"
-- "Last updated"
-- "Verified"
-- "Approximate area"
-- "Observe from a safe distance"
+- For each paid vertical: confirm a real operator/provider, acceptance step,
+  cancellation/refund policy, and support contact — or revert it to lead-gen.
+- Add source + freshness labels to all operational data (ferry, weather, events).
+- Formalize provider onboarding/verification for the people-service
+  marketplaces.
 
-Avoid:
+Exit: every checkout vertical is genuinely supportable; no flow implies a
+partnership that doesn't exist.
 
-- "Confirmed" unless confirmed by source of truth
-- "Real-time animal location"
-- "Find Fluffy now"
-- "92% confidence" without evidence
-- "Secret wildlife spots"
-- "Guaranteed availability"
+### Wave C — Revenue Activation
 
-## 14. Rollout Plan
+- Package and sell enhanced listings + sponsored placement on the existing
+  infrastructure.
+- Optimize membership conversion/retention; activate lead attribution as a
+  partner product.
+- Resolve the Nature Mode decision (§10).
 
-### Phase 0: Stabilize Prototype
-
-Duration: 1-2 weeks
-
-Tasks:
-
-- Remove fake transaction CTAs.
-- Gate admin routes.
-- Make public routes accessible without login.
-- Fix metadata, title, favicon, noindex state, and manifest.
-- Remove unused imports.
-- Fix or disable broken typecheck configuration.
-- Audit and prune unused dependencies.
-- Add PRD-aligned route labels.
-
-Exit criteria:
-
-- Public app can be demoed safely.
-- No fake bookings or reservations can be created by users.
-- Build and lint pass.
-
-### Phase 1: Public Informational MVP
-
-Duration: 4-8 weeks
-
-Tasks:
-
-- Build public Today Dashboard.
-- Build Getting Here and Trip Packet.
-- Build ferry/tram/parking official-link flows.
-- Build verified directory and map.
-- Build island conditions page with real data source.
-- Build wildlife safety guide and delayed/coarse sightings.
-- Build admin CMS for listings, alerts, and sources.
-- Add analytics.
-
-Exit criteria:
-
-- Product can be shared publicly with visitors and homeowners.
-- Information is source-labeled and trustworthy.
-- Businesses can be onboarded manually.
-
-### Phase 2: Revenue and Partner Tools
-
-Duration: 6-10 weeks
-
-Tasks:
-
-- Enhanced listing plans.
-- Sponsored placements.
-- Property-manager guest guide product.
-- Wildlife/Nature Mode subscription.
-- Partner dashboard.
-- Lead attribution.
-- Moderation workflows.
-
-Exit criteria:
-
-- First paying partners or property managers onboarded.
-- Paid wildlife/nature feature passes safety review.
-- Partner reporting is credible.
-
-### Phase 3: Select Transactions
-
-Duration: 3-6 months after Phase 2 validation
-
-Tasks:
-
-- Identify low-risk transaction category.
-- Sign partner agreements.
-- Build server-side transaction service.
-- Add payment provider.
-- Add webhooks, refunds, support, reconciliation.
-- Pilot with one partner/category.
-
-Exit criteria:
-
-- Transaction pilot has support workflows and reconciliation.
-- No transaction is client-confirmed.
-- Users understand cancellation/refund terms.
+Exit: diversified revenue beyond commissions; first sold partner inventory.
 
 ## 15. Success Metrics
 
-### MVP Usage
+Add to v0.1's usage/trust/wildlife metrics the marketplace realities:
 
-- Weekly active users.
-- Returning users.
-- Dashboard views.
-- Ferry/tram official link clicks.
-- Parking official link clicks.
-- Trip packets created.
-- Directory searches.
-- Map interactions.
-- Alert opt-ins.
+- **Transactions:** GMV and commission by vertical; booking completion rate;
+  **booking-to-fulfillment rate** (did a human actually service it?); refund/
+  dispute rate; double-booking incidents (should be zero after Wave A).
+- **Membership:** trial-to-paid conversion; monthly/annual mix; retention/churn.
+- **Live data trust:** stale-data incidents on ferry/weather/events; sync
+  failure rate (`SyncLog`); user-reported inaccuracies.
+- **Security/ops:** open audit findings by severity; time-to-close.
 
-### Trust and Quality
+## 16. Engineering Backlog (reconciled)
 
-- Data source freshness.
-- Error rate.
-- Stale data incidents.
-- Partner correction requests.
-- User-reported inaccurate info.
-- Support contacts per active user.
+### P0 (from `SECURITY_AUDIT_2026-07-08_codex.md`)
 
-### Monetization
-
-- Enhanced listing conversion.
-- Sponsored placement revenue.
-- Property-manager guide revenue.
-- Paid Nature Mode conversion.
-- Partner lead volume.
-- Cost per acquired subscriber.
-
-### Wildlife Safety
-
-- Reports submitted.
-- Reports verified.
-- Reports rejected for unsafe behavior.
-- Sensitive sightings protected.
-- Public safety escalations.
-- No evidence of crowding caused by app.
-
-## 16. Engineering Backlog From Review Findings
-
-### P0
-
-- Replace client-side ferry booking with official booking handoff.
-- Replace parking reservation creation with official parking guide.
-- Remove fake QR/ticket surfaces.
-- Remove local "confirmed" states from lodging/rental/food until transaction backend exists.
+- Automation/notification endpoints: signed auth, fail closed.
+- Remove browser-side `asServiceRole` (EventsAdmin, PartnersAdmin,
+  BabysittingAdmin).
+- Remove client `ParkingReservation.create`; remove "92% confidence" ETA.
 
 ### P1
 
-- Add role-gated admin routing.
-- Remove admin from global public menu.
-- Replace hard-coded ETA with real routing or conservative estimates.
-- Add source and freshness metadata to schedules, conditions, and directory data.
-- Make public informational pages accessible without login.
+- Idempotency + capacity checks + reconciliation on booking/order/sync.
+- Harden `admin-ops` (per-entity field/op allowlists, audit log).
+- Back community counters with real per-user rows.
+- Server-side price verification audit across *all* paid verticals (confirm
+  babysitting/lodging/birdie match the ferry/rental/food pattern).
 
 ### P2
 
-- Prune unused dependencies.
-- Resolve npm audit vulnerabilities.
-- Fix lint errors.
-- Fix typecheck configuration.
-- Update app title, favicon, manifest, SEO metadata, and robots state.
-- Add privacy policy and terms.
+- Split public/private schema fields; sanitize all outbound URLs (shared
+  allowlist: https/http/mailto/tel).
+- Resolve `npm audit`; fix 150 unused-import lint errors; fix typecheck config.
+- SEO/metadata/manifest/robots; privacy policy + terms of service (now
+  mandatory given payments and children's-service data).
+- Keep entry-bundle weight in check (`APP_WEIGHT_LOG.md`).
 
 ## 17. Open Questions
 
-- Will BHI Development Corp support this as an unofficial companion, official partner, or white-labeled property/guest service?
-- Can BHI Transportation provide schedule/status API or approved deep-linking?
-- Can BHI Conservancy partner on wildlife safety, moderation rules, and revenue share?
-- Which property managers are most likely to pay for branded guest guides?
-- Which local businesses have the highest pain around visibility and seasonal updates?
-- Is consumer-paid Nature Mode acceptable to local stakeholders if exact sensitive locations are never sold?
-- Should the public product use "Bald Head" or "BHI" branding, and what naming rights or trademark constraints apply?
+- Which paid verticals have **real, contracted operators today**, and which are
+  currently checkout flows without a supported back end?
+- Can BHI Transportation provide a schedule/status API or sanctioned deep-links
+  (to legitimize ferry/parking)?
+- Will BHI Development Corp treat this as unofficial companion, official partner,
+  or white-label guest service?
+- Nature Mode: invest, keep-free, or drop (§10)?
+- Does the babysitting vertical's handling of minors' logistics and provider
+  background checks meet the legal/insurance bar for a paid marketplace?
+- What is the support/operations staffing model behind the marketplace at scale?
 
 ## 18. Source References
 
-- NC Wildlife Resources Commission alligator coexistence guidance: https://www.ncwildlife.gov/news/press-releases/2023/05/12/wildlife-commission-provides-tips-coexist-alligators
+- NC Wildlife Resources Commission alligator coexistence guidance:
+  https://www.ncwildlife.gov/news/press-releases/2023/05/12/wildlife-commission-provides-tips-coexist-alligators
 - NC Wildlife alligator species and safety page: https://www.ncwildlife.gov/alligator
-- Village of Bald Head Island alligator guidance: https://villagebhi.org/visitors/learn-about-island-wildlife/alligators/
+- Village of Bald Head Island alligator guidance:
+  https://villagebhi.org/visitors/learn-about-island-wildlife/alligators/
 - Bald Head Island Conservancy wildlife safety: https://bhic.org/learn/wildlife-safety/
-- Bald Head Island Transportation ferry and tram reservations: https://www.baldheadislandferry.com/tram/
+- Bald Head Island Transportation ferry and tram reservations:
+  https://www.baldheadislandferry.com/tram/
+- Internal: `docs/SECURITY_AUDIT_2026-07-08_codex.md`, `docs/APP_WEIGHT_LOG.md`
 
 ## 19. Product Decision Summary
 
-The application should be salvaged as a premium island intelligence product, not shipped as the current transaction-heavy prototype. The best path is:
+The product is no longer a prototype to be salvaged into an informational guide —
+it is a **live, broad, transactional island super-app**. The strategic task has
+inverted accordingly:
 
-1. Launch an accurate public guide.
-2. Build trust through daily utility.
-3. Monetize local visibility, guest-guide operations, sponsorships, and safe premium nature intelligence.
-4. Add transactions only after partnership, backend, payment, inventory, and support infrastructure exist.
+1. **Harden before promoting.** Close the security findings and remove the
+   remaining fake-transaction anti-patterns; the app takes real money now.
+2. **Make breadth honest.** Every paid vertical needs a real operator and a
+   support path, or it becomes lead-gen. Depth of support now beats breadth of
+   features.
+3. **Diversify revenue deliberately** beyond commissions and membership by
+   activating the listing/sponsorship/attribution infrastructure already built.
+4. **Decide the wildlife story** — invest in safe, coordinate-free Nature Mode as
+   a differentiator, or retire it cleanly.
 
-The wildlife feature can be a signature differentiator, especially because Bald Head Island has memorable wildlife stories and real safety needs. The product must, however, sell context rather than coordinates. The app should help people understand and respect the island, not direct crowds toward sensitive animals.
+The live-data core (ferry, weather, events) is the genuine daily-habit
+differentiator and should be protected and made demonstrably trustworthy. The
+marketplace is the revenue engine and must be made demonstrably safe and
+supportable. The wildlife feature can still be a signature — but only if it
+sells context, never coordinates.
