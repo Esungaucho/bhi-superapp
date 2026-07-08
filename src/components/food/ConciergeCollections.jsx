@@ -1,13 +1,40 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { CONCIERGE_COLLECTIONS } from '@/lib/diningConstants';
 
 export default function ConciergeCollections({ restaurants, onSelect, selected }) {
+  const scrollRef = useRef(null);
+
   if (!restaurants || restaurants.length === 0) return null;
+
+  const scroll = (dir) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * 200, behavior: 'smooth' });
+  };
 
   return (
     <div className="px-4 py-4 border-b border-border">
-      <p className="font-heading text-sm font-semibold text-foreground mb-3">Concierge Collections</p>
-      <div className="flex gap-3 overflow-x-auto no-scrollbar pb-1">
+      <div className="flex items-center justify-between mb-3">
+        <p className="font-heading text-sm font-semibold text-foreground">Concierge Collections</p>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => scroll(-1)}
+            className="p-1.5 rounded-full bg-secondary text-muted-foreground hover:bg-accent hover:text-white transition-colors"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
+          </button>
+          <button
+            onClick={() => scroll(1)}
+            className="p-1.5 rounded-full bg-secondary text-muted-foreground hover:bg-accent hover:text-white transition-colors"
+            aria-label="Scroll right"
+          >
+            <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+          </button>
+        </div>
+      </div>
+      <div ref={scrollRef} className="flex gap-3 overflow-x-auto no-scrollbar pb-1">
         {CONCIERGE_COLLECTIONS.map(col => {
           const Icon = col.icon;
           const matchedRestaurants = restaurants.filter(col.filter);
