@@ -48,6 +48,7 @@ const Discovery = lazy(() => import('@/pages/Discovery'));
 const IslandShop = lazy(() => import('@/pages/IslandShop'));
 const BirdieConcierge = lazy(() => import('@/pages/BirdieConcierge'));
 const BirdieNewRequest = lazy(() => import('@/pages/BirdieNewRequest'));
+const BirdieItinerary = lazy(() => import('@/pages/BirdieItinerary'));
 const BirdieRequestDetail = lazy(() => import('@/pages/BirdieRequestDetail'));
 const BirdieShoppers = lazy(() => import('@/pages/BirdieShoppers'));
 const BHIConcierge = lazy(() => import('@/pages/BHIConcierge'));
@@ -176,6 +177,7 @@ const AuthenticatedApp = () => {
         <Route path="/island-shop" element={<IslandShop />} />
         <Route path="/birdie" element={<BirdieConcierge />} />
         <Route path="/birdie/new" element={<BirdieNewRequest />} />
+        <Route path="/birdie/itinerary" element={<BirdieItinerary />} />
         <Route path="/birdie/request/:id" element={<BirdieRequestDetail />} />
         <Route path="/birdie/shoppers" element={<BirdieShoppers />} />
         <Route path="/concierge" element={<BHIConcierge />} />

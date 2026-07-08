@@ -22,7 +22,7 @@ const SECTIONS = [
     label: 'Bertie AI Concierge', path: '/birdie', Icon: Bird,
     children: [
       { label: 'Ask Birdie (AI Assistant)', path: '/birdie' },
-      { label: 'Plan My Stay', path: '/birdie/new' },
+      { label: 'Plan My Stay', path: '/birdie/itinerary' },
       { label: 'Concierge Requests', path: '/concierge' },
       { label: 'Grocery Delivery', path: '/birdie/new' },
     ],

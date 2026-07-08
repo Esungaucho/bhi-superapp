@@ -51,7 +51,7 @@ export default function MyPlansSection() {
         <div className="bg-card border border-border/40 rounded-2xl p-5 text-center shadow-luxe-sm">
           <ClipboardList className="w-7 h-7 text-muted-foreground/30 mx-auto mb-2" strokeWidth={1.5} />
           <p className="text-sm text-muted-foreground">You don't have anything planned today</p>
-          <Link to="/birdie/new" className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-accent mt-3 hover:underline">
+          <Link to="/birdie/itinerary" className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-accent mt-3 hover:underline">
             <Plus className="w-3.5 h-3.5" strokeWidth={1.5} />
             Create Day Plan
           </Link>
