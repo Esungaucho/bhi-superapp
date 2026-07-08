@@ -88,3 +88,13 @@ longer ships to guests, recharts loads only with the revenue dashboard, and
 leaflet only with map pages. JS total rose slightly (chunk overhead) — that's
 expected and fine. Also fixed a build-breaking legacy octal literal (`06`) in
 `src/lib/sunTimes.js` that arrived with the sunset-times feature.
+
+### 2026-07-08: Codex security audit (open findings)
+
+Codex audited `28eb386` and flagged authorization/service-role risks that the
+code-splitting work did not address (lazy chunks are not an auth boundary).
+Full findings, severities, and remediation order:
+[SECURITY_AUDIT_2026-07-08_codex.md](./SECURITY_AUDIT_2026-07-08_codex.md).
+Top items: unauthenticated notification/automation endpoints (fail open on
+missing auth), browser-side `asServiceRole` in three admin pages, and a failing
+`npm audit`. **Not yet remediated.**
