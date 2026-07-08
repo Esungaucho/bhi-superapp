@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   Wine, Users, Sunset, Coffee, PartyPopper, Fish, UtensilsCrossed,
-  IceCream, ShoppingBag, Salad, Leaf, Star, Bird, Sparkles
+  IceCream, ShoppingBag, Salad, Leaf, Star, Bird, Sparkles,
+  ChevronLeft, ChevronRight
 } from 'lucide-react';
 
 export const BIRDIE_CATEGORIES = [
@@ -93,22 +94,48 @@ export const BIRDIE_CATEGORIES = [
 ];
 
 export default function BirdieRecommendations({ selected, onSelect }) {
+  const scrollRef = useRef(null);
+
+  const scroll = (dir) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * 200, behavior: 'smooth' });
+  };
+
   return (
     <div className="px-4 py-4 border-b border-border">
-      <div className="flex items-center gap-2 mb-3">
-        <div className="w-7 h-7 rounded-full bg-accent/15 flex items-center justify-center flex-shrink-0">
-          <Bird className="w-4 h-4 text-accent" strokeWidth={1.5} />
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-full bg-accent/15 flex items-center justify-center flex-shrink-0">
+            <Bird className="w-4 h-4 text-accent" strokeWidth={1.5} />
+          </div>
+          <div>
+            <p className="font-heading text-sm font-semibold text-foreground flex items-center gap-1.5">
+              Birdie Recommends
+              <Sparkles className="w-3 h-3 text-accent" strokeWidth={1.5} />
+            </p>
+            <p className="text-[11px] text-muted-foreground">Tell Birdie what you're in the mood for</p>
+          </div>
         </div>
-        <div>
-          <p className="font-heading text-sm font-semibold text-foreground flex items-center gap-1.5">
-            Birdie Recommends
-            <Sparkles className="w-3 h-3 text-accent" strokeWidth={1.5} />
-          </p>
-          <p className="text-[11px] text-muted-foreground">Tell Birdie what you're in the mood for</p>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => scroll(-1)}
+            className="p-1.5 rounded-full bg-secondary text-muted-foreground hover:bg-accent hover:text-white transition-colors"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
+          </button>
+          <button
+            onClick={() => scroll(1)}
+            className="p-1.5 rounded-full bg-secondary text-muted-foreground hover:bg-accent hover:text-white transition-colors"
+            aria-label="Scroll right"
+          >
+            <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+          </button>
         </div>
       </div>
 
-      <div className="flex gap-2.5 overflow-x-auto no-scrollbar pb-1">
+      <div ref={scrollRef} className="flex gap-2.5 overflow-x-auto no-scrollbar pb-1">
         {BIRDIE_CATEGORIES.map(cat => {
           const Icon = cat.icon;
           const isActive = selected === cat.id;
