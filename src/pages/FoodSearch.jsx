@@ -109,24 +109,6 @@ export default function FoodSearch() {
 
   return (
     <div>
-      {/* Hero */}
-      <div className="bg-primary px-4 pt-4 pb-5">
-        <div className="flex items-center gap-2">
-          <UtensilsCrossed className="w-5 h-5 text-primary-foreground" strokeWidth={1.5} />
-          <h2 className="text-primary-foreground font-heading text-xl">Island Dining</h2>
-        </div>
-        <p className="text-primary-foreground/70 text-sm mt-0.5">Your concierge guide to Bald Head Island restaurants</p>
-        <div className="relative mt-3">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <input
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder="Search restaurants, cuisine, or dishes…"
-            className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-white/10 text-primary-foreground placeholder:text-primary-foreground/50 text-sm border border-white/20 focus:outline-none focus:bg-white/20 transition-colors"
-          />
-        </div>
-      </div>
-
       {/* AI Dining Search */}
       <AIDiningSearch restaurants={restaurants} />
 
