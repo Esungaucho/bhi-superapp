@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { format } from 'date-fns';
 import {
-  Sun, Ship, Waves, Turtle, Music, UtensilsCrossed, Bike, CalendarDays,
+  Sun, Ship, Waves, Turtle, Music, UtensilsCrossed, CalendarDays,
   ChevronRight, AlertCircle,
 } from 'lucide-react';
 
@@ -69,11 +69,6 @@ export default function DailyBrief() {
     const special = todaysSpecials[0].specials[0];
     briefLines.push({ icon: Music, text: `${todaysSpecials[0].name} — ${special}`, sub: 'Tonight' });
   }
-  if (weather?.crowd_level) {
-    const crowdLabel = { quiet: 'Light traffic', moderate: 'Moderate golf cart traffic', busy: 'Busy island traffic', very_busy: 'Heavy traffic expected' }[weather.crowd_level] || weather.crowd_level;
-    briefLines.push({ icon: Bike, text: crowdLabel, sub: null });
-  }
-
   if (briefLines.length === 0) {
     return null;
   }
