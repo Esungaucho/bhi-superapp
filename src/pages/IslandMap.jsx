@@ -187,7 +187,7 @@ export default function IslandMap() {
   }, [filtered]);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-[calc(100vh-128px)]">
       {/* Category filter */}
       <div className="bg-primary px-4 py-2.5">
         <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
