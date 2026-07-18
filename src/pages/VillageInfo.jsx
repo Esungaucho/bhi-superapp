@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ExternalLink, Megaphone, Siren, CalendarDays, Ship, ShieldCheck, Waves, Bike, Trash2, Dog, BookOpen, Phone } from 'lucide-react';
 import GlobalMenu from '@/components/GlobalMenu';
+import SharkTrackerCard from '@/components/shark/SharkTrackerCard';
 
 const SOURCE_LABEL = 'Official Village of Bald Head Island';
 
@@ -103,6 +104,11 @@ export default function VillageInfo() {
           <p className="text-sm text-muted-foreground leading-relaxed">
             Quick links to official information from the Village of Bald Head Island. Always visit the Village website for the most current and complete details.
           </p>
+        </div>
+
+        {/* Shark Tracker */}
+        <div className="mb-4">
+          <SharkTrackerCard />
         </div>
 
         {/* Cards */}

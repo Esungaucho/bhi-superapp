@@ -1,0 +1,103 @@
+{
+  "name": "SharkSighting",
+  "type": "object",
+  "properties": {
+    "location_name": {
+      "type": "string",
+      "description": "Where the sighting occurred"
+    },
+    "latitude": {
+      "type": "number",
+      "description": "GPS latitude of the sighting"
+    },
+    "longitude": {
+      "type": "number",
+      "description": "GPS longitude of the sighting"
+    },
+    "sighting_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time of the sighting"
+    },
+    "distance_from_shore": {
+      "type": "string",
+      "description": "Estimated distance from shore e.g. 50 yards, 1 mile offshore"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the shark, size, behavior, direction of travel"
+    },
+    "photo_url": {
+      "type": "string",
+      "description": "Photo or video URL"
+    },
+    "observer_type": {
+      "type": "string",
+      "enum": [
+        "beachgoer",
+        "boater",
+        "fisherman",
+        "lifeguard",
+        "resident",
+        "researcher",
+        "other"
+      ],
+      "default": "beachgoer",
+      "description": "Type of observer"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "unconfirmed",
+        "community_report",
+        "verified_staff",
+        "tagged_detection"
+      ],
+      "default": "community_report",
+      "description": "Verification status"
+    },
+    "reporter_email": {
+      "type": "string",
+      "description": "Email of the person who reported"
+    },
+    "reporter_name": {
+      "type": "string",
+      "description": "Name of the person who reported"
+    }
+  },
+  "required": [
+    "location_name",
+    "sighting_date",
+    "reporter_email"
+  ],
+  "rls": {
+    "create": {
+      "data.reporter_email": "{{user.email}}"
+    },
+    "read": {},
+    "update": {
+      "$or": [
+        {
+          "data.reporter_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.reporter_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

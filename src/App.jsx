@@ -137,6 +137,7 @@ const Membership = lazy(() => import('@/pages/Membership'));
 const MainlandShoppers = lazy(() => import('@/pages/MainlandShoppers'));
 const ShopBeforeArrive = lazy(() => import('@/pages/ShopBeforeArrive'));
 const FerryTramHub = lazy(() => import('@/pages/FerryTramHub'));
+const SharkTracker = lazy(() => import('@/pages/SharkTracker'));
 
 const PageLoader = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-background">
@@ -227,6 +228,7 @@ const AuthenticatedApp = () => {
         <Route path="/mainland-shoppers" element={<MainlandShoppers />} />
         <Route path="/shop-before-arrive" element={<ShopBeforeArrive />} />
         <Route path="/ferry-tram" element={<FerryTramHub />} />
+        <Route path="/shark-tracker" element={<SharkTracker />} />
         <Route path="/bookings" element={<AllBookings />} />
       </Route>
       <Route path="/thank-you" element={<ThankYou />} />

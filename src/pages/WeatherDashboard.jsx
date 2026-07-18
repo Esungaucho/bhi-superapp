@@ -5,6 +5,7 @@ import { Wind, Droplets, Waves, Thermometer, Sun, CloudSun, Cloud, CloudRain, Cl
 import { Link } from 'react-router-dom';
 import ContextualAd, { getTriggeredAds } from '@/components/weather/ContextualAd';
 import BeachFinder from '@/components/weather/BeachFinder';
+import SharkTrackerCard from '@/components/shark/SharkTrackerCard';
 import WeatherMarineModule from '@/components/dashboard/WeatherMarineModule';
 
 const CONDITION_ICON = {
@@ -133,6 +134,9 @@ export default function WeatherDashboard() {
 
       {/* Beach Finder */}
       <BeachFinder conditions={conditions} waveHeightFt={marine?.wave_height_ft} />
+
+      {/* Shark Tracker */}
+      <SharkTrackerCard />
 
       {/* Tide */}
       <div className="bg-card border border-border/50 rounded-2xl p-5 shadow-luxe-sm">
