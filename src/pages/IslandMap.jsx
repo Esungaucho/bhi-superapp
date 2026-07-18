@@ -7,6 +7,7 @@ import { Loader2, Info, X } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { getTriggeredAds } from '@/components/weather/ContextualAd';
+import { isSightingActive } from '@/lib/sharkConstants';
 
 const BHI_CENTER = [33.8626, -77.9858];
 
@@ -39,6 +40,11 @@ const COLOR_MAP = {
   restaurant:     { color: '#3F6D80', label: 'Dining', group: 'dining' },
   shop:           { color: '#9B4F7E', label: 'Shops', group: 'shops' },
   service:        { color: '#6B6B6B', label: 'Services', group: 'services' },
+  // Shark sighting statuses
+  unconfirmed:      { color: '#D97706', label: 'Unconfirmed Sighting', group: 'sharks' },
+  community_report: { color: '#0284C7', label: 'Community Report', group: 'sharks' },
+  verified_staff:   { color: '#059669', label: 'Verified Sighting', group: 'sharks' },
+  tagged_detection: { color: '#7C3AED', label: 'Tagged Shark Detection', group: 'sharks' },
 };
 
 const DEFAULT_COLOR = '#7B7B7B';
@@ -52,6 +58,7 @@ const FILTER_PILLS = [
   { key: 'activities', label: 'Activities' },
   { key: 'beach', label: 'Beach' },
   { key: 'services', label: 'Services' },
+  { key: 'sharks', label: 'Sharks' },
 ];
 
 function getColorMeta(category) {
@@ -89,6 +96,11 @@ export default function IslandMap() {
   const { data: shops = [] } = useQuery({
     queryKey: ['mapShops'],
     queryFn: () => base44.entities.Shop.filter({ is_active: true }),
+  });
+
+  const { data: sharkSightings = [] } = useQuery({
+    queryKey: ['sharkSightingsMap'],
+    queryFn: () => base44.entities.SharkSighting.list('-sighting_date', 100),
   });
 
   const { data: conditionsAll = [] } = useQuery({
@@ -142,6 +154,26 @@ export default function IslandMap() {
       }
     });
 
+    // Shark sightings (active only — expired ones stay on the Shark Tracker page)
+    sharkSightings.filter(isSightingActive).forEach(s => {
+      if (s.latitude != null && s.longitude != null) {
+        const meta = getColorMeta(s.status);
+        pins.push({
+          id: `shark-${s.id}`,
+          name: `Shark Sighting — ${s.location_name}`,
+          lat: s.latitude,
+          lng: s.longitude,
+          category: s.status,
+          colorMeta: meta,
+          group: 'sharks',
+          address: s.distance_from_shore,
+          hours: new Date(s.sighting_date).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }),
+          deep_link: '/shark-tracker',
+          source: 'shark',
+        });
+      }
+    });
+
     // BusinessPins
     businessPins.forEach(p => {
       const meta = getColorMeta(p.category);
@@ -163,7 +195,7 @@ export default function IslandMap() {
     });
 
     return pins;
-  }, [restaurants, shops, businessPins]);
+  }, [restaurants, shops, businessPins, sharkSightings]);
 
   const triggeredAdIds = useMemo(
     () => new Set(getTriggeredAds(businessPins, conditions).map(p => `bp-${p.id}`)),
